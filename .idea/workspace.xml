@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet-equipe14/src/FormationContinue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/projet-equipe14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/projet-equipe14.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +30,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1yBGGw5pLbXGzhTb4RLdO4Y4ho7" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -27,9 +38,10 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="13" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production/projet-equipe14" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/UQÀM Automne 2021/INF2050/json-simple-1.1.1.jar" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -38,6 +50,7 @@
       <recent name="C:\Users\Nicolas\IdeaProjects\inf2050-a21-projet-equipe14\out\production\projet-equipe14" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\frazi\IdeaProjects\inf2050-a21-projet-equipe14\projet-equipe14\src" />
       <recent name="C:\Users\Nicolas\IdeaProjects\inf2050-a21-projet-equipe14" />
     </key>
   </component>
@@ -76,5 +89,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
