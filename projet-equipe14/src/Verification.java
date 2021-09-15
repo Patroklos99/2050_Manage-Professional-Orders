@@ -48,36 +48,19 @@ public class Verification {
         return validationNbHeuresActivite(17, heures);
     }
 
-    public int calculHeuresPresentation(){
+    public int calculHeuresMaxCategories(String categorie, int heureMax){
         JSONArray activities = formationAVerifier.getActivities();
         int heures = 0;
 
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
 
-            if(activity.get("categorie").toString().contentEquals(CATEGORIE[6]))
+            if(activity.get("categorie").toString().contentEquals(categorie))
                 heures += Integer.parseInt(activity.get("heures").toString());
         }
 
-        if(validationNbHeuresActivite(23, heures))
-            return 23;
-
-        return heures;
-    }
-
-    public int calculHeuresGroupeDeDiscussion(){
-        JSONArray activities = formationAVerifier.getActivities();
-        int heures = 0;
-
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-
-            if(activity.get("categorie").toString().contentEquals(CATEGORIE[7]))
-                heures += Integer.parseInt(activity.get("heures").toString());
-        }
-
-        if(validationNbHeuresActivite(17, heures))
-            return 17;
+        if(validationNbHeuresActivite(heureMax, heures))
+            return heureMax;
 
         return heures;
     }

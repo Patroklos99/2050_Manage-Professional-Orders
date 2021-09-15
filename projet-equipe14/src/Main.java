@@ -15,7 +15,7 @@ public class Main {
 
         System.out.println("Catégorie: " + verificateur.validationCategories());
         System.out.println("Heures Catégorie Multiple: " + verificateur.validationHeuresCatégorieMultiple());
-        System.out.println("Heures Présentation: " + verificateur.calculHeuresPresentation());
-        System.out.println("Heures Groupe de Discussion: " + verificateur.calculHeuresGroupeDeDiscussion());
+        System.out.println("Heures Présentation: " + verificateur.calculHeuresMaxCategories("présentation", 23));
+        System.out.println("Heures Groupe de Discussion: " + verificateur.calculHeuresMaxCategories("groupe de discussion", 17));
     }
 }
