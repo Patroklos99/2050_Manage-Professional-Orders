@@ -64,4 +64,21 @@ public class Verification {
 
         return heures;
     }
+
+    public int calculHeuresGroupeDeDiscussion(){
+        JSONArray activities = formationAVerifier.getActivities();
+        int heures = 0;
+
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+
+            if(activity.get("categorie").toString().contentEquals(CATEGORIE[7]))
+                heures += Integer.parseInt(activity.get("heures").toString());
+        }
+
+        if(validationNbHeuresActivite(17, heures))
+            return 17;
+
+        return heures;
+    }
 }

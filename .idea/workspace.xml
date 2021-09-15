@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé">
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" afterDir="false" />
@@ -99,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631730353604</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué.">
+      <created>1631731267162</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1631731267162</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,7 +125,8 @@
     <MESSAGE value="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
     <MESSAGE value="Ajout de la brache Nicolas" />
     <MESSAGE value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
+    <MESSAGE value="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/inf2050_a21_projet_equipe14$Main.ic" NAME="Main Coverage Results" MODIFIED="1631730924672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
