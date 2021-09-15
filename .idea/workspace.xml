@@ -2,18 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_20_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_20_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_21_PM_[Changes]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_21_PM__Changes_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/projet-equipe14/FormationContinue.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +92,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631728896202</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé">
+      <created>1631730353604</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1631730353604</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,5 +119,8 @@
     <MESSAGE value="Ajout de la brache Nicolas" />
     <MESSAGE value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
     <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/inf2050_a21_projet_equipe14$Main.ic" NAME="Main Coverage Results" MODIFIED="1631730924672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

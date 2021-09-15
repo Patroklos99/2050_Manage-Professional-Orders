@@ -15,5 +15,6 @@ public class Main {
 
         System.out.println("Catégorie: " + verificateur.validationCategories());
         System.out.println("Heures Catégorie Multiple: " + verificateur.validationHeuresCatégorieMultiple());
+        System.out.println("Heures Présentation: " + verificateur.calculHeuresPresentation());
     }
 }
