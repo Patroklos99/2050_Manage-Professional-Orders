@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Remis au modèle original.">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/json_simple_1_1_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé">
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_20_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_20_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_21_PM_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_21_PM__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/projet-equipe14/FormationContinue.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +28,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1yBGGw5pLbXGzhTb4RLdO4Y4ho7" />
@@ -77,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631726009586</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Ajout de la brache Nicolas">
+      <created>1631728896202</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1631728896202</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -94,6 +115,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
+    <MESSAGE value="Ajout de la brache Nicolas" />
+    <MESSAGE value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
   </component>
 </project>

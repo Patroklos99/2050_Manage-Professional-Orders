@@ -13,6 +13,7 @@ public class Main {
         FormationContinue formation = new FormationContinue(fichierEntree);
         Verification verificateur = new Verification(formation);
 
-        System.out.print(verificateur.validationCategories());
+        System.out.println("Catégorie: " + verificateur.validationCategories());
+        System.out.println("Heures Catégorie Multiple: " + verificateur.validationHeuresCatégorieMultiple());
     }
 }
