@@ -13,6 +13,8 @@ public class Main {
         FormationContinue formation = new FormationContinue(fichierEntree);
         Verification verificateur = new Verification(formation);
 
-        System.out.print(verificateur.validationCategories());
+        verificateur.validationCategories();
+
+        System.out.print(verificateur.resultat());
     }
 }
