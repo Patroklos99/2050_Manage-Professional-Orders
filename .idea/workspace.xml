@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout branche William">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,10 +20,17 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1yBGGw5pLbXGzhTb4RLdO4Y4ho7" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <OptionsSetting value="false" id="Update" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -28,11 +40,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="13" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/UQÀM Automne 2021/INF2050/json-simple-1.1.1.jar" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/20180307183431_William_Frazilien_TP_Paint/paint" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -54,6 +66,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -73,7 +86,21 @@
       <option name="project" value="LOCAL" />
       <updated>1631726009586</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Ajout de la librairie JSON.simple">
+      <created>1631726480987</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1631726480987</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Ajout branche William">
+      <created>1632144844399</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1632144844399</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -90,6 +117,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
+    <MESSAGE value="Ajout de la librairie JSON.simple" />
+    <MESSAGE value="Ajout branche William" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout branche William" />
   </component>
 </project>
