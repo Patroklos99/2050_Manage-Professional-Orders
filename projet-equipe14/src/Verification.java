@@ -36,4 +36,43 @@ public class Verification {
             }
         }
     }
+
+    public boolean validationNbHeuresActivite(int pHeuresRequises, int pHeuresCompletes){
+        if(pHeuresRequises <= pHeuresCompletes)
+            return true;
+
+        return false;
+    }
+
+    public boolean validationHeuresCatégorieMultiple(){
+        String[] categoriesRequise = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée"};
+        JSONArray activities = formationAVerifier.getActivities();
+        int heures = 0;
+
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+
+            if(Arrays.asList(categoriesRequise).contains(activity.get("categorie")))
+                heures += Integer.parseInt(activity.get("heures").toString());
+        }
+
+        return validationNbHeuresActivite(17, heures);
+    }
+
+    public int calculHeuresMaxCategories(String categorie, int heureMax){
+        JSONArray activities = formationAVerifier.getActivities();
+        int heures = 0;
+
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+
+            if(activity.get("categorie").toString().contentEquals(categorie))
+                heures += Integer.parseInt(activity.get("heures").toString());
+        }
+
+        if(validationNbHeuresActivite(heureMax, heures))
+            return heureMax;
+
+        return heures;
+    }
 }
