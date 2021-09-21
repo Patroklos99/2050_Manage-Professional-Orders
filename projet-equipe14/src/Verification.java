@@ -1,6 +1,7 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Verification {
@@ -31,7 +32,7 @@ public class Verification {
 
                 String nom = (String) activity.get("description");
                 JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
-                erreurs.add("La catégorie " + nom + " n'existe pas dans la banque de catégories");
+                erreurs.add("La catégorie de " + nom + " n'existe pas dans la banque de catégories");
 
             }
         }
@@ -74,5 +75,33 @@ public class Verification {
             return heureMax;
 
         return heures;
+    }
+
+    public void validationCycle(){
+        String cycle = formationAVerifier.getCycle();
+
+        if(!cycle.equals("2020-2022")){
+            JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
+            erreurs.add("Le cycle de la formation n'est pas valide");
+        }
+    }
+
+    public ArrayList<String> validationHeureFormat(){
+        JSONArray activities = formationAVerifier.getActivities();
+        ArrayList<String> activiteIncorrecte = new ArrayList<>();
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+            if (Double.parseDouble((activity.get("heures")).toString()) < 1 || (activity.get(
+                    "heures")).toString().contains(".")){
+
+                String nom = (String) activity.get("description");
+                JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
+                erreurs.add("L'activité " + nom + " n'a pas un nombre valide d'heures");
+
+                activiteIncorrecte.add(nom);
+
+            }
+        }
+        return activiteIncorrecte;
     }
 }
