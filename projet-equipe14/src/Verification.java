@@ -1,7 +1,6 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Verification {
@@ -16,24 +15,22 @@ public class Verification {
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
 
+        fichierErreur.put("complet", false);
         fichierErreur.put("erreurs", listeErreurs);
-        fichierErreur.put("complet", true);
-
     }
 
     public JSONObject resultat(){
         return fichierErreur;
     }
 
-    public void validationCategories(){
-        JSONArray activities = formationAVerifier.getActivities();
+    public void validationCategories(JSONArray activities){
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activity.get("categorie"))){
 
                 String nom = (String) activity.get("description");
                 JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
-                erreurs.add("La catégorie de " + nom + " n'existe pas dans la banque de catégories");
+                erreurs.add("La catégorie " + nom + " n'existe pas dans la banque de catégories");
 
             }
         }
@@ -46,9 +43,8 @@ public class Verification {
         return false;
     }
 
-    public boolean validationHeuresCatégorieMultiple(){
+    public boolean validationHeuresCatégorieMultiple(JSONArray activities){
         String[] categoriesRequise = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée"};
-        JSONArray activities = formationAVerifier.getActivities();
         int heures = 0;
 
         for (Object o : activities) {
@@ -61,8 +57,7 @@ public class Verification {
         return validationNbHeuresActivite(17, heures);
     }
 
-    public int calculHeuresMaxCategories(String categorie, int heureMax){
-        JSONArray activities = formationAVerifier.getActivities();
+    public int calculHeuresMaxCategories(String categorie, int heureMax, JSONArray activities){
         int heures = 0;
 
         for (Object o : activities) {
@@ -76,14 +71,6 @@ public class Verification {
             return heureMax;
 
         return heures;
-    }
-
-    public void validationCycle(){
-        String cycle = formationAVerifier.getCycle();
-
-        if(!cycle.equals("2020-2022")){
-            ajoutMsgErreur("Le cycle de la formation n'est pas valide");
-        }
     }
 
     public JSONArray validationHeureFormat(){
@@ -102,7 +89,6 @@ public class Verification {
         }
         return bonneActivites;
     }
-
 
     public void ajoutMsgErreur(String msg){
         Boolean complet = (Boolean) fichierErreur.remove("complet");

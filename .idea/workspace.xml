@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout branche William">
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué.">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_20_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_20_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_21_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_21_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" afterDir="false" />
@@ -22,7 +25,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Nicolas" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,11 +43,11 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="13" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/20180307183431_William_Frazilien_TP_Paint/paint" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/json-simple-1.1.1.jar" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -66,7 +69,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -86,22 +88,40 @@
       <option name="project" value="LOCAL" />
       <updated>1631726009586</updated>
     </task>
-    <task id="LOCAL-00002" summary="Ajout de la librairie JSON.simple">
-      <created>1631726480987</created>
+    <task id="LOCAL-00002" summary="Ajout de la brache Nicolas">
+      <created>1631728896202</created>
       <option name="number" value="00002" />
       <option name="presentableId" value="LOCAL-00002" />
       <option name="project" value="LOCAL" />
-      <updated>1631726480987</updated>
+      <updated>1631728896202</updated>
     </task>
-    <task id="LOCAL-00003" summary="Ajout branche William">
-      <created>1632144844399</created>
+    <task id="LOCAL-00003" summary="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé">
+      <created>1631730353604</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1632144844399</updated>
+      <updated>1631730353604</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué.">
+      <created>1631731267162</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1631731267162</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -117,8 +137,13 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Ajout de la structure de base du projet pour aider à commencer. 1 validation fonctionnelle." />
-    <MESSAGE value="Ajout de la librairie JSON.simple" />
-    <MESSAGE value="Ajout branche William" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout branche William" />
+    <MESSAGE value="Ajout de la brache Nicolas" />
+    <MESSAGE value="Ajout de la méthode validationNBHeuresActivite et validationHeuresCatégorieMultiple. Non testé" />
+    <MESSAGE value="Ajout de la méthode calculHeuresPresentation. Test simpe éffectué." />
+    <MESSAGE value="Revert &quot;Retrait de la fonction calculHeuresGroupeDeDiscussion et modification de la fonction calculHeuresPresentation pour pouvoir compté tout les nombres d'heures maximum de toutes les catégories dans une seule et unique méthode&quot;&#10;&#10;This reverts commit eb5bfe3e" />
+    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;Retrait de la fonction calculHeuresGroupeDeDiscussion et modification de la fonction calculHeuresPresentation pour pouvoir compté tout les nombres d'heures maximum de toutes les catégories dans une seule et unique méthode&quot;&#10;&#10;This reverts commit eb5bfe3e" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/inf2050_a21_projet_equipe14$Main.ic" NAME="Main Coverage Results" MODIFIED="1631730924672" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
