@@ -86,22 +86,21 @@ public class Verification {
         }
     }
 
-    public ArrayList<String> validationHeureFormat(){
+    public JSONArray validationHeureFormat(){
         JSONArray activities = formationAVerifier.getActivities();
-        ArrayList<String> activiteIncorrecte = new ArrayList<>();
+        JSONArray bonneActivites = new JSONArray();
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
             if (Double.parseDouble((activity.get("heures")).toString()) < 1 || (activity.get(
                     "heures")).toString().contains(".")){
 
-                String nom = (String) activity.get("description");
-                ajoutMsgErreur("L'activité " + nom + " n'a pas un nombre valide d'heures");
+                ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
 
-                activiteIncorrecte.add(nom);
-
+            }else{
+                bonneActivites.add(activity);
             }
         }
-        return activiteIncorrecte;
+        return bonneActivites;
     }
 
 
