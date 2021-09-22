@@ -78,11 +78,8 @@ public class Verification {
         JSONArray bonneActivites = new JSONArray();
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-            if (Double.parseDouble((activity.get("heures")).toString()) < 1 || (activity.get(
-                    "heures")).toString().contains(".")){
-
+            if (Double.parseDouble((activity.get("heures")).toString()) < 1 || (activity.get("heures")).toString().contains(".")){
                 ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
-
             }else{
                 bonneActivites.add(activity);
             }
@@ -98,5 +95,13 @@ public class Verification {
 
         fichierErreur.put("erreurs", erreur);
         fichierErreur.put("complet", false);
+    }
+
+    public void validationCycle(){
+        String cycle = formationAVerifier.getCycle();
+
+        if(!cycle.equals("2020-2022")){
+            ajoutMsgErreur("Le cycle de la formation n'est pas valide");
+        }
     }
 }
