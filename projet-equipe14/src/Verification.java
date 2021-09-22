@@ -104,12 +104,4 @@ public class Verification {
         fichierErreur.put("erreurs", erreur);
         fichierErreur.put("complet", false);
     }
-
-    public void validationCycle(){
-        String cycle = formationAVerifier.getCycle();
-
-        if(!cycle.equals("2020-2022")){
-            ajoutMsgErreur("Le cycle de la formation n'est pas valide");
-        }
-    }
 }
