@@ -1,13 +1,16 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
 
-    private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée", "présentation", "groupe de discussion", "projet de recherche", "rédaction professionnelle"};
+    private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche", "rédaction professionnelle"};
 
     public Verification(FormationContinue formation){
         this.formationAVerifier = formation;
@@ -28,13 +31,65 @@ public class Verification {
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activity.get("categorie"))){
-
                 String nom = (String) activity.get("description");
                 JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
                 erreurs.add("La catégorie " + nom + " n'existe pas dans la banque de catégories");
 
             }
         }
+    }
+
+    public void validationDates() throws ParseException {
+            JSONArray activities = formationAVerifier.getActivities();
+            for (Object o : activities) {
+                JSONObject activity = (JSONObject) o;
+                String date = (String) activity.get("date");
+                    if ((date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
+                        validationDatesPeriode(date);
+                    }
+            }
+    }
+
+    public void validationDatesPeriode(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+        Date dateEntree = sdf.parse(date);
+        Date dateMin = sdf.parse("2020-04-01");
+        Date dateMax = sdf.parse("2022-04-01");
+        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
+            JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
+            erreurs.add("Not a validate date");
+        }
+    }
+
+    public void validationHeuresTransferees(){
+        long heuresMax = 7;
+        long heuresMin = 0;
+        long heures = formationAVerifier.getHeuresTransferees();
+        long heuresFixe = heures;
+            if (heures < heuresMin) {
+                formationAVerifier.setHeuresTransferees(heuresMin);
+            }
+            if (heures > heuresMax){
+                formationAVerifier.setHeuresTransferees(7);
+                JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
+                erreurs.add("Le nombre d'heures transferes ("+heuresFixe+") depasse la limite permise, seulement sept heures seront transferees");
+            }
+    }
+
+    public void validationHeures(){
+        long heuresTotal = 0;
+        long heuresMin = 40;
+        JSONObject activity;
+        JSONArray activities = formationAVerifier.getActivities();
+        for (Object o : activities) {
+            activity = (JSONObject) o;
+            heuresTotal += (long) activity.get("heures");
+        }
+            if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < heuresMin) {
+                JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
+                erreurs.add("\nL'etudiant a complete seulement " + (heuresTotal + formationAVerifier.getHeuresTransferees()) + " de 40");
+            }
+        System.out.println(resultat());
     }
 
     public boolean validationNbHeuresActivite(int pHeuresRequises, int pHeuresCompletes){

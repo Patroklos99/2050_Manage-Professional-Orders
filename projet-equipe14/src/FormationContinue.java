@@ -30,4 +30,9 @@ public class FormationContinue {
     public long getHeuresTransferees() {
         return heuresTransferees;
     }
+
+    public void setHeuresTransferees(long heuresTransferees) {
+        this.heuresTransferees = heuresTransferees;
+    }
 }
+
