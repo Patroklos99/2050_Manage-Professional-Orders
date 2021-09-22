@@ -16,8 +16,9 @@ public class Verification {
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
 
-        fichierErreur.put("complet", false);
         fichierErreur.put("erreurs", listeErreurs);
+        fichierErreur.put("complet", true);
+
     }
 
     public JSONObject resultat(){
@@ -81,8 +82,7 @@ public class Verification {
         String cycle = formationAVerifier.getCycle();
 
         if(!cycle.equals("2020-2022")){
-            JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
-            erreurs.add("Le cycle de la formation n'est pas valide");
+            ajoutMsgErreur("Le cycle de la formation n'est pas valide");
         }
     }
 
@@ -95,13 +95,23 @@ public class Verification {
                     "heures")).toString().contains(".")){
 
                 String nom = (String) activity.get("description");
-                JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
-                erreurs.add("L'activité " + nom + " n'a pas un nombre valide d'heures");
+                ajoutMsgErreur("L'activité " + nom + " n'a pas un nombre valide d'heures");
 
                 activiteIncorrecte.add(nom);
 
             }
         }
         return activiteIncorrecte;
+    }
+
+
+    public void ajoutMsgErreur(String msg){
+        Boolean complet = (Boolean) fichierErreur.remove("complet");
+        JSONArray erreur = (JSONArray) fichierErreur.remove("erreurs");
+
+        erreur.add(msg);
+
+        fichierErreur.put("erreurs", erreur);
+        fichierErreur.put("complet", false);
     }
 }
