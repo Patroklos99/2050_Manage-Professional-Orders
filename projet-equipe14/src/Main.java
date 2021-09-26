@@ -1,3 +1,4 @@
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -12,13 +13,15 @@ public class Main {
 
         FormationContinue formation = new FormationContinue(fichierEntree);
         Verification verificateur = new Verification(formation);
-        //verificateur.validationCategories();
-        System.out.println(verificateur.validationDates());
-        System.out.println(verificateur.validationHeuresTransferees());
-        System.out.println(verificateur.validationHeures());
-        //System.out.println("Catégorie: " + verificateur.validationCategories());
-        //System.out.println("Heures Catégorie Multiple: " + verificateur.validationHeuresCatégorieMultiple());
-        //System.out.println("Heures Présentation: " + verificateur.calculHeuresMaxCategories("présentation", 23));
-        //System.out.println("Heures Groupe de Discussion: " + verificateur.calculHeuresMaxCategories("groupe de discussion", 17));
+
+        verificateur.validationCategories();
+
+        JSONArray activites = verificateur.validationHeureFormat();
+
+        System.out.print(verificateur.resultat());
+
+        System.out.println("Heures Catégorie Multiple: " + verificateur.validationHeuresCatégorieMultiple(activites));
+        System.out.println("Heures Présentation: " + verificateur.calculHeuresMaxCategories("présentation", 23, activites));
+        System.out.println("Heures Groupe de Discussion: " + verificateur.calculHeuresMaxCategories("groupe de discussion", 17, activites));
     }
 }
