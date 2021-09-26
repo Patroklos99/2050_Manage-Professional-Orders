@@ -13,9 +13,9 @@ public class Main {
         FormationContinue formation = new FormationContinue(fichierEntree);
         Verification verificateur = new Verification(formation);
         //verificateur.validationCategories();
-        verificateur.validationDates();
-        verificateur.validationHeuresTransferees();
-        verificateur.validationHeures();
+        System.out.println(verificateur.validationDates());
+        System.out.println(verificateur.validationHeuresTransferees());
+        System.out.println(verificateur.validationHeures());
         //System.out.println("Catégorie: " + verificateur.validationCategories());
         //System.out.println("Heures Catégorie Multiple: " + verificateur.validationHeuresCatégorieMultiple());
         //System.out.println("Heures Présentation: " + verificateur.calculHeuresMaxCategories("présentation", 23));

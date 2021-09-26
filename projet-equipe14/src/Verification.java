@@ -39,29 +39,41 @@ public class Verification {
         }
     }
 
-    public void validationDates() throws ParseException {
+    public boolean validationDates() throws ParseException {
+        boolean [] result = new boolean [1];
+        result [0] = true;
             JSONArray activities = formationAVerifier.getActivities();
             for (Object o : activities) {
                 JSONObject activity = (JSONObject) o;
                 String date = (String) activity.get("date");
-                    if ((date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
-                        validationDatesPeriode(date);
+                    if (!(date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) | !validationDatesPeriode(date)) {
+                            result [0] = false;
                     }
             }
+        return result [0];
     }
 
-    public void validationDatesPeriode(String date) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+    public boolean validationDatesPeriode(String date) throws ParseException {
+        boolean resultat = true;
+        SimpleDateFormat sdf = null;
+        try {
+            sdf = new SimpleDateFormat("yyyy-M-dd");
         Date dateEntree = sdf.parse(date);
         Date dateMin = sdf.parse("2020-04-01");
         Date dateMax = sdf.parse("2022-04-01");
-        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
+            if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
             JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
             erreurs.add("Not a validate date");
+            resultat = false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return resultat;
     }
 
-    public void validationHeuresTransferees(){
+    public boolean validationHeuresTransferees(){
+        boolean resultat = true;
         long heuresMax = 7;
         long heuresMin = 0;
         long heures = formationAVerifier.getHeuresTransferees();
@@ -73,10 +85,13 @@ public class Verification {
                 formationAVerifier.setHeuresTransferees(7);
                 JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
                 erreurs.add("Le nombre d'heures transferes ("+heuresFixe+") depasse la limite permise, seulement sept heures seront transferees");
+                resultat = false;
             }
+            return resultat;
     }
 
-    public void validationHeures(){
+    public boolean validationHeures(){
+        boolean resultat = true;
         long heuresTotal = 0;
         long heuresMin = 40;
         JSONObject activity;
@@ -88,8 +103,10 @@ public class Verification {
             if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < heuresMin) {
                 JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
                 erreurs.add("\nL'etudiant a complete seulement " + (heuresTotal + formationAVerifier.getHeuresTransferees()) + " de 40");
+                resultat = false;
             }
-        System.out.println(resultat());
+        //System.out.println(resultat());
+        return resultat;
     }
 
     public boolean validationNbHeuresActivite(int pHeuresRequises, int pHeuresCompletes){
