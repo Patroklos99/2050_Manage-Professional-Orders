@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException, java.text.ParseException {
 
         Object obj = new JSONParser().parse(new FileReader("test.json"));
         JSONObject fichierEntree = (JSONObject) obj;
