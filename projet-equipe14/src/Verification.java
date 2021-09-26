@@ -28,7 +28,6 @@ public class Verification {
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activity.get("categorie"))){
-
                 String nom = (String) activity.get("description");
                 JSONArray erreurs = (JSONArray) fichierErreur.get("erreurs");
                 erreurs.add("La catégorie " + nom + " n'existe pas dans la banque de catégories");
@@ -37,3 +36,4 @@ public class Verification {
         }
     }
 }
+
