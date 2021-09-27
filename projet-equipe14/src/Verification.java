@@ -40,18 +40,18 @@ public class Verification {
         }
     }
 
-    public boolean validationDates() throws ParseException {
+    public void validationDates() throws ParseException {
             JSONArray activities = formationAVerifier.getActivities();
             for (Object o : activities) {
                 JSONObject activity = (JSONObject) o;
                 String date = (String) activity.get("date");
-                    if (!(date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) | !validationDatesPeriode(date)) {
-                            result [0] = false;
+                    if (!(date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
+                            validationDatesPeriode(date);
                     }
-            } return result [0];
+            }
     }
 
-    public boolean validationDatesPeriode(String date) throws ParseException {
+    public void validationDatesPeriode(String date) throws ParseException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
         Date dateEntree = sdf.parse(date);
