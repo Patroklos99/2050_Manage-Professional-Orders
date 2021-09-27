@@ -45,7 +45,7 @@ public class Verification {
             for (Object o : activities) {
                 JSONObject activity = (JSONObject) o;
                 String date = (String) activity.get("date");
-                    if (!(date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
+                    if ((date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
                             validationDatesPeriode(date);
                     }
             }
@@ -73,7 +73,7 @@ public class Verification {
             if (heures > pHeureMax){
                 formationAVerifier.setHeuresTransferees(7);
                 ajoutMsgErreur("Le nombre d'heures transferes ("+heuresFixe+") depasse la limite permise, seulement" +
-                        "sept heures seront transferees");
+                        " sept heures seront transferees");
             }
     }
 
