@@ -10,7 +10,9 @@ public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
 
-    private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche", "rédaction professionnelle"};
+    private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence",
+            "lecture dirigée", "présentation", "groupe de discussion", "projet de recherche",
+            "rédaction professionnelle"};
 
     public Verification(FormationContinue formation) throws ParseException {
         this.formationAVerifier = formation;
@@ -38,21 +40,18 @@ public class Verification {
         }
     }
 
-    public void validationDates() throws ParseException {
+    public boolean validationDates() throws ParseException {
             JSONArray activities = formationAVerifier.getActivities();
             for (Object o : activities) {
                 JSONObject activity = (JSONObject) o;
                 String date = (String) activity.get("date");
-
-                if (date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) {
-                    validationDatesPeriode(date);
-                }
-            }
+                    if (!(date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) | !validationDatesPeriode(date)) {
+                            result [0] = false;
+                    }
+            } return result [0];
     }
 
-
-    //Essayé d'enlever le try/catch
-    public void validationDatesPeriode(String date) throws ParseException {
+    public boolean validationDatesPeriode(String date) throws ParseException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
         Date dateEntree = sdf.parse(date);
@@ -141,7 +140,8 @@ public class Verification {
         JSONArray bonneActivites = new JSONArray();
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-            if (Double.parseDouble((activity.get("heures")).toString()) < 1 || (activity.get("heures")).toString().contains(".")){
+            if (Double.parseDouble((activity.get("heures")).toString()) < 1 ||
+                    (activity.get("heures")).toString().contains(".")){
                 ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
             }else{
                 bonneActivites.add(activity);
