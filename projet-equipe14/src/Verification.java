@@ -11,7 +11,7 @@ public class Verification {
     private JSONObject fichierErreur;
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence",
-            "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche",
+            "lecture dirigée", "présentation", "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
     public Verification(FormationContinue formation){
