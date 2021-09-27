@@ -12,7 +12,9 @@ public class Verification {
     private final long HEUREMIN = 0;
     private final long HEUREMAX = 7;
 
-    private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche", "rédaction professionnelle"};
+    private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence",
+            "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche",
+            "rédaction professionnelle"};
 
     public Verification(FormationContinue formation){
         this.formationAVerifier = formation;
@@ -147,7 +149,8 @@ public class Verification {
         JSONArray bonneActivites = new JSONArray();
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-            if (Double.parseDouble((activity.get("heures")).toString()) < 1 || (activity.get("heures")).toString().contains(".")){
+            if (Double.parseDouble((activity.get("heures")).toString()) < 1 ||
+                    (activity.get("heures")).toString().contains(".")){
                 ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
             }else{
                 bonneActivites.add(activity);
