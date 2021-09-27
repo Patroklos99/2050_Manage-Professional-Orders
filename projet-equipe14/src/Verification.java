@@ -9,8 +9,6 @@ import java.util.Date;
 public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
-    private final long HEUREMIN = 0;
-    private final long HEUREMAX = 7;
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence",
             "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche",
@@ -69,12 +67,12 @@ public class Verification {
         return true;
     }
 
-    public boolean validationHeuresTransferees(){
+    public boolean validationHeuresTransferees(int hMax, int hMin){
         long heures = formationAVerifier.getHeuresTransferees();
         long heuresFixe = heures;
-            if (heures < HEUREMIN)
-                formationAVerifier.setHeuresTransferees(HEUREMIN);
-            if (heures > HEUREMAX){
+            if (heures < hMin)
+                formationAVerifier.setHeuresTransferees(hMin);
+            if (heures > hMax){
                 formationAVerifier.setHeuresTransferees(7);
                 ajoutMsgErreur("Le nombre d'heures transferes ("+heuresFixe+") depasse la limite permise, seulement" +
                         "sept heures seront transferees");
@@ -83,7 +81,7 @@ public class Verification {
             return true;
     }
 
-    public boolean validationHeures(){
+    public boolean validationHeures(int hMin){
         long heuresTotal = 0;
         JSONObject activity;
         JSONArray activities = formationAVerifier.getActivities();
@@ -91,7 +89,7 @@ public class Verification {
             activity = (JSONObject) o;
             heuresTotal += (long) activity.get("heures");
         }
-            if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < HEUREMIN) {
+            if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < hMin) {
                 ajoutMsgErreur("L'etudiant a complete seulement " + (heuresTotal +
                         (formationAVerifier.getHeuresTransferees()) + " de 40"));
                 return false;
