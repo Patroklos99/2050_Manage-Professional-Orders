@@ -38,6 +38,12 @@
       "categorie": "vacances",
       "heures": 2,
       "date": "2021-02-02"
+    },
+    {
+      "description": "Visite d'établissements architecturaux",
+      "categorie": "vacances",
+      "heures": 2,
+      "date": "2021-02-02"
     }
   ]
 }

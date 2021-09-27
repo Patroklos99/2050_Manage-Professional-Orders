@@ -9,19 +9,19 @@ import java.util.Date;
 public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
-    private final long HEUREMIN = 0;
-    private final long HEUREMAX = 7;
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée", "présentat ion", "groupe de discussion", "projet de recherche", "rédaction professionnelle"};
 
-    public Verification(FormationContinue formation){
+    public Verification(FormationContinue formation) throws ParseException {
         this.formationAVerifier = formation;
 
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
 
-        fichierErreur.put("complet", false);
-        fichierErreur.put("erreurs", listeErreurs);
+        fichierErreur.put("Complet", true);
+        fichierErreur.put("Erreurs", listeErreurs);
+
+        validationFinal();
     }
 
     public JSONObject resultat(){
@@ -38,20 +38,21 @@ public class Verification {
         }
     }
 
-    public boolean validationDates() throws ParseException {
-        boolean [] result = new boolean [1];
-        result [0] = true;
+    public void validationDates() throws ParseException {
             JSONArray activities = formationAVerifier.getActivities();
             for (Object o : activities) {
                 JSONObject activity = (JSONObject) o;
                 String date = (String) activity.get("date");
-                    if (!(date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) | !validationDatesPeriode(date)) {
-                            result [0] = false;
-                    }
-            } return result [0];
+
+                if (date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) {
+                    validationDatesPeriode(date);
+                }
+            }
     }
 
-    public boolean validationDatesPeriode(String date) throws ParseException {
+
+    //Essayé d'enlever le try/catch
+    public void validationDatesPeriode(String date) throws ParseException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
         Date dateEntree = sdf.parse(date);
@@ -59,42 +60,36 @@ public class Verification {
         Date dateMax = sdf.parse("2022-04-01");
             if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
                 ajoutMsgErreur("Date non valide");
-            return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
     }
 
-    public boolean validationHeuresTransferees(){
+    public void validationHeuresTransferees(int pHeureMax, int pHeureMin){
         long heures = formationAVerifier.getHeuresTransferees();
         long heuresFixe = heures;
-            if (heures < HEUREMIN)
-                formationAVerifier.setHeuresTransferees(HEUREMIN);
-            if (heures > HEUREMAX){
+            if (heures < pHeureMin)
+                formationAVerifier.setHeuresTransferees(pHeureMin);
+            if (heures > pHeureMax){
                 formationAVerifier.setHeuresTransferees(7);
                 ajoutMsgErreur("Le nombre d'heures transferes ("+heuresFixe+") depasse la limite permise, seulement" +
                         "sept heures seront transferees");
-                return false;
             }
-            return true;
     }
 
-    public boolean validationHeures(){
-        long heuresTotal = 0;
+    public void validationHeures(int pHeureMax, int pHeureMin, JSONArray pActiviteValide){
+        int heuresTotal = 0;
         JSONObject activity;
-        JSONArray activities = formationAVerifier.getActivities();
-        for (Object o : activities) {
+        for (Object o : pActiviteValide) {
             activity = (JSONObject) o;
-            heuresTotal += (long) activity.get("heures");
+            heuresTotal += regarderCategorie(activity.get("categorie").toString(), pActiviteValide,
+                            Integer.parseInt(activity.get("heures").toString()));
         }
-            if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < HEUREMIN) {
+            if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < pHeureMin) {
                 ajoutMsgErreur("L'etudiant a complete seulement " + (heuresTotal +
                         (formationAVerifier.getHeuresTransferees()) + " de 40"));
-                return false;
             }
-        return true;
     }
 
     public boolean validationNbHeuresActivite(int pHeuresRequises, int pHeuresCompletes){
@@ -104,18 +99,18 @@ public class Verification {
         return false;
     }
 
-    public boolean validationHeuresCatégorieMultiple(JSONArray activities){
+    public void validationHeuresCatégorieMultiple(JSONArray activities){
         String[] categoriesRequise = {"cours", "atelier", "séminaire", "colloque", "conférence", "lecture dirigée"};
         int heures = 0;
 
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-
             if(Arrays.asList(categoriesRequise).contains(activity.get("categorie")))
                 heures += Integer.parseInt(activity.get("heures").toString());
         }
 
-        return validationNbHeuresActivite(17, heures);
+        if(!validationNbHeuresActivite(17, heures))
+            ajoutMsgErreur("abc");
     }
 
     public int calculHeuresMaxCategories(String categorie, int heureMax, JSONArray activities){
@@ -123,7 +118,6 @@ public class Verification {
 
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-
             if(activity.get("categorie").toString().contentEquals(categorie))
                 heures += Integer.parseInt(activity.get("heures").toString());
         }
@@ -157,12 +151,41 @@ public class Verification {
     }
 
     public void ajoutMsgErreur(String msg){
-        Boolean complet = (Boolean) fichierErreur.remove("complet");
-        JSONArray erreur = (JSONArray) fichierErreur.remove("erreurs");
+        //Boolean complet = (Boolean) fichierErreur.remove("complet");
+        JSONArray erreur = (JSONArray)fichierErreur.get("Erreurs");
 
         erreur.add(msg);
 
-        fichierErreur.put("erreurs", erreur);
-        fichierErreur.put("complet", false);
+        fichierErreur.put("Erreurs", erreur);
+        fichierErreur.put("Complet", false);
+    }
+
+    public int regarderCategorie(String pCategorie, JSONArray pActiviteValide, int pHeure){
+        if(pCategorie == "presentation")
+            pHeure = calculHeuresMaxCategories("presentation", 23, pActiviteValide);
+
+        if(pCategorie == "groupe de discussion")
+            pHeure = calculHeuresMaxCategories("groupe de discussion", 17, pActiviteValide);
+
+        if(pCategorie == "projet de recherche")
+            pHeure = calculHeuresMaxCategories("projet de recherche", 23, pActiviteValide);
+
+        if(pCategorie == "redaction professionnelle")
+            pHeure = calculHeuresMaxCategories("redaction professionnelle", 17, pActiviteValide);
+
+        return pHeure;
+    }
+
+    public void validationFinal() throws ParseException {
+        JSONArray activiteValide = validationHeureFormat();
+
+        validationCycle();
+        validationDates();
+        validationCategories(activiteValide);
+        validationHeuresTransferees(7, 0);
+        validationHeures(40, 0, activiteValide);
+        validationHeuresCatégorieMultiple(activiteValide);
+
+        System.out.println(resultat());
     }
 }
