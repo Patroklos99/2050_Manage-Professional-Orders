@@ -95,8 +95,8 @@ public class Verification {
             }
         }
         heuresTotal += formationAVerifier.getHeuresTransferees();
-            if ((heuresTotal + formationAVerifier.getHeuresTransferees()) < pHeureMin) {
-                ajoutMsgErreur("L'etudiant a complete seulement " + (heuresTotal) + " de 40");
+            if (heuresTotal < pHeureMin) {
+                ajoutMsgErreur("L'etudiant a complete seulement " + (heuresTotal) + " de 40h");
             }
         System.out.println(heuresTotal);
     }
