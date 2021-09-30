@@ -43,20 +43,20 @@ public class Verification {
     }
 
     public void validationDates() throws ParseException {
-            JSONArray activities = formationAVerifier.getActivities();
+            JSONArray activities = validationFormatDate();
             for (Object o : activities) {
                 JSONObject activity = (JSONObject) o;
                 if(Arrays.asList(CATEGORIE).contains(activity.get("categorie"))) {
                     String date = (String) activity.get("date");
                     String categorie = (String) activity.get("categorie");
-                    if ((date.matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}")) && validationDatesPeriode(date, categorie)) {
+                    if (validationDatesPeriode(date)) {
                         categorieValide.add(categorie);
                     }
                 }
             }
     }
 
-    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
+    public boolean validationDatesPeriode(String date) throws ParseException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
             Date dateEntree = sdf.parse(date);
@@ -148,10 +148,9 @@ public class Verification {
         JSONArray bonneActivites = new JSONArray();
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-            if (!(activity.get("heures").toString()).matches("[0-9]") ||
+            if (!(activity.get("heures").toString()).matches("[0-9]+") ||
                     Double.parseDouble((activity.get("heures")).toString()) < 1 ||
-                    (activity.get("heures")).toString().contains(".")
-                    )
+                    (activity.get("heures")).toString().contains("."))
             {
                 ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
             }else{
@@ -160,6 +159,34 @@ public class Verification {
         }
         return bonneActivites;
     }
+
+    //Methode impossible dappliquer, linstantion de lobjet formation type formationcontinue arrive avant.
+    public long validationFormatHeuresTransferees(){
+        long heuresTrans = 0;
+        if ((!(String.valueOf(formationAVerifier.getHeuresTransferees())).matches("[0-9]+")) ||
+                Double.parseDouble(String.valueOf(formationAVerifier.getHeuresTransferees())) < 1
+                        || (!String.valueOf(formationAVerifier.getHeuresTransferees()).contains(".")))
+        {
+        formationAVerifier.setHeuresTransferees(0);
+        } else {
+            heuresTrans = formationAVerifier.getHeuresTransferees();
+        }
+        return heuresTrans;
+    }
+
+    public JSONArray validationFormatDate(){
+        JSONArray activities = formationAVerifier.getActivities();
+        JSONArray dateValide = new JSONArray();
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+            if (((activity.get("date").toString()).matches("[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
+                dateValide.add(activity);
+            }
+        }
+        return dateValide;
+    }
+
+
 
     public void ajoutMsgErreur(String msg){
         //Boolean complet = (Boolean) fichierErreur.remove("complet");
