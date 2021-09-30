@@ -148,8 +148,11 @@ public class Verification {
         JSONArray bonneActivites = new JSONArray();
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-            if (Double.parseDouble((activity.get("heures")).toString()) < 1 ||
-                    (activity.get("heures")).toString().contains(".")){
+            if (!(activity.get("heures").toString()).matches("[0-9]") ||
+                    Double.parseDouble((activity.get("heures")).toString()) < 1 ||
+                    (activity.get("heures")).toString().contains(".")
+                    )
+            {
                 ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
             }else{
                 bonneActivites.add(activity);
