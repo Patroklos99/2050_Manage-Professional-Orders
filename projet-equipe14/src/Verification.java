@@ -49,21 +49,21 @@ public class Verification {
                 if(Arrays.asList(CATEGORIE).contains(activity.get("categorie"))) {
                     String date = (String) activity.get("date");
                     String categorie = (String) activity.get("categorie");
-                    if (validationDatesPeriode(date)) {
+                    if (validationDatesPeriode(date, categorie)) {
                         categorieValide.add(categorie);
                     }
                 }
             }
     }
 
-    public boolean validationDatesPeriode(String date) throws ParseException {
+    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
             Date dateEntree = sdf.parse(date);
             Date dateMin = sdf.parse("2020-04-01");
             Date dateMax = sdf.parse("2022-04-01");
             if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-                ajoutMsgErreur("La date n'est pas valide.");
+                ajoutMsgErreur("La date de la categorie ("+ categorie + ") n'est pas valide.");
                 return false;
             }
         } catch (Exception e) {
@@ -79,8 +79,8 @@ public class Verification {
                 formationAVerifier.setHeuresTransferees(pHeureMin);
             if (heures > pHeureMax){
                 formationAVerifier.setHeuresTransferees(7);
-                ajoutMsgErreur("Le nombre d'heures transferes ("+heuresFixe+") depasse la limite permise, seulement" +
-                        " sept heures seront transferees");
+                ajoutMsgErreur("Le nombre d'heures transferees ("+heuresFixe+") depasse la limite permise, seulement" +
+                        " 7h seront transferees");
             }
     }
 
@@ -185,8 +185,6 @@ public class Verification {
         }
         return dateValide;
     }
-
-
 
     public void ajoutMsgErreur(String msg){
         //Boolean complet = (Boolean) fichierErreur.remove("complet");
