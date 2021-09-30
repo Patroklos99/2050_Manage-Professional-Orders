@@ -143,17 +143,25 @@ public class Verification {
         }
     }
 
-    public JSONArray validationHeureFormat(){
-        JSONArray activities = formationAVerifier.getActivities();
-        JSONArray bonneActivites = new JSONArray();
-        for (Object o : activities) {
+    public void validationHeureFormat(){
+        for (Object o : formationAVerifier.getActivities()) {
             JSONObject activity = (JSONObject) o;
-            if (!(activity.get("heures").toString()).matches("[0-9]+") ||
-                    Double.parseDouble((activity.get("heures")).toString()) < 1 ||
-                    (activity.get("heures")).toString().contains("."))
+            if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
+                    Double.parseDouble((activity.get("heures")).toString()) < 1)
             {
-                ajoutMsgErreur("L'activité " + activity.get("description") + " n'a pas un nombre valide d'heures");
-            }else{
+                ajoutMsgErreur("L'activité " + activity.get("description")
+                        + " n'a pas un nombre valide d'heures");
+            }
+        }
+    }
+
+    public JSONArray creationListeBonnesActivites(){
+        JSONArray bonneActivites = new JSONArray();
+        for (Object o : formationAVerifier.getActivities()){
+            JSONObject activity = (JSONObject) o;
+            if((activity.get("heures").toString()).matches("^[0-9]+$") &&
+                    Double.parseDouble((activity.get("heures")).toString())
+                            >= 1) {
                 bonneActivites.add(activity);
             }
         }
@@ -187,11 +195,8 @@ public class Verification {
     }
 
     public void ajoutMsgErreur(String msg){
-        //Boolean complet = (Boolean) fichierErreur.remove("complet");
         JSONArray erreur = (JSONArray)fichierErreur.get("Erreurs");
-
         erreur.add(msg);
-
         fichierErreur.put("Erreurs", erreur);
         fichierErreur.put("Complet", false);
     }
@@ -213,8 +218,9 @@ public class Verification {
     }
 
     public void validationFinal() throws ParseException {
-        JSONArray activiteValide = validationHeureFormat();
+        JSONArray activiteValide = creationListeBonnesActivites();
 
+        validationHeureFormat();
         validationCycle();
         validationDates();
         validationCategories(activiteValide);
