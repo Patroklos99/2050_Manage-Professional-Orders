@@ -45,6 +45,16 @@ public class Verification {
     }
 
     public void validationDates() throws ParseException {
+        JSONArray activities = validationFormatDate();
+        for (Object o : activities) {
+            JSONObject activite = (JSONObject) o;
+            if(Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
+                String date = (String) activite.get("date");
+                String categorie = (String) activite.get("categorie");
+                if (validationDatesPeriode(date, categorie))
+                    categorieValide.add(categorie);
+            }
+        }
             JSONArray activites = validationFormatDate();
             for (Object o : activites) {
                 JSONObject activite = (JSONObject) o;
@@ -153,20 +163,17 @@ public class Verification {
 
     public void validationCycle(){
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022")){
+        if(!cycle.equals("2020-2022"))
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
-        }
     }
 
     public void validationHeureFormat(){
         for (Object o : formationAVerifier.getActivites()) {
-            JSONObject activite = (JSONObject) o;
-            if (!(activite.get("heures").toString()).matches("^[0-9]+$") ||
-                    Double.parseDouble((activite.get("heures")).toString()) < 1)
-            {
-                ajoutMsgErreur("L'activité " + activite.get("description")
+            JSONObject activity = (JSONObject) o;
+            if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
+                    Double.parseDouble((activity.get("heures")).toString()) < 1)
+                ajoutMsgErreur("L'activité " + activity.get("description")
                         + " n'a pas un nombre valide d'heures");
-            }
         }
     }
 
@@ -189,11 +196,9 @@ public class Verification {
         if ((!(String.valueOf(formationAVerifier.getHeuresTransferees())).matches("[0-9]+")) ||
                 Double.parseDouble(String.valueOf(formationAVerifier.getHeuresTransferees())) < 1
                         || (!String.valueOf(formationAVerifier.getHeuresTransferees()).contains(".")))
-        {
         formationAVerifier.setHeuresTransferees(0);
-        } else {
+        else
             heuresTrans = formationAVerifier.getHeuresTransferees();
-        }
         return heuresTrans;
     }
 
