@@ -114,23 +114,34 @@ public class Verification {
             }
     }
 
-    public void validationHeures(int pHeureMin, JSONArray pActiviteValide){       //trop long
+    public void validationHeures(int pHeureMin, JSONArray pActiviteValide){
         int heuresTotal = 0;
         JSONObject activite;
         for (Object o : pActiviteValide) {
             activite = (JSONObject) o;
-            if(categorieValide.contains(activite.get("categorie"))) {
-                heuresTotal += regarderCategorie(
-                        activite.get("categorie").toString(), pActiviteValide,
-                        Integer.parseInt(activite.get("heures").toString()));
-            }
+            heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
+                    pActiviteValide);
         }
         heuresTotal += formationAVerifier.getHeuresTransferees();
-            if (heuresTotal < pHeureMin) {
-                ajoutMsgErreur("L'etudiant a complete seulement "
-                        + (heuresTotal) + " de 40h");
-            }
+        ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
         System.out.println(heuresTotal);
+    }
+
+    public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
+                                  JSONArray pActiviteValide){
+        if(categorieValide.contains(activite.get("categorie"))) {
+            heuresTotal += regarderCategorie(
+                    activite.get("categorie").toString(), pActiviteValide,
+                    Integer.parseInt(activite.get("heures").toString()));
+        }
+        return heuresTotal;
+    }
+
+    public void ecrireMsgErrHeureTotal (int heuresTotal, int pHeureMin){
+        if (heuresTotal < pHeureMin) {
+            ajoutMsgErreur("L'etudiant a complete seulement "
+                    + (heuresTotal) + " de 40h");
+        }
     }
 
     public void validationHeuresCatégorieMultiple(JSONArray activites){
