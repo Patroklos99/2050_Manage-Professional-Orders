@@ -33,11 +33,11 @@ public class Verification {
         return fichierErreur;
     }
 
-    public void validationCategories(JSONArray activities){
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if (!Arrays.asList(CATEGORIE).contains(activity.get("categorie"))){
-                String nom = (String) activity.get("categorie");
+    public void validationCategories(JSONArray activites){
+        for (Object o : activites) {
+            JSONObject activite = (JSONObject) o;
+            if (!Arrays.asList(CATEGORIE).contains(activite.get("categorie"))){
+                String nom = (String) activite.get("categorie");
                 ajoutMsgErreur("La catégorie " + nom
                         + " n'existe pas dans la banque de catégories");
             }
@@ -45,18 +45,18 @@ public class Verification {
     }
 
     public void validationDates() throws ParseException {
-        JSONArray activities = validationFormatDate();
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if(Arrays.asList(CATEGORIE).contains(activity.get("categorie")))
-            {
-                String date = (String) activity.get("date");
-                String categorie = (String) activity.get("categorie");
-                if (validationDatesPeriode(date, categorie)) {
-                    categorieValide.add(categorie);
+            JSONArray activites = validationFormatDate();
+            for (Object o : activites) {
+                JSONObject activite = (JSONObject) o;
+                if(Arrays.asList(CATEGORIE).contains(activite.get("categorie")))
+                {
+                    String date = (String) activite.get("date");
+                    String categorie = (String) activite.get("categorie");
+                    if (validationDatesPeriode(date, categorie)) {
+                        categorieValide.add(categorie);
+                    }
                 }
             }
-        }
     }
 
     public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
@@ -101,30 +101,30 @@ public class Verification {
 
     public void validationHeures(int pHeureMin, JSONArray pActiviteValide){       //trop long
         int heuresTotal = 0;
-        JSONObject activity;
+        JSONObject activite;
         for (Object o : pActiviteValide) {
-            activity = (JSONObject) o;
-            if(categorieValide.contains(activity.get("categorie"))) {
+            activite = (JSONObject) o;
+            if(categorieValide.contains(activite.get("categorie"))) {
                 heuresTotal += regarderCategorie(
-                        activity.get("categorie").toString(), pActiviteValide,
-                        Integer.parseInt(activity.get("heures").toString()));
+                        activite.get("categorie").toString(), pActiviteValide,
+                        Integer.parseInt(activite.get("heures").toString()));
             }
         }
         heuresTotal += formationAVerifier.getHeuresTransferees();
-        if (heuresTotal < pHeureMin) {
-            ajoutMsgErreur("L'etudiant a complete seulement "
-                    + (heuresTotal) + " de 40h");
-        }
+            if (heuresTotal < pHeureMin) {
+                ajoutMsgErreur("L'etudiant a complete seulement "
+                        + (heuresTotal) + " de 40h");
+            }
         System.out.println(heuresTotal);
     }
 
-    public void validationHeuresCatégorieMultiple(JSONArray activities){         //trop long
+    public void validationHeuresCatégorieMultiple(JSONArray activites){
         int heures = 0;
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
+        for (Object o : activites) {
+            JSONObject activite = (JSONObject) o;
             if(Arrays.asList(categoriesRequise).contains(
-                    activity.get("categorie")))
-                heures += Integer.parseInt(activity.get("heures").toString());
+                    activite.get("categorie")))
+                heures += Integer.parseInt(activite.get("heures").toString());
         }
         if(!validationNbHeuresActivite(17, heures))
             ajoutMsgErreur("Les heures totales de l'ensemble des categories " +
@@ -153,17 +153,18 @@ public class Verification {
 
     public void validationCycle(){
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022"))
+        if(!cycle.equals("2020-2022")){
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
+        }
     }
 
     public void validationHeureFormat(){
-        for (Object o : formationAVerifier.getActivities()) {
-            JSONObject activity = (JSONObject) o;
-            if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
-                    Double.parseDouble((activity.get("heures")).toString()) < 1)
+        for (Object o : formationAVerifier.getActivites()) {
+            JSONObject activite = (JSONObject) o;
+            if (!(activite.get("heures").toString()).matches("^[0-9]+$") ||
+                    Double.parseDouble((activite.get("heures")).toString()) < 1)
             {
-                ajoutMsgErreur("L'activité " + activity.get("description")
+                ajoutMsgErreur("L'activité " + activite.get("description")
                         + " n'a pas un nombre valide d'heures");
             }
         }
@@ -171,12 +172,12 @@ public class Verification {
 
     public JSONArray creationListeBonnesActivites(){
         JSONArray bonneActivites = new JSONArray();
-        for (Object o : formationAVerifier.getActivities()){
-            JSONObject activity = (JSONObject) o;
-            if((activity.get("heures").toString()).matches("^[0-9]+$") &&
-                    Double.parseDouble((activity.get("heures")).toString())
+        for (Object o : formationAVerifier.getActivites()){
+            JSONObject activite = (JSONObject) o;
+            if((activite.get("heures").toString()).matches("^[0-9]+$") &&
+                    Double.parseDouble((activite.get("heures")).toString())
                             >= 1) {
-                bonneActivites.add(activity);
+                bonneActivites.add(activite);
             }
         }
         return bonneActivites;
@@ -197,13 +198,13 @@ public class Verification {
     }
 
     public JSONArray validationFormatDate(){
-        JSONArray activities = formationAVerifier.getActivities();
+        JSONArray activites = formationAVerifier.getActivites();
         JSONArray dateValide = new JSONArray();
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if (((activity.get("date").toString()).matches(
+        for (Object o : activites) {
+            JSONObject activite = (JSONObject) o;
+            if (((activite.get("date").toString()).matches(
                     "[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
-                dateValide.add(activity);
+                dateValide.add(activite);
             }
         }
         return dateValide;
