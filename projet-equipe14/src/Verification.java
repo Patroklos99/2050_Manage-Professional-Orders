@@ -112,7 +112,6 @@ public class Verification {
         }
         heuresTotal += formationAVerifier.getHeuresTransferees();
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
-        System.out.println(heuresTotal);
     }
 
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
@@ -165,10 +164,14 @@ public class Verification {
         return heures;
     }
 
-    public void validationCycle(){
+    public boolean validationCycle(){
+        boolean bonCycle = true;
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022"))
+        if(!cycle.equals("2020-2022")) {
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
+            bonCycle = false;
+        }
+        return bonCycle;
     }
 
     public void validationHeureFormat(){
@@ -224,7 +227,7 @@ public class Verification {
     }
 
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide,
-                                 int pHeure){                                       //trop long
+                                 int pHeure){
         if(pCategorie == "presentation")
             pHeure = calculHeuresMaxCategories("presentation", 23,
                     pActiviteValide);
@@ -242,15 +245,14 @@ public class Verification {
 
     public void validationFinal(String fichierSortie) throws Exception {
         JSONArray activiteValide = creationListeBonnesActivites();
-
-        validationHeureFormat();
-        validationCycle();
-        validationDates();
-        validationCategories(activiteValide);
-        validationHeuresTransferees(7, 0);
-        validationHeures(40, activiteValide);
-        validationHeuresCatégorieMultiple(activiteValide);
-        System.out.println(resultat());
+        if(validationCycle()) {
+            validationHeureFormat();
+            validationDates();
+            validationCategories(activiteValide);
+            validationHeuresTransferees(7, 0);
+            validationHeures(40, activiteValide);
+            validationHeuresCatégorieMultiple(activiteValide);
+        }
         imprimer(fichierSortie);
     }
 
