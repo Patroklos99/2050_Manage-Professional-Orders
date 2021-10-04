@@ -202,9 +202,18 @@ public class Verification {
             if (((activite.get("date").toString()).matches(
                     "[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
                 dateValide.add(activite);
+            }else {
+                afficherErrFormatDate(activite);
             }
         }
         return dateValide;
+    }
+
+    public void afficherErrFormatDate(JSONObject activite){
+        String categorie = (String) activite.get("categorie");
+        ajoutMsgErreur("La date de la categorie ("+ categorie
+                + ") n'est pas valide (pas bon format).");
+
     }
 
     public void ajoutMsgErreur(String msg){
