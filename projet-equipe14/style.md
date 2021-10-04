@@ -13,10 +13,10 @@ Ce fichier contient des informations pertinentes sur le style goblal utilisé  d
 
 
 - Respect de convention du code Java.
+- Respect d'environ 10 lignes par methodes.
 - Noms des methodes commencent par des verbes.
 - Noms des variable commencent par des noms.
 - 80 caracteres maximum sur les lignes.
-- -Limiter les parametres à trois.
+- Limiter les parametres à trois.
 - Commentaires courts et précis.
 - Couplage faible entres les modules.
-- respect d'environ 10 lignes par methodes.
