@@ -60,18 +60,6 @@ public class Verification {
                     categorieValide.add(categorie);
             }
         }
-            JSONArray activites = validationFormatDate();
-            for (Object o : activites) {
-                JSONObject activite = (JSONObject) o;
-                if(Arrays.asList(CATEGORIE).contains(activite.get("categorie")))
-                {
-                    String date = (String) activite.get("date");
-                    String categorie = (String) activite.get("categorie");
-                    if (validationDatesPeriode(date, categorie)) {
-                        categorieValide.add(categorie);
-                    }
-                }
-            }
     }
 
     public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
