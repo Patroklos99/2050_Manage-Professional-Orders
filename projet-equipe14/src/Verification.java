@@ -25,13 +25,13 @@ public class Verification {
     private String[] categoriesRequise = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée"};
 
-    public Verification(FormationContinue formation) throws ParseException {
+    public Verification(FormationContinue formation, String fichierSortie) throws Exception {
         this.formationAVerifier = formation;
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
-        validationFinal();
+        validationFinal(fichierSortie);
     }
 
     public JSONObject resultat(){
@@ -243,7 +243,7 @@ public class Verification {
         return pHeure;
     }
 
-    public void validationFinal() throws ParseException {
+    public void validationFinal(String fichierSortie) throws Exception {
         JSONArray activiteValide = creationListeBonnesActivites();
 
         validationHeureFormat();
@@ -254,17 +254,17 @@ public class Verification {
         validationHeures(40, activiteValide);
         validationHeuresCatégorieMultiple(activiteValide);
         System.out.println(resultat());
+        imprimer(fichierSortie);
     }
 
     /**
      * Code inspire de la methode save() du projet json-lib-ex ecrit par
      * Dogny, Gnagnely Serge
      */
-    public void imprimer(String fichierResultat) throws Exception {
-        try (FileWriter f = new FileWriter(fichierResultat)) {
+    public void imprimer(String fichierSortie) throws Exception {
+        try (FileWriter f = new FileWriter(fichierSortie)) {
             f.write(fichierErreur.toString(3));
             f.flush();
-            f.close();
         }catch(IOException e){
             throw new Exception(e.toString());
         }

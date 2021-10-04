@@ -13,11 +13,10 @@ public class Main {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
         String stringJson = IOUtils.toString(new
-                        FileInputStream(fichierEntree), "UTF-8");
+                FileInputStream(fichierEntree), "UTF-8");
         JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
 
         FormationContinue formation = new FormationContinue(jsonObj);
-        Verification verificateur = new Verification(formation);
-        verificateur.imprimer(fichierSortie);
+        Verification verificateur = new Verification(formation, fichierSortie);
     }
 }
