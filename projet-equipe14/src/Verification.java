@@ -258,7 +258,8 @@ public class Verification {
     }
 
     /**
-     * (crediter le prof)
+     * Code inspire de la methode save() du projet json-lib-ex ecrit par
+     * Dogny, Gnagnely Serge
      */
     public void imprimer(String fichierResultat) throws Exception {
         try (FileWriter f = new FileWriter(fichierResultat)) {

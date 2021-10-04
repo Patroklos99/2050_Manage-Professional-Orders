@@ -10,13 +10,14 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
+        String fichierEntree = args[0];
+        String fichierSortie = args[1];
         String stringJson = IOUtils.toString(new
-                        FileInputStream("test.json"), "UTF-8");
+                        FileInputStream(fichierEntree), "UTF-8");
         JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
 
         FormationContinue formation = new FormationContinue(jsonObj);
         Verification verificateur = new Verification(formation);
-        verificateur.imprimer("resultat.json");
+        verificateur.imprimer(fichierSortie);
     }
 }
