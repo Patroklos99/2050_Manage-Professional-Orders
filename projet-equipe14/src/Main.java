@@ -14,6 +14,6 @@ public class Main {
         FormationContinue formation = new FormationContinue(fichierEntree);
         Verification verificateur = new Verification(formation);
 
-        JSONArray activites = verificateur.validationHeureFormat();
+        verificateur.validationFinal();
     }
 }

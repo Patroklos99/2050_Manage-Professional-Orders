@@ -17,15 +17,15 @@ public class Verification {
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
+    private String[] categoriesRequise = {"cours", "atelier", "séminaire",
+            "colloque", "conférence", "lecture dirigée"};
+
     public Verification(FormationContinue formation) throws ParseException {
         this.formationAVerifier = formation;
-
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
-
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
-
         validationFinal();
     }
 
@@ -45,18 +45,18 @@ public class Verification {
     }
 
     public void validationDates() throws ParseException {
-            JSONArray activities = validationFormatDate();
-            for (Object o : activities) {
-                JSONObject activity = (JSONObject) o;
-                if(Arrays.asList(CATEGORIE).contains(activity.get("categorie")))
-                {
-                    String date = (String) activity.get("date");
-                    String categorie = (String) activity.get("categorie");
-                    if (validationDatesPeriode(date, categorie)) {
-                        categorieValide.add(categorie);
-                    }
+        JSONArray activities = validationFormatDate();
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+            if(Arrays.asList(CATEGORIE).contains(activity.get("categorie")))
+            {
+                String date = (String) activity.get("date");
+                String categorie = (String) activity.get("categorie");
+                if (validationDatesPeriode(date, categorie)) {
+                    categorieValide.add(categorie);
                 }
             }
+        }
     }
 
     public boolean validationDatesPeriode(String date, String categorie)          //trop long
@@ -102,16 +102,14 @@ public class Verification {
             }
         }
         heuresTotal += formationAVerifier.getHeuresTransferees();
-            if (heuresTotal < pHeureMin) {
-                ajoutMsgErreur("L'etudiant a complete seulement "
-                        + (heuresTotal) + " de 40h");
-            }
+        if (heuresTotal < pHeureMin) {
+            ajoutMsgErreur("L'etudiant a complete seulement "
+                    + (heuresTotal) + " de 40h");
+        }
         System.out.println(heuresTotal);
     }
 
     public void validationHeuresCatégorieMultiple(JSONArray activities){         //trop long
-        String[] categoriesRequise = {"cours", "atelier", "séminaire",
-                "colloque", "conférence", "lecture dirigée"};
         int heures = 0;
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
@@ -146,9 +144,8 @@ public class Verification {
 
     public void validationCycle(){
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022")){
+        if(!cycle.equals("2020-2022"))
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
-        }
     }
 
     public void validationHeureFormat(){
