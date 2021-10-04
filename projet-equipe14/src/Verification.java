@@ -194,18 +194,6 @@ public class Verification {
         return bonneActivites;
     }
 
-    //Methode impossible dappliquer, linstantion de lobjet formation type formationcontinue arrive avant.
-    public long validationFormatHeuresTransferees(){
-        long heuresTrans = 0;
-        if ((!(String.valueOf(formationAVerifier.getHeuresTransferees())).matches("[0-9]+")) ||
-                Double.parseDouble(String.valueOf(formationAVerifier.getHeuresTransferees())) < 1
-                        || (!String.valueOf(formationAVerifier.getHeuresTransferees()).contains(".")))
-        formationAVerifier.setHeuresTransferees(0);
-        else
-            heuresTrans = formationAVerifier.getHeuresTransferees();
-        return heuresTrans;
-    }
-
     public JSONArray validationFormatDate(){
         JSONArray activites = formationAVerifier.getActivites();
         JSONArray dateValide = new JSONArray();
