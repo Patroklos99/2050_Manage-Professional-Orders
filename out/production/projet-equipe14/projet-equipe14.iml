@@ -10,5 +10,20 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="json-simple-1.1.1" level="project" />
     <orderEntry type="library" name="json-simple-1.1.11" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/ezmorph-1.0.6.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/commons-io-2.4.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/commons-lang-2.5.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/json-lib-2.4-jdk15.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/commons-logging-1.1.1.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/commons-beanutils-1.8.0.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/lib-projet/commons-collections-3.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
