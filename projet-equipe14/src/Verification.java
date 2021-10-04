@@ -59,22 +59,31 @@ public class Verification {
         }
     }
 
-    public boolean validationDatesPeriode(String date, String categorie)          //trop long
+    public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
+                                                  Date dateMax,
+                                                  String categorie){
+        boolean bonneDate = true;
+        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
+            ajoutMsgErreur("La date de la categorie ("+ categorie
+                    + ") n'est pas valide.");
+            bonneDate = false;
+        }
+        return bonneDate;
+    }
+
+    public boolean validationDatesPeriode(String date, String categorie)
             throws ParseException {
+        boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
-            Date dateEntree = sdf.parse(date);
-            Date dateMin = sdf.parse("2020-04-01");
-            Date dateMax = sdf.parse("2022-04-01");
-            if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-                ajoutMsgErreur("La date de la categorie ("+ categorie
-                        + ") n'est pas valide.");
-                return false;
-            }
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2020-04-01");
+            Date max = sdf.parse("2022-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
+        return bonneDate;
     }
 
     public void validationHeuresTransferees(int pHeureMax, int pHeureMin){
@@ -234,5 +243,6 @@ public class Verification {
         validationHeuresTransferees(7, 0);
         validationHeures(40, activiteValide);
         validationHeuresCatégorieMultiple(activiteValide);
+        System.out.println(resultat());
     }
 }
