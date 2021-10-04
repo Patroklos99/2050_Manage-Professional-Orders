@@ -1,17 +1,20 @@
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import org.apache.commons.io.IOUtils;
 
 public class FormationContinue {
 
     private String numeroPermis;
     private String cycle;
-    private long heuresTransferees;
+    private int heuresTransferees;
     private JSONArray activites;
 
     public FormationContinue (JSONObject fichier){
         this.numeroPermis = (String) fichier.get("numero_de_permis");
         this.cycle = (String) fichier.get("cycle");
-        this.heuresTransferees = (long) fichier.get(
+        this.heuresTransferees = (int) fichier.get(
                 "heures_transferees_du_cycle_precedent");
         this.activites = (JSONArray) fichier.get("activites");
     }
@@ -28,7 +31,7 @@ public class FormationContinue {
         return activites;
     }
 
-    public long getHeuresTransferees() {
+    public int getHeuresTransferees() {
         return heuresTransferees;
     }
 

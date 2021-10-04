@@ -1,6 +1,11 @@
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import org.apache.commons.io.IOUtils;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -246,4 +251,18 @@ public class Verification {
         validationHeuresCatégorieMultiple(activiteValide);
         System.out.println(resultat());
     }
+
+    /**
+     * (crediter le prof)
+     */
+    public void imprimer(String fichierResultat) throws Exception {
+        try (FileWriter f = new FileWriter(fichierResultat)) {
+            f.write(fichierErreur.toString(3));
+            f.flush();
+            f.close();
+        }catch(IOException e){
+            throw new Exception(e.toString());
+        }
+    }
+
 }

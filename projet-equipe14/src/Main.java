@@ -1,19 +1,22 @@
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import org.apache.commons.io.IOUtils;
+
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ParseException, java.text.ParseException {
+    public static void main(String[] args) throws Exception {
 
-        Object obj = new JSONParser().parse(new FileReader("test.json"));
-        JSONObject fichierEntree = (JSONObject) obj;
+        String stringJson = IOUtils.toString(new
+                        FileInputStream("test.json"), "UTF-8");
+        JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
 
-        FormationContinue formation = new FormationContinue(fichierEntree);
+        FormationContinue formation = new FormationContinue(jsonObj);
         Verification verificateur = new Verification(formation);
-
-        verificateur.validationFinal();
+        verificateur.imprimer("resultat.json");
     }
 }
