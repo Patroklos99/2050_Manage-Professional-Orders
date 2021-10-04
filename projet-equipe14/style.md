@@ -6,7 +6,7 @@ Ce fichier contient des informations pertinentes sur le style goblal utilisé  d
 
 - Aucune
 
-## Langue utilisé
+## Langue utilisée
 - Francais
 
 ## Style du code
