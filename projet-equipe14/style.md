@@ -1,6 +1,7 @@
 # Projet TP1 2050
 ## _Style du projet_
-Ce fichier contient des informations pertinentes sur le style goblal utilisé  dans l'écriture du code de source pour le projet du cours 2050.
+Ce fichier contient des informations pertinentes sur le style global utilisé 
+dans l'écriture du code de source pour le projet du cours 2050.
 
 ## Particularités du projet
 
@@ -15,8 +16,8 @@ Ce fichier contient des informations pertinentes sur le style goblal utilisé  d
 - Respect de convention du code Java.
 - Respect d'environ 10 lignes par methodes.
 - Noms des methodes commencent par des verbes.
-- Noms des variable commencent par des noms.
-- 80 caracteres maximum sur les lignes.
-- Limiter les parametres à trois.
+- Noms des variables commencent par des noms.
+- 80 caractères maximum sur les lignes.
+- Limiter les paramètres à trois par méthode.
 - Commentaires courts et précis.
 - Couplage faible entres les modules.

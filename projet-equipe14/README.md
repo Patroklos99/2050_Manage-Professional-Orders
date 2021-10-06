@@ -5,12 +5,15 @@ Description des technologies présentes et du fonctionnement(compilation et exec
 
 ## Description du fonctionnement (en ordre d'exécution)
 - Lit les deux premiers arguments lors du lancement du programme et les associe aux fichier d'entrée et sortie.
-- Formatte le fichier d'entrée texte pour créer un objet JSON recherchable.
+- Formatte le fichier d'entrée de type .json pour créer un objet JSON 
+  recherchable.
 - Créer un objet de la classe FormationContinue pour stocker les informations de l'objet JSON.
 - Créer un objet de la classe Verification avec l'objet de la classe FormationContinue et le fichier de sortie.
 - À sa création, l'objet verificateur effectura lui-même les vérifications selon les exigences demandées.
 - À chaque vérification, si celle-ci échoue, un message sera ajouté à la liste de messages d'erreurs.
-- À la fin de toutes les vérification ou si la vérification de cycle échoue, tout les message d'erreurs seront enregistré dans le fichier de sortie en format JSON.
+- À la fin de toutes les vérifications ou si la vérification de cycle échoue,
+  tout les messages d'erreurs seront enregistré dans le fichier de sortie en 
+  format JSON.
 
 
 ## Particularités 
