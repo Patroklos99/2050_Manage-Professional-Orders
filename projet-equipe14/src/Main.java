@@ -18,5 +18,6 @@ public class Main {
 
         FormationContinue formation = new FormationContinue(jsonObj);
         Verification verificateur = new Verification(formation, fichierSortie);
+        verificateur.imprimer(fichierSortie);
     }
 }

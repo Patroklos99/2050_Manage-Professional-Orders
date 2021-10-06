@@ -42,7 +42,7 @@ public class Verification {
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activite.get("categorie"))){
-                String nom = (String) activite.get("categorie");
+                String nom = activite.get("categorie").toString();
                 ajoutMsgErreur("La catégorie " + nom
                         + " n'existe pas dans la banque de catégories");
             }
@@ -203,7 +203,7 @@ public class Verification {
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
             if (((activite.get("date").toString()).matches(
-                    "[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
+                    "[0-9]{4}[-]{1}[0-1]{1}[0-2]{1}[-]{1}[0-3]{1}[0-9]{1}"))) {
                 dateValide.add(activite);
             }else {
                 afficherErrFormatDate(activite);
@@ -228,18 +228,19 @@ public class Verification {
 
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide,
                                  int pHeure){
-        if(pCategorie == "presentation")
-            pHeure = calculHeuresMaxCategories("presentation", 23,
+        if(pCategorie.equals("présentation"))
+            pHeure = calculHeuresMaxCategories("présentation", 23,
                     pActiviteValide);
-        if(pCategorie == "groupe de discussion")
+        if(pCategorie.equals("groupe de discussion"))
             pHeure = calculHeuresMaxCategories("groupe de discussion", 17,
                     pActiviteValide);
-        if(pCategorie == "projet de recherche")
+        if(pCategorie.equals("projet de recherche"))
             pHeure = calculHeuresMaxCategories("projet de recherche", 23,
                     pActiviteValide);
-        if(pCategorie == "redaction professionnelle")
+        if(pCategorie.equals("redaction professionnelle"))
             pHeure = calculHeuresMaxCategories("redaction professionnelle",
                     17, pActiviteValide);
+
         return pHeure;
     }
 
@@ -268,5 +269,4 @@ public class Verification {
             throw new Exception(e.toString());
         }
     }
-
 }

@@ -1,36 +1,36 @@
 {
   "numero_de_permis": "A0001",
   "cycle": "2020-2022",
-  "heures_transferees_du_cycle_precedent": 2,
+  "heures_transferees_du_cycle_precedent": 0,
   "activites": [
     {
       "description": "Cours sur la déontologie",
-      "categorie": "cours",
-      "heures": 14,
-      "date": "2021-03-20"
+      "categorie": "présentation",
+      "heures": 1,
+      "date": "2021-12-01"
     },
     {
       "description": "Cours sur la présentation",
       "categorie": "groupe de discussion",
       "heures": 10,
-      "date": "2021-03-20"
+      "date": "2021-01-07"
     },
     {
       "description": "Séminaire sur l'architecture contemporaine",
       "categorie": "séminaire",
-      "heures": 10,
+      "heures": 0,
       "date": "2021-01-07"
     },
     {
       "description": "Rédaction pour le magazine Architecture moderne",
       "categorie": "rédaction professionnelle",
-      "heures": 6,
+      "heures": 9,
       "date": "2021-10-22"
     },
     {
       "description": "Participation à un groupe de discussion sur le partage des projets architecturaux de plus de 20 ans",
       "categorie": "groupe de discussion",
-      "heures": 6,
+      "heures": 0,
       "date": "2021-04-01"
     },
     {
