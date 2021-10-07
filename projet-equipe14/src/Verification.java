@@ -64,7 +64,7 @@ public class Verification {
                                                   String categorie){
         boolean bonneDate = true;
         if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-            ajoutMsgErreur("La date de la categorie ("+ categorie
+            ajoutMsgErreur("La date de la catégorie ("+ categorie
                     + ") n'est pas valide.");
             bonneDate = false;
         }
