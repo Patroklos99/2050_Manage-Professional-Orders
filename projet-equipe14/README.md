@@ -1,7 +1,14 @@
 # Projet TP1 2050
 
 ## _README_
-Description des technologies présentes et du fonctionnement(compilation et execution) ----
+Description des technologies présentes et du fonctionnement(compilation et execution) 
+
+## Particularités
+- Notre code respecte la convention d'écriture camel case.
+- La langue choisie pour l'écriture du projet est le français.
+- Chacune des méthodes fait environs 10 lignes.
+- Aucune ligne dans le projet ne dépasse 80 caractères.
+- Peu de commentaires car les noms de variables/méthodes/attributs donnent assez d'information par eux-même.
 
 ## Description du fonctionnement (en ordre d'exécution)
 - Lit les deux premiers arguments lors du lancement du programme et les associe aux fichier d'entrée et sortie.
@@ -16,10 +23,5 @@ Description des technologies présentes et du fonctionnement(compilation et exec
   format JSON.
 
 
-## Particularités 
-- Notre code respecte la convention d'écriture camel case.
-- La langue choisie pour l'écriture du projet est le français.
-- Chacune des méthodes ne fait pas plus de 10 lignes.
-- Aucune ligne dans le projet ne dépasse 80 caractères.
-- Peu de commentaires car les noms de variables/méthodes/attributs donnent assez d'information par eux-même.
+
 
