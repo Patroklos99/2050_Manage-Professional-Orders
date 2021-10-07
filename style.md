@@ -20,4 +20,4 @@ dans l'écriture du code de source pour le projet du cours 2050.
 - 80 caractères maximum sur les lignes.
 - Limiter les paramètres à trois par méthode.
 - Commentaires courts et précis.
-- Couplage faible entres les modules.
+- Couplage faible entre les modules.
