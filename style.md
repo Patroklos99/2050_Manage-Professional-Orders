@@ -14,7 +14,7 @@ dans l'écriture du code de source pour le projet du cours 2050.
 
 
 - Respect de convention du code Java.
-- Respect d'environ 10 lignes par methodes.
+- Respect d'environs 10 lignes par methodes.
 - Noms des methodes commencent par des verbes.
 - Noms des variables commencent par des noms.
 - 80 caractères maximum sur les lignes.
