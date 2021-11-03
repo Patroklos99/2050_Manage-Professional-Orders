@@ -1,8 +1,7 @@
-import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
-import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
+import net.sf.json.*;
 import org.apache.commons.io.IOUtils;
+
+import java.util.Arrays;
 
 public class FormationContinue {
 
@@ -12,10 +11,12 @@ public class FormationContinue {
     private JSONArray activites;
 
     public FormationContinue (JSONObject fichier){
-        this.numeroPermis = (String) fichier.get("numero_de_permis");
-        this.cycle = (String) fichier.get("cycle");
-        this.heuresTransferees = (int) fichier.get(
-                "heures_transferees_du_cycle_precedent");
+        verifierType(fichier);
+
+        this.numeroPermis = fichier.get("numero_de_permis").toString();
+        this.cycle = fichier.get("cycle").toString();
+        this.heuresTransferees = Integer.parseInt(fichier.get(
+                "heures_transferees_du_cycle_precedent").toString());
         this.activites = (JSONArray) fichier.get("activites");
     }
 
@@ -37,6 +38,22 @@ public class FormationContinue {
 
     public void setHeuresTransferees(int heuresTransferees) {
         this.heuresTransferees = heuresTransferees;
+    }
+
+    public void verifierType(JSONObject f){
+        if(!(f.get("activites") instanceof JSONArray))
+            Erreur("Les activités doivent être stocké dans un tableau");
+        if(!(f.get("heures_transferees_du_cycle_precedent") instanceof Integer))
+            Erreur("Les heures transférées doivent être un chiffre");
+        if(!(f.get("numero_de_permis") instanceof String))
+            Erreur("Le numéros de permis doit être une chaîne de caractères");
+        if(!(f.get("cycle") instanceof String))
+            Erreur("Le cycle doit être une chaîne de caractères");
+    }
+
+    public void Erreur(String pMessage){
+        System.err.println(pMessage);
+        System.exit( -1 );
     }
 }
 

@@ -14,9 +14,18 @@ public class Main {
         String fichierSortie = args[1];
         String stringJson = IOUtils.toString(new
                 FileInputStream(fichierEntree), "UTF-8");
-        JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
+        try {
+            JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
+            verifImprime(jsonObj,fichierSortie);
+        }catch(JSONException e){
+            System.out.println("Le fichier d'entrée n'est pas valide.");
+        }
+    }
 
+    public static void verifImprime(JSONObject jsonObj,
+                                    String fichierSortie) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj);
         Verification verificateur = new Verification(formation, fichierSortie);
+        verificateur.imprimer(fichierSortie);
     }
 }

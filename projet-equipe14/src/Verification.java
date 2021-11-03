@@ -1,8 +1,5 @@
 import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import org.apache.commons.io.IOUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,9 +13,14 @@ public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private ArrayList<String> categorieValide = new ArrayList<String>();
+    private ArrayList<String> categorieTotale = new ArrayList<String>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
+            "groupe de discussion", "projet de recherche",
+            "rédaction professionnelle"};
+
+    private static final String[] CATEGORIETOTAL = {"présentation",
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
@@ -42,7 +44,7 @@ public class Verification {
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activite.get("categorie"))){
-                String nom = (String) activite.get("categorie");
+                String nom = activite.get("categorie").toString();
                 ajoutMsgErreur("La catégorie " + nom
                         + " n'existe pas dans la banque de catégories");
             }
@@ -67,7 +69,7 @@ public class Verification {
                                                   String categorie){
         boolean bonneDate = true;
         if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-            ajoutMsgErreur("La date de la categorie ("+ categorie
+            ajoutMsgErreur("La date de la catégorie ("+ categorie
                     + ") n'est pas valide.");
             bonneDate = false;
         }
@@ -110,17 +112,22 @@ public class Verification {
             heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
                     pActiviteValide);
         }
+
+        for (int i = 0; i < categorieTotale.size(); i++)
+            heuresTotal += regarderCategorie(categorieTotale.get(i), pActiviteValide);
+
         heuresTotal += formationAVerifier.getHeuresTransferees();
+
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
     }
 
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
                                   JSONArray pActiviteValide){
-        if(categorieValide.contains(activite.get("categorie"))) {
-            heuresTotal += regarderCategorie(
-                    activite.get("categorie").toString(), pActiviteValide,
-                    Integer.parseInt(activite.get("heures").toString()));
-        }
+        String categorie = activite.get("categorie").toString();
+
+        if(categorieValide.contains(categorie) && !categorieTotale.contains(categorie))
+            heuresTotal += Integer.parseInt(activite.get("heures").toString());
+
         return heuresTotal;
     }
 
@@ -131,7 +138,7 @@ public class Verification {
         }
     }
 
-    public void validationHeuresCatégorieMultiple(JSONArray activites){
+    public void validationHeuresCategorieMultiple(JSONArray activites){
         int heures = 0;
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
@@ -203,7 +210,7 @@ public class Verification {
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
             if (((activite.get("date").toString()).matches(
-                    "[0-9]{4}[-]{1}[0-9]{2}[-]{1}[0-9]{2}"))) {
+                    "[0-9]{4}[-]{1}[0-1]{1}[0-9]{1}[-]{1}[0-3]{1}[0-9]{1}"))) {
                 dateValide.add(activite);
             }else {
                 afficherErrFormatDate(activite);
@@ -226,32 +233,33 @@ public class Verification {
         fichierErreur.put("Complet", false);
     }
 
-    public int regarderCategorie(String pCategorie, JSONArray pActiviteValide,
-                                 int pHeure){
-        if(pCategorie == "presentation")
-            pHeure = calculHeuresMaxCategories("presentation", 23,
-                    pActiviteValide);
-        if(pCategorie == "groupe de discussion")
-            pHeure = calculHeuresMaxCategories("groupe de discussion", 17,
-                    pActiviteValide);
-        if(pCategorie == "projet de recherche")
-            pHeure = calculHeuresMaxCategories("projet de recherche", 23,
-                    pActiviteValide);
-        if(pCategorie == "redaction professionnelle")
-            pHeure = calculHeuresMaxCategories("redaction professionnelle",
-                    17, pActiviteValide);
-        return pHeure;
+    public int regarderCategorie(String pCategorie, JSONArray pActiviteValide){
+        int heure = 0;
+
+        if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
+            heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
+
+        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"));
+            heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
+
+        return heure;
+    }
+
+    public void ajouterCategorieTotale(){
+        for (int i = 0; i < CATEGORIETOTAL.length; i++)
+            categorieTotale.add(CATEGORIETOTAL[i]);
     }
 
     public void validationFinal(String fichierSortie) throws Exception {
         JSONArray activiteValide = creationListeBonnesActivites();
+        ajouterCategorieTotale();
         if(validationCycle()) {
             validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
             validationHeures(40, activiteValide);
-            validationHeuresCatégorieMultiple(activiteValide);
+            validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
     }
@@ -268,5 +276,4 @@ public class Verification {
             throw new Exception(e.toString());
         }
     }
-
 }
