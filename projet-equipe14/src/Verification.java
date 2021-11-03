@@ -1,8 +1,5 @@
 import net.sf.json.JSONArray;
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
-import net.sf.json.JSONSerializer;
-import org.apache.commons.io.IOUtils;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -72,7 +69,7 @@ public class Verification {
                                                   String categorie){
         boolean bonneDate = true;
         if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-            ajoutMsgErreur("La date de la categorie ("+ categorie
+            ajoutMsgErreur("La date de la catégorie ("+ categorie
                     + ") n'est pas valide.");
             bonneDate = false;
         }
@@ -141,7 +138,7 @@ public class Verification {
         }
     }
 
-    public void validationHeuresCatégorieMultiple(JSONArray activites){
+    public void validationHeuresCategorieMultiple(JSONArray activites){
         int heures = 0;
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
@@ -262,7 +259,7 @@ public class Verification {
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
             validationHeures(40, activiteValide);
-            validationHeuresCatégorieMultiple(activiteValide);
+            validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
     }
