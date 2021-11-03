@@ -33,6 +33,8 @@ public class Verification {
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
+
+
         validationFinal(fichierSortie);
     }
 

@@ -12,6 +12,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
+
+
         String stringJson = IOUtils.toString(new
                 FileInputStream(fichierEntree), "UTF-8");
         try {
@@ -25,6 +27,16 @@ public class Main {
     public static void verifImprime(JSONObject jsonObj,
                                     String fichierSortie) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj);
+
+
+
+
+
+
+
+
+
+
         Verification verificateur = new Verification(formation, fichierSortie);
         verificateur.imprimer(fichierSortie);
     }
