@@ -10,15 +10,9 @@
       "date": "2021-12-01"
     },
     {
-      "description": "Cours sur la présentation",
-      "categorie": "groupe de discussion",
-      "heures": 10,
-      "date": "2021-01-07"
-    },
-    {
       "description": "Séminaire sur l'architecture contemporaine",
       "categorie": "séminaire",
-      "heures": 0,
+      "heures": 10,
       "date": "2021-01-07"
     },
     {
@@ -26,24 +20,6 @@
       "categorie": "rédaction professionnelle",
       "heures": 9,
       "date": "2021-10-22"
-    },
-    {
-      "description": "Participation à un groupe de discussion sur le partage des projets architecturaux de plus de 20 ans",
-      "categorie": "groupe de discussion",
-      "heures": 0,
-      "date": "2021-04-01"
-    },
-    {
-      "description": "Visite d'établissements architecturaux",
-      "categorie": "vacances",
-      "heures": 2,
-      "date": "2021-02-02"
-    },
-    {
-      "description": "Visite d'établissements architecturaux",
-      "categorie": "vacances",
-      "heures": 2,
-      "date": "2021-02-02"
     }
   ]
 }
