@@ -189,12 +189,12 @@ public class Verification {
         return bonCycle;
     }
 
-    public void validationHeureFormat(){
+    public void validationHeureFormat() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
             JSONObject activity = (JSONObject) o;
             if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
                     Double.parseDouble((activity.get("heures")).toString()) < 1)
-                ajoutMsgErreur("L'activité " + activity.get("description")
+                causerErreurVerif("L'activité " + activity.get("description")
                         + " n'a pas un nombre valide d'heures");
         }
     }
@@ -258,27 +258,28 @@ public class Verification {
             categorieTotale.add(CATEGORIETOTAL[i]);
     }
 
-    public void validationNumeroPermis(){
+    public void validationNumeroPermis() throws Exception {
         String numeroPermis = formationAVerifier.getNumeroPermis();
-        if(!numeroPermis.matches("^[A-Z]{1}[0-9]{4}$"))
-            ajoutMsgErreur("Le numero de permis n'est pas du bon format (1 lettre majuscule suivit de 4 chiffres).");
+        if(!numeroPermis.matches("^[ARSZ]{1}[0-9]{4}$"))
+            causerErreurVerif("Le numero de permis n'est pas du bon format (A, R, S ou Z suivit de " +
+                    "4 chiffres).");
     }
 
-    public void validationDescription(){
+    public void validationDescription() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
             JSONObject activity = (JSONObject) o;
             if (!(activity.get("description").toString()).matches("^.{21,}$"))
-                ajoutMsgErreur("La description de l'activité " + activity.get("description")
+                causerErreurVerif("La description de l'activité " + activity.get("description")
                         + " ne contient pas plus de 20 caractères.");
         }
     }
 
     public void verifierChampHeuresTransf() throws Exception {
         if(formationAVerifier.getHeuresTransferees() == -10000)
-            Erreur("Les heures transférées doivent être un nombre");
+            causerErreurVerif("Les heures transférées doivent être un nombre");
     }
 
-    public void Erreur(String pMessage) throws Exception {
+    public void causerErreurVerif(String pMessage) throws Exception {
         System.err.println(pMessage);
         ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est incomplet.");
         imprimer(getFichierSortie());
@@ -286,13 +287,10 @@ public class Verification {
     }
 
     public void validationFinal(String fichierSortie) throws Exception {
-        verifierChampHeuresTransf();
+        validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
-            validationNumeroPermis();
-            validationDescription();
-            validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
@@ -300,6 +298,13 @@ public class Verification {
             validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
+    }
+
+    public void validationGenerale() throws Exception {
+        verifierChampHeuresTransf();
+        validationNumeroPermis();
+        validationDescription();
+        validationHeureFormat();
     }
 
     /**
