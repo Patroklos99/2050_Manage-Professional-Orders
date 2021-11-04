@@ -1,0 +1,14 @@
+<changelist name="Uncommitted_changes_before_Update_at_2021-11-03_17_53_[Changes]1" date="1635976432891" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2021-11-03 17:53 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/projet-equipe14/Main.class" />
+    <option name="AFTER_PATH" value="out/production/projet-equipe14/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53_[Changes]1/Main.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="out/production/projet-equipe14/Verification.class" />
+    <option name="AFTER_PATH" value="out/production/projet-equipe14/Verification.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53_[Changes]1/Verification.class" />
+  </binary>
+</changelist>
