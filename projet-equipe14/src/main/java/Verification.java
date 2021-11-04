@@ -12,6 +12,7 @@ import java.util.*;
 public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
+    private String fichierSortie;
     private ArrayList<String> categorieValide = new ArrayList<String>();
     private ArrayList<String> categorieTotale = new ArrayList<String>();
 
@@ -29,6 +30,7 @@ public class Verification {
 
     public Verification(FormationContinue formation, String fichierSortie) throws Exception {
         this.formationAVerifier = formation;
+        this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
@@ -36,6 +38,10 @@ public class Verification {
 
 
         validationFinal(fichierSortie);
+    }
+
+    public String getFichierSortie(){
+        return fichierSortie;
     }
 
     public JSONObject resultat(){
@@ -267,7 +273,20 @@ public class Verification {
         }
     }
 
+    public void verifierChampHeuresTransf() throws Exception {
+        if(formationAVerifier.getHeuresTransferees() == -10000)
+            Erreur("Les heures transférées doivent être un nombre");
+    }
+
+    public void Erreur(String pMessage) throws Exception {
+        System.err.println(pMessage);
+        ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est incomplet.");
+        imprimer(getFichierSortie());
+        System.exit( -1 );
+    }
+
     public void validationFinal(String fichierSortie) throws Exception {
+        verifierChampHeuresTransf();
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
