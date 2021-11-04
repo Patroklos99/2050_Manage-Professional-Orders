@@ -1,3 +1,0 @@
-Fichier erreur : il faut inverser erreur et complet, il faut que complet soit true au début.
-remove?
-Peut-être faire une méthode qui le fait automatiquement
