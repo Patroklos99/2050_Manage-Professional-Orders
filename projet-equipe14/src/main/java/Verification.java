@@ -254,8 +254,16 @@ public class Verification {
 
     public void validationNumeroPermis(){
         String numeroPermis = formationAVerifier.getNumeroPermis();
-        if(!numeroPermis.matches("^[A-Z]{1}[0-9]{4}$")){
+        if(!numeroPermis.matches("^[A-Z]{1}[0-9]{4}$"))
             ajoutMsgErreur("Le numero de permis n'est pas du bon format (1 lettre majuscule suivit de 4 chiffres).");
+    }
+
+    public void validationDescription(){
+        for (Object o : formationAVerifier.getActivites()) {
+            JSONObject activity = (JSONObject) o;
+            if (!(activity.get("description").toString()).matches("^.{21,}$"))
+                ajoutMsgErreur("La description de l'activité " + activity.get("description")
+                        + " ne contient pas plus de 20 caractères.");
         }
     }
 
@@ -264,6 +272,7 @@ public class Verification {
         ajouterCategorieTotale();
         if(validationCycle()) {
             validationNumeroPermis();
+            validationDescription();
             validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
