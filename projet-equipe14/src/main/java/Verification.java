@@ -252,10 +252,18 @@ public class Verification {
             categorieTotale.add(CATEGORIETOTAL[i]);
     }
 
+    public void validationNumeroPermis(){
+        String numeroPermis = formationAVerifier.getNumeroPermis();
+        if(!numeroPermis.matches("^[A-Z]{1}[0-9]{4}$")){
+            ajoutMsgErreur("Le numero de permis n'est pas du bon format (1 lettre majuscule suivit de 4 chiffres).");
+        }
+    }
+
     public void validationFinal(String fichierSortie) throws Exception {
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
+            validationNumeroPermis();
             validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
