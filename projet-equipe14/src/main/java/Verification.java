@@ -12,6 +12,7 @@ import java.util.*;
 public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
+    private String fichierSortie;
     private ArrayList<String> categorieValide = new ArrayList<String>();
     private ArrayList<String> categorieTotale = new ArrayList<String>();
 
@@ -29,6 +30,7 @@ public class Verification {
 
     public Verification(FormationContinue formation, String fichierSortie) throws Exception {
         this.formationAVerifier = formation;
+        this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
@@ -36,6 +38,10 @@ public class Verification {
 
 
         validationFinal(fichierSortie);
+    }
+
+    public String getFichierSortie(){
+        return fichierSortie;
     }
 
     public JSONObject resultat(){
@@ -183,12 +189,12 @@ public class Verification {
         return bonCycle;
     }
 
-    public void validationHeureFormat(){
+    public void validationHeureFormat() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
             JSONObject activity = (JSONObject) o;
             if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
                     Double.parseDouble((activity.get("heures")).toString()) < 1)
-                ajoutMsgErreur("L'activité " + activity.get("description")
+                causerErreurVerif("L'activité " + activity.get("description")
                         + " n'a pas un nombre valide d'heures");
         }
     }
@@ -252,11 +258,39 @@ public class Verification {
             categorieTotale.add(CATEGORIETOTAL[i]);
     }
 
+    public void validationNumeroPermis() throws Exception {
+        String numeroPermis = formationAVerifier.getNumeroPermis();
+        if(!numeroPermis.matches("^[ARSZ]{1}[0-9]{4}$"))
+            causerErreurVerif("Le numero de permis n'est pas du bon format (A, R, S ou Z suivit de " +
+                    "4 chiffres).");
+    }
+
+    public void validationDescription() throws Exception {
+        for (Object o : formationAVerifier.getActivites()) {
+            JSONObject activity = (JSONObject) o;
+            if (!(activity.get("description").toString()).matches("^.{21,}$"))
+                causerErreurVerif("La description de l'activité " + activity.get("description")
+                        + " ne contient pas plus de 20 caractères.");
+        }
+    }
+
+    public void verifierChampHeuresTransf() throws Exception {
+        if(formationAVerifier.getHeuresTransferees() == -10000)
+            causerErreurVerif("Les heures transférées doivent être un nombre");
+    }
+
+    public void causerErreurVerif(String pMessage) throws Exception {
+        System.err.println(pMessage);
+        ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est incomplet.");
+        imprimer(getFichierSortie());
+        System.exit( -1 );
+    }
+
     public void validationFinal(String fichierSortie) throws Exception {
+        validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
-            validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
@@ -264,6 +298,13 @@ public class Verification {
             validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
+    }
+
+    public void validationGenerale() throws Exception {
+        verifierChampHeuresTransf();
+        validationNumeroPermis();
+        validationDescription();
+        validationHeureFormat();
     }
 
     /**
