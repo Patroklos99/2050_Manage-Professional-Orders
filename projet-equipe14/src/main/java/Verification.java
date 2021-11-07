@@ -172,6 +172,14 @@ public class Verification {
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
     }
 
+    public void validationHeuresParCycle(JSONArray pActiviteValide){
+        if(formationAVerifier.getCycle().equals("2020-2022")){
+            validationHeures(40,pActiviteValide);
+        }else{
+            validationHeures(42,pActiviteValide);
+        }
+    }
+
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
@@ -185,7 +193,7 @@ public class Verification {
     public void ecrireMsgErrHeureTotal (int heuresTotal, int pHeureMin){
         if (heuresTotal < pHeureMin) {
             ajoutMsgErreur("L'etudiant a complete seulement "
-                    + (heuresTotal) + " de 40h");
+                    + (heuresTotal) + " de " + pHeureMin + "h");
         }
     }
 
@@ -339,7 +347,7 @@ public class Verification {
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
-            validationHeures(40, activiteValide);
+            validationHeuresParCycle(activiteValide);
             validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
