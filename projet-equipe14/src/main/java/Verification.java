@@ -182,12 +182,14 @@ public class Verification {
     public boolean validationCycle(){
         boolean bonCycle = true;
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022")) {
+        if(!cycle.equals("2020-2022") && !cycle.equals("2018-2020") && !cycle.equals("2016-2018")) {
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
             bonCycle = false;
         }
         return bonCycle;
     }
+
+
 
     public void validationHeureFormat() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
