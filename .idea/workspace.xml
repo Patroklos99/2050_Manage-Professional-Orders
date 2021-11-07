@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non.">
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Retrait de la variable isGeologue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +190,28 @@
       <option name="project" value="LOCAL" />
       <updated>1636323805084</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage.">
+      <created>1636325112875</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1636325112875</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage.">
+      <created>1636325164010</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1636325164010</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Retrait de la variable isGeologue">
+      <created>1636325281238</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1636325281238</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -234,7 +253,9 @@
     <MESSAGE value="Conception de la méthode checkGeologue" />
     <MESSAGE value="Ajout de la méthode checkCycle" />
     <MESSAGE value="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non." />
+    <MESSAGE value="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage." />
+    <MESSAGE value="Retrait de la variable isGeologue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Retrait de la variable isGeologue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
