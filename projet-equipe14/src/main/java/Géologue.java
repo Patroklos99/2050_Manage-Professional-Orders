@@ -28,5 +28,15 @@ public class Géologue {
         return heures >= 55;
     }
 
+    public boolean checkActivite(JSONArray activities, String categorie, int pHeureRequise){
+        int heures = 0;
 
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+            if(activity.get("categorie").toString().contentEquals(categorie))
+                heures += Integer.parseInt(activity.get("heures").toString());
+        }
+
+        return heures >= pHeureRequise;
+    }
 }
