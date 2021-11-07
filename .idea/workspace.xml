@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Need to commit">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-11-03_18_03__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-11-03_18_03__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-11-03_18_03__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2021-11-03_18_03__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_12_39__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_12_39__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2021-11-03_17_53__Changes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" afterDir="false" />
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Création de la classe Géologue">
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +141,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636320670273</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Création de la classe Géologue">
+      <created>1636321252842</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1636321252842</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -184,7 +184,8 @@
     <MESSAGE value="Ajout de la méthode validationCycle qui à été perdu lors d'un push" />
     <MESSAGE value="Fix méthode validationCycle" />
     <MESSAGE value="Need to commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Need to commit" />
+    <MESSAGE value="Création de la classe Géologue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Création de la classe Géologue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
