@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Création de la classe Géologue">
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Conception de la méthode checkActivite">
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -148,7 +148,21 @@
       <option name="project" value="LOCAL" />
       <updated>1636321252842</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Conception de la méthode checkHeureTotal et initialisation de la classe Géologue">
+      <created>1636321773743</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1636321773743</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Conception de la méthode checkActivite">
+      <created>1636321789886</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1636321789886</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -185,7 +199,9 @@
     <MESSAGE value="Fix méthode validationCycle" />
     <MESSAGE value="Need to commit" />
     <MESSAGE value="Création de la classe Géologue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Création de la classe Géologue" />
+    <MESSAGE value="Conception de la méthode checkHeureTotal et initialisation de la classe Géologue" />
+    <MESSAGE value="Conception de la méthode checkActivite" />
+    <option name="LAST_COMMIT_MESSAGE" value="Conception de la méthode checkActivite" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

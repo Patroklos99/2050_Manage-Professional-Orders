@@ -17,6 +17,13 @@ public class Géologue {
         isGeologue = geologue;
     }
 
+    public boolean checkGeologue(JSONArray activities, String categorie, int pHeureRequise){
+        if(checkHeureTotal(activities) && checkActivite(activities, categorie, pHeureRequise))
+            return true;
+        else
+            return false;
+    }
+
     public boolean checkHeureTotal(JSONArray activities){
         int heures = 0;
 
