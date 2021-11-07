@@ -12,8 +12,8 @@ import java.util.*;
 public class Verification {
     protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
-    private ArrayList<String> categorieValide = new ArrayList<String>();
-    private ArrayList<String> categorieTotale = new ArrayList<String>();
+    private ArrayList<String> categorieValide = new ArrayList<>();
+    private ArrayList<String> categorieTotale = new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",

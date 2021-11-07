@@ -1,11 +1,11 @@
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class Géologue extends Verification{
+public class Geologue extends Verification{
 
     public boolean isGeologue;
 
-    public Géologue(FormationContinue formation, String fichierSortie) throws Exception {
+    public Geologue(FormationContinue formation, String fichierSortie) throws Exception {
         super(formation, fichierSortie);
     }
 
