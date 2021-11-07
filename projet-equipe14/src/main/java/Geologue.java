@@ -2,19 +2,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class Geologue extends Verification{
-
-    public boolean isGeologue;
-
     public Geologue(FormationContinue formation, String fichierSortie) throws Exception {
         super(formation, fichierSortie);
-    }
-
-    public boolean isGeologue() {
-        return isGeologue;
-    }
-
-    public void setGeologue(boolean geologue) {
-        isGeologue = geologue;
     }
 
     public boolean checkHeuresTransferees(FormationContinue formation){
