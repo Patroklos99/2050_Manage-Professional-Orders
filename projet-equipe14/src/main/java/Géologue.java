@@ -1,12 +1,12 @@
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class Géologue {
+public class Géologue extends Verification{
 
     public boolean isGeologue;
 
-    public Géologue() {
-        this.isGeologue = true;
+    public Géologue(FormationContinue formation, String fichierSortie) throws Exception {
+        super(formation, fichierSortie);
     }
 
     public boolean isGeologue() {
@@ -17,47 +17,43 @@ public class Géologue {
         isGeologue = geologue;
     }
 
-    public boolean checkGeologue(JSONArray activities, FormationContinue formation){
-        if(checkHeureTotal(activities)
-                && checkActivite(activities, "cours", 22)
-                && checkActivite(activities, "projet de recherche", 3)
-                && checkActivite(activities, "groupe de discussion", 1)
-                && checkCycle() && checkHeuresTransferees(formation))
-            return true;
-        else
-            return false;
-    }
-
-    public boolean checkHeureTotal(JSONArray activities){
-        int heures = 0;
-
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            heures += Integer.parseInt(activity.get("heures").toString());
-        }
-
-        return heures >= 55;
-    }
-
-    public boolean checkActivite(JSONArray activities, String categorie, int pHeureRequise){
-        int heures = 0;
-
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().contentEquals(categorie))
-                heures += Integer.parseInt(activity.get("heures").toString());
-        }
-
-        return heures >= pHeureRequise;
-    }
-
-    public boolean checkCycle(){
-        //Code pour checker le cycle
-
-        return true;
-    }
-
     public boolean checkHeuresTransferees(FormationContinue formation){
         return formation.isHeuresTransfereesNull;
+    }
+
+    @Override
+    public boolean validationCycle() {
+        return super.validationCycle();
+    }
+
+    @Override
+    public int regarderCategorie(String pCategorie, JSONArray pActiviteValide) {
+        int heure = 0;
+
+        if(pCategorie.equals("cours"))
+            heure = calculHeuresMaxCategories(pCategorie, 22, pActiviteValide);
+
+        if(pCategorie.equals("projet de recherche"));
+        heure = calculHeuresMaxCategories(pCategorie, 3, pActiviteValide);
+
+        if(pCategorie.equals("groupe de discussion"))
+            heure = calculHeuresMaxCategories(pCategorie, 1, pActiviteValide);
+
+        return heure;
+    }
+
+    @Override
+    public void validationFinal(String fichierSortie) throws Exception {
+        JSONArray activiteValide = creationListeBonnesActivites();
+        super.ajouterCategorieTotale();
+        if(validationCycle()) {
+            super.validationHeureFormat();
+            super.validationDates();
+            super.validationCategories(activiteValide);
+            this.checkHeuresTransferees(super.formationAVerifier);
+            super.validationHeures(55, activiteValide);
+            super.validationHeuresCategorieMultiple(activiteValide);
+        }
+        imprimer(fichierSortie);
     }
 }

@@ -4,26 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode checkCycle">
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/equipe.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/commons-beanutils-1.8.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/commons-collections-3.2.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/commons-io-2.4.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/commons-lang-2.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/commons-logging-1.1.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/ezmorph-1.0.6.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/lib/json-lib-2.4-jdk15.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/projet-equipe14.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/FormationContinue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/FormationContinue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Géologue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/target/classes/FormationContinue.class" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/target/classes/FormationContinue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/target/classes/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/target/classes/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/target/classes/Verification.class" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/target/classes/Verification.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resultat.json" beforeDir="false" afterPath="$PROJECT_DIR$/resultat.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +178,21 @@
       <option name="project" value="LOCAL" />
       <updated>1636322853969</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non.">
+      <created>1636323795836</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1636323795836</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non.">
+      <created>1636323805084</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1636323805084</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -235,7 +233,8 @@
     <MESSAGE value="Conception de la méthode checkActivite" />
     <MESSAGE value="Conception de la méthode checkGeologue" />
     <MESSAGE value="Ajout de la méthode checkCycle" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode checkCycle" />
+    <MESSAGE value="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non." />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

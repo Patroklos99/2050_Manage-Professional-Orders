@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.*;
 
 public class Verification {
-    private FormationContinue formationAVerifier;
+    protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private ArrayList<String> categorieValide = new ArrayList<String>();
     private ArrayList<String> categorieTotale = new ArrayList<String>();
