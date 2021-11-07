@@ -28,15 +28,6 @@ public class Main {
                                     String fichierSortie) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj);
 
-
-
-
-
-
-
-
-
-
         Verification verificateur = new Verification(formation, fichierSortie);
         verificateur.imprimer(fichierSortie);
     }

@@ -17,12 +17,12 @@ public class Géologue {
         isGeologue = geologue;
     }
 
-    public boolean checkGeologue(JSONArray activities){
+    public boolean checkGeologue(JSONArray activities, FormationContinue formation){
         if(checkHeureTotal(activities)
                 && checkActivite(activities, "cours", 22)
                 && checkActivite(activities, "projet de recherche", 3)
                 && checkActivite(activities, "groupe de discussion", 1)
-                && checkCycle())
+                && checkCycle() && checkHeuresTransferees(formation))
             return true;
         else
             return false;
@@ -55,5 +55,9 @@ public class Géologue {
         //Code pour checker le cycle
 
         return true;
+    }
+
+    public boolean checkHeuresTransferees(FormationContinue formation){
+        return formation.isHeuresTransfereesNull;
     }
 }
