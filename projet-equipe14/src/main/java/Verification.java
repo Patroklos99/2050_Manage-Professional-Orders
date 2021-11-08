@@ -71,7 +71,6 @@ public class Verification {
         }
     }
 
-<<<<<<< HEAD
     public void validationDateParCycle(String date, String categorie) throws ParseException {
         if(formationAVerifier.getCycle().equals("2020-2022")){
             if (validationDatesPeriode(date, categorie))
@@ -86,8 +85,8 @@ public class Verification {
     }
 
     public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
-                                                  Date dateMax,
-                                                  String categorie){
+                                             Date dateMax,
+                                             String categorie){
         boolean bonneDate = true;
         if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
             ajoutMsgErreur("La date de la catégorie ("+ categorie
@@ -97,8 +96,6 @@ public class Verification {
         return bonneDate;
     }
 
-=======
->>>>>>> Renzo
     public boolean validationDatesPeriode(String date, String categorie)
             throws ParseException {
         boolean bonneDate = true;
@@ -114,7 +111,6 @@ public class Verification {
         return bonneDate;
     }
 
-<<<<<<< HEAD
 
     public boolean validationDatesPeriode18(String date, String categorie)
             throws ParseException {
@@ -142,16 +138,6 @@ public class Verification {
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
-=======
-    public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
-                                             Date dateMax,
-                                             String categorie){
-        boolean bonneDate = true;
-        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-            ajoutMsgErreur("La date de la catégorie ("+ categorie
-                    + ") n'est pas valide.");
-            bonneDate = false;
->>>>>>> Renzo
         }
         return bonneDate;
     }
@@ -159,14 +145,14 @@ public class Verification {
     public void validationHeuresTransferees(int pHeureMax, int pHeureMin){
         long heures = formationAVerifier.getHeuresTransferees();
         long heuresFixe = heures;
-            if (heures < pHeureMin)
-                formationAVerifier.setHeuresTransferees(pHeureMin);
-            if (heures > pHeureMax){
-                formationAVerifier.setHeuresTransferees(7);
-                ajoutMsgErreur("Le nombre d'heures transferees ("+ heuresFixe
-                        +") depasse la limite permise, seulement" +
-                        " 7h seront transferees");
-            }
+        if (heures < pHeureMin)
+            formationAVerifier.setHeuresTransferees(pHeureMin);
+        if (heures > pHeureMax){
+            formationAVerifier.setHeuresTransferees(7);
+            ajoutMsgErreur("Le nombre d'heures transferees ("+ heuresFixe
+                    +") depasse la limite permise, seulement" +
+                    " 7h seront transferees");
+        }
     }
 
     public void validationHeures(int pHeureMin, JSONArray pActiviteValide){
@@ -314,8 +300,8 @@ public class Verification {
         if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
             heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
 
-        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"))
-            heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
+        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"));
+        heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
 
         return heure;
     }

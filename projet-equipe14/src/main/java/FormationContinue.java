@@ -1,11 +1,8 @@
 import net.sf.json.*;
-<<<<<<< HEAD
 
 import javax.swing.*;
 import java.util.Arrays;
 import java.io.FileWriter;
-=======
->>>>>>> Renzo
 
 public class FormationContinue {
 
@@ -59,7 +56,7 @@ public class FormationContinue {
 
     public void verifierType(JSONObject f,String fichierSortie) throws Exception {
         if(!(f.get("activites") instanceof JSONArray))
-            Erreur("Les activités doivent être stocké dans un tableau");
+            Erreur("Les activités doivent être stocké dans un tableau", fichierSortie);
         if(!(f.get("heures_transferees_du_cycle_precedent") instanceof Integer)
                 && f.get("heures_transferees_du_cycle_precedent") != null)
             Erreur("Les heures transférées doivent être un chiffre", fichierSortie);
