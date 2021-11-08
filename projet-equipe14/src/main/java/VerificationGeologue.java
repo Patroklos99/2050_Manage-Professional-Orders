@@ -1,13 +1,15 @@
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class Geologue extends Verification{
-    public Geologue(FormationContinue formation, String fichierSortie) throws Exception {
+public class VerificationGeologue extends Verification{
+    public VerificationGeologue(FormationContinue formation, String fichierSortie) throws Exception {
         super(formation, fichierSortie);
     }
 
-    public boolean checkHeuresTransferees(FormationContinue formation){
-        return formation.isHeuresTransfereesNull;
+    @Override
+    public void verifierChampHeuresTransf() throws Exception {
+        if(!formationAVerifier.isHeuresTransfereesNull())
+            causerErreurVerif("Il ne devrait pas avoir des heures transférées");
     }
 
     @Override
@@ -33,13 +35,13 @@ public class Geologue extends Verification{
 
     @Override
     public void validationFinal(String fichierSortie) throws Exception {
+        validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
         super.ajouterCategorieTotale();
         if(validationCycle()) {
             super.validationHeureFormat();
             super.validationDates();
             super.validationCategories(activiteValide);
-            this.checkHeuresTransferees(super.formationAVerifier);
             super.validationHeures(55, activiteValide);
             super.validationHeuresCategorieMultiple(activiteValide);
         }

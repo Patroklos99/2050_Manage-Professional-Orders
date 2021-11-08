@@ -94,7 +94,7 @@ public class FormationContinue {
                     "heures_transferees_du_cycle_precedent").toString());
             isHeuresTransfereesNull = false;
         }else{
-            this.heuresTransferees = -10000;
+            this.heuresTransferees = 0;
             isHeuresTransfereesNull = true;
         }
     }
