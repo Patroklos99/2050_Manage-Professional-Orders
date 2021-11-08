@@ -48,7 +48,7 @@ public class VerificationPsychologues extends Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2018-01-01");
             Date max = sdf.parse("2023-01-01");

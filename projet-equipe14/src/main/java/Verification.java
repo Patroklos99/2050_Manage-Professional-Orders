@@ -100,7 +100,7 @@ public class Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2020-04-01");
             Date max = sdf.parse("2022-04-01");
@@ -116,7 +116,7 @@ public class Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2018-04-01");
             Date max = sdf.parse("2020-04-01");
@@ -131,7 +131,7 @@ public class Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2016-04-01");
             Date max = sdf.parse("2018-07-01");
