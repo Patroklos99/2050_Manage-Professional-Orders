@@ -21,12 +21,8 @@ public class VerificationPsychologues extends Verification {
 
 
     public VerificationPsychologues(FormationContinue formation, String fichierSortie) throws Exception {
-        super(formation, "test");
-        this.fichierErreur = new JSONObject();
-        JSONArray listeErreurs = new JSONArray();
-        fichierErreur.put("Complet", true);
-        fichierErreur.put("Erreurs", listeErreurs);
-        validationFinal(fichierSortie);
+            super(formation, fichierSortie);
+
     }
 
     public void ajouterDateValideTab() throws ParseException {

@@ -4,16 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode validationFinal et optimisation de certaine partie du code">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/FormationContinue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/FormationContinue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" afterDir="false" />
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Retrait de la variable isGeologue">
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/VerificationPsychologues.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/VerificationPsychologues.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -38,6 +30,7 @@
   <component name="ProjectId" id="1yBGGw5pLbXGzhTb4RLdO4Y4ho7" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="false" id="Update" />
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -80,6 +73,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
