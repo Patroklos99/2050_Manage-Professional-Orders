@@ -3,46 +3,48 @@ import net.sf.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
 public class VerificationPsychologues extends Verification {
-    private JSONObject fichierErreur;
-    private ArrayList<String> categorieValide = new ArrayList<String>();
-    private ArrayList<String> categorieTotale = new ArrayList<String>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
-    private String[] categoriesRequise = {"cours"};
-
 
     public VerificationPsychologues(FormationContinue formation, String fichierSortie) throws Exception {
-        super(formation, "test");
-        this.fichierErreur = new JSONObject();
-        JSONArray listeErreurs = new JSONArray();
-        fichierErreur.put("Complet", true);
-        fichierErreur.put("Erreurs", listeErreurs);
-        validationFinal(fichierSortie);
+        super(formation, fichierSortie);
     }
 
-    public void ajouterDateValideTab() throws ParseException {
+    @Override
+    public boolean validationCycle() {
+        boolean bonCycle = true;
+        String cycle = formationAVerifier.getCycle();
+        if(!cycle.equals("2018-2023")) {
+            ajoutMsgErreur("Le cycle de la formation n'est pas valide");
+            bonCycle = false;
+        }
+        return bonCycle;
+    }
+
+    @Override
+    public void validationDates() throws ParseException {
         JSONArray activities = validationFormatDate();
         for (Object o : activities) {
             JSONObject activite = (JSONObject) o;
             if (Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validerDatePeriode(date, categorie))
+                if (validationDatesPeriode(date, categorie))
                     categorieValide.add(categorie);
             }
         }
     }
 
-    public boolean validerDatePeriode(String date, String categorie)
+    @Override
+    public boolean validationDatesPeriode(String date, String categorie)
             throws ParseException {
         boolean bonneDate = true;
         try {
@@ -50,31 +52,20 @@ public class VerificationPsychologues extends Verification {
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2018-01-01");
             Date max = sdf.parse("2023-01-01");
-            bonneDate = validerDateBornes(entree, min, max, categorie);
+            bonneDate = conditionValidDatePeriode(entree, min, max, categorie);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return bonneDate;
     }
 
-    public boolean validerDateBornes(Date dateEntree, Date dateMin,
-                                     Date dateMax,
-                                     String categorie) {
-        boolean bonneDate = true;
-        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-            ajoutMsgErreur("La date de la catégorie (" + categorie
-                    + ") n'est pas valide.");
-            bonneDate = false;
-        }
-        return bonneDate;
-    }
-
-    public void validerHeuresCategorieCours(JSONArray activites){
+    @Override
+    public void validationHeuresCategorieMultiple(JSONArray activites){
         int heures = 0;
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
-            if(Arrays.asList(categoriesRequise).contains(
-                    activite.get("categorie")))
+            if(activite.get("categorie").equals(
+                    "cours"))
                 heures += Integer.parseInt(activite.get("heures").toString());
         }
         if(!validationNbHeuresActivite(25, heures))
@@ -99,7 +90,8 @@ public class VerificationPsychologues extends Verification {
         }
     }
 
-    public void validerHeures(int pHeureMin, JSONArray pActiviteValide){
+    @Override
+    public void validationHeures(int pHeureMin, JSONArray pActiviteValide){
         int heuresTotal = 0;
         JSONObject activite;
         for (Object o : pActiviteValide) {
@@ -114,13 +106,7 @@ public class VerificationPsychologues extends Verification {
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
     }
 
-    public void ecrireMsgErrHeureTotal (int heuresTotal, int pHeureMin){
-        if (heuresTotal < pHeureMin) {
-            ajoutMsgErreur("L'étudiant a complete seulement "
-                    + (heuresTotal) + " de 90h");
-        }
-    }
-
+    @Override
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide){
         int heure = 0;
 
@@ -130,19 +116,24 @@ public class VerificationPsychologues extends Verification {
         return heure;
     }
 
+    @Override
+    public void verifierChampHeuresTransf() throws Exception {
+        if(!formationAVerifier.isHeuresTransfereesNull())
+            causerErreurVerif("Il ne devrait pas avoir des heures transférées");
+    }
 
-
+    @Override
     public void validationFinal(String fichierSortie) throws Exception {
+        validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
             validationHeureFormat();
-            ajouterDateValideTab();
+            validationDates();
             validationCategories(activiteValide);
-            validerHeures(90, activiteValide);
-            validerHeuresCategorieCours(activiteValide);
+            validationHeures(90, activiteValide);
+            validationHeuresCategorieMultiple(activiteValide);
         }
-
         imprimer(fichierSortie);
     }
 

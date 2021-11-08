@@ -13,8 +13,8 @@ public class Verification {
     protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private String fichierSortie;
-    private ArrayList<String> categorieValide = new ArrayList<>();
-    private ArrayList<String> categorieTotale = new ArrayList<>();
+    protected ArrayList<String> categorieValide = new ArrayList<>();
+    protected ArrayList<String> categorieTotale = new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
