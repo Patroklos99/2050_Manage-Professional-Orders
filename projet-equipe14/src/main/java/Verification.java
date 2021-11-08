@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.*;
 
 public class Verification {
-    private FormationContinue formationAVerifier;
+    protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private String fichierSortie;
     private ArrayList<String> categorieValide = new ArrayList<>();
@@ -71,6 +71,7 @@ public class Verification {
         }
     }
 
+<<<<<<< HEAD
     public void validationDateParCycle(String date, String categorie) throws ParseException {
         if(formationAVerifier.getCycle().equals("2020-2022")){
             if (validationDatesPeriode(date, categorie))
@@ -96,6 +97,8 @@ public class Verification {
         return bonneDate;
     }
 
+=======
+>>>>>>> Renzo
     public boolean validationDatesPeriode(String date, String categorie)
             throws ParseException {
         boolean bonneDate = true;
@@ -111,6 +114,7 @@ public class Verification {
         return bonneDate;
     }
 
+<<<<<<< HEAD
 
     public boolean validationDatesPeriode18(String date, String categorie)
             throws ParseException {
@@ -138,6 +142,16 @@ public class Verification {
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
+=======
+    public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
+                                             Date dateMax,
+                                             String categorie){
+        boolean bonneDate = true;
+        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
+            ajoutMsgErreur("La date de la catégorie ("+ categorie
+                    + ") n'est pas valide.");
+            bonneDate = false;
+>>>>>>> Renzo
         }
         return bonneDate;
     }
@@ -300,7 +314,7 @@ public class Verification {
         if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
             heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
 
-        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"));
+        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"))
             heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
 
         return heure;
