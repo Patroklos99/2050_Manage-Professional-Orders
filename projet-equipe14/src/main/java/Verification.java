@@ -13,8 +13,8 @@ public class Verification {
     protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private String fichierSortie;
-    private ArrayList<String> categorieValide = new ArrayList<>();
-    private ArrayList<String> categorieTotale = new ArrayList<>();
+    protected ArrayList<String> categorieValide = new ArrayList<>();
+    protected ArrayList<String> categorieTotale = new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
@@ -100,7 +100,7 @@ public class Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2020-04-01");
             Date max = sdf.parse("2022-04-01");
@@ -116,7 +116,7 @@ public class Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2018-04-01");
             Date max = sdf.parse("2020-04-01");
@@ -131,7 +131,7 @@ public class Verification {
             throws ParseException {
         boolean bonneDate = true;
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2016-04-01");
             Date max = sdf.parse("2018-07-01");
@@ -328,7 +328,7 @@ public class Verification {
     }
 
     public void verifierChampHeuresTransf() throws Exception {
-        if(formationAVerifier.getHeuresTransferees() == -10000)
+        if(formationAVerifier.isHeuresTransfereesNull())
             causerErreurVerif("Les heures transférées doivent être un nombre");
     }
 

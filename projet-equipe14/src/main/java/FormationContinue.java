@@ -1,7 +1,4 @@
 import net.sf.json.*;
-
-import javax.swing.*;
-import java.util.Arrays;
 import java.io.FileWriter;
 
 public class FormationContinue {
@@ -20,8 +17,7 @@ public class FormationContinue {
         this.ordre = fichier.get("ordre").toString();
         this.numeroPermis = fichier.get("numero_de_permis").toString();
         this.cycle = fichier.get("cycle").toString();
-        this.heuresTransferees = Integer.parseInt(fichier.get(
-                "heures_transferees_du_cycle_precedent").toString());
+        assignerChampHeuresTranf(fichier);
         this.activites = (JSONArray) fichier.get("activites");
 
     }
@@ -50,6 +46,10 @@ public class FormationContinue {
         return heuresTransferees;
     }
 
+    public boolean isHeuresTransfereesNull() {
+        return isHeuresTransfereesNull;
+    }
+
     public void setHeuresTransferees(int heuresTransferees) {
         this.heuresTransferees = heuresTransferees;
     }
@@ -57,9 +57,6 @@ public class FormationContinue {
     public void verifierType(JSONObject f,String fichierSortie) throws Exception {
         if(!(f.get("activites") instanceof JSONArray))
             Erreur("Les activités doivent être stocké dans un tableau", fichierSortie);
-        if(!(f.get("heures_transferees_du_cycle_precedent") instanceof Integer)
-                && f.get("heures_transferees_du_cycle_precedent") != null)
-            Erreur("Les heures transférées doivent être un chiffre", fichierSortie);
         if(!(f.get("numero_de_permis") instanceof String))
             Erreur("Le numéros de permis doit être une chaîne de caractères",fichierSortie);
         if(!(f.get("cycle") instanceof String))
@@ -95,8 +92,10 @@ public class FormationContinue {
         if(getFichier().get("heures_transferees_du_cycle_precedent") instanceof Integer){
             this.heuresTransferees = Integer.parseInt(fichier.get(
                     "heures_transferees_du_cycle_precedent").toString());
+            isHeuresTransfereesNull = false;
         }else{
-            this.heuresTransferees = -10000;
+            this.heuresTransferees = 0;
+            isHeuresTransfereesNull = true;
         }
     }
 }
