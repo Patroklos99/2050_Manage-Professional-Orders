@@ -1,7 +1,7 @@
 {
   "numero_de_permis": "A0001",
   "cycle": "2020-2022",
-  "heures_transferees_du_cycle_precedent": 0,
+  "ordre": "géologues",
   "activites": [
     {
       "description": "Cours sur la déontologie",

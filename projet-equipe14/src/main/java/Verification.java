@@ -12,15 +12,16 @@ import java.util.*;
 public class Verification {
     protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
-    private ArrayList<String> categorieValide = new ArrayList<String>();
-    private ArrayList<String> categorieTotale = new ArrayList<String>();
+    private String fichierSortie;
+    protected ArrayList<String> categorieValide = new ArrayList<>();
+    protected ArrayList<String> categorieTotale = new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
-    private static final String[] CATEGORIETOTAL = {"présentation",
+    protected static final String[] CATEGORIETOTAL = {"présentation",
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
@@ -29,6 +30,7 @@ public class Verification {
 
     public Verification(FormationContinue formation, String fichierSortie) throws Exception {
         this.formationAVerifier = formation;
+        this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
@@ -36,6 +38,10 @@ public class Verification {
 
 
         validationFinal(fichierSortie);
+    }
+
+    public String getFichierSortie(){
+        return fichierSortie;
     }
 
     public JSONObject resultat(){
@@ -60,25 +66,22 @@ public class Verification {
             if(Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie))
-                    categorieValide.add(categorie);
+                validationDateParCycle(date,categorie);
             }
         }
     }
 
-    public boolean validationDatesPeriode(String date, String categorie)
-            throws ParseException {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2020-04-01");
-            Date max = sdf.parse("2022-04-01");
-            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void validationDateParCycle(String date, String categorie) throws ParseException {
+        if(formationAVerifier.getCycle().equals("2020-2022")){
+            if (validationDatesPeriode(date, categorie))
+                categorieValide.add(categorie);
+        }else if(formationAVerifier.getCycle().equals("2018-2020")){
+            if (validationDatesPeriode18(date, categorie))
+                categorieValide.add(categorie);
+        }else{
+            if (validationDatesPeriode16(date, categorie))
+                categorieValide.add(categorie);
         }
-        return bonneDate;
     }
 
     public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
@@ -93,17 +96,63 @@ public class Verification {
         return bonneDate;
     }
 
+    public boolean validationDatesPeriode(String date, String categorie)
+            throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2020-04-01");
+            Date max = sdf.parse("2022-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+
+    public boolean validationDatesPeriode18(String date, String categorie)
+            throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-04-01");
+            Date max = sdf.parse("2020-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean validationDatesPeriode16(String date, String categorie)
+            throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2016-04-01");
+            Date max = sdf.parse("2018-07-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
     public void validationHeuresTransferees(int pHeureMax, int pHeureMin){
         long heures = formationAVerifier.getHeuresTransferees();
         long heuresFixe = heures;
-            if (heures < pHeureMin)
-                formationAVerifier.setHeuresTransferees(pHeureMin);
-            if (heures > pHeureMax){
-                formationAVerifier.setHeuresTransferees(7);
-                ajoutMsgErreur("Le nombre d'heures transferees ("+ heuresFixe
-                        +") depasse la limite permise, seulement" +
-                        " 7h seront transferees");
-            }
+        if (heures < pHeureMin)
+            formationAVerifier.setHeuresTransferees(pHeureMin);
+        if (heures > pHeureMax){
+            formationAVerifier.setHeuresTransferees(7);
+            ajoutMsgErreur("Le nombre d'heures transferees ("+ heuresFixe
+                    +") depasse la limite permise, seulement" +
+                    " 7h seront transferees");
+        }
     }
 
     public void validationHeures(int pHeureMin, JSONArray pActiviteValide){
@@ -123,6 +172,14 @@ public class Verification {
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
     }
 
+    public void validationHeuresParCycle(JSONArray pActiviteValide){
+        if(formationAVerifier.getCycle().equals("2020-2022")){
+            validationHeures(40,pActiviteValide);
+        }else{
+            validationHeures(42,pActiviteValide);
+        }
+    }
+
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
@@ -136,7 +193,7 @@ public class Verification {
     public void ecrireMsgErrHeureTotal (int heuresTotal, int pHeureMin){
         if (heuresTotal < pHeureMin) {
             ajoutMsgErreur("L'etudiant a complete seulement "
-                    + (heuresTotal) + " de 40h");
+                    + (heuresTotal) + " de " + pHeureMin + "h");
         }
     }
 
@@ -176,19 +233,21 @@ public class Verification {
     public boolean validationCycle(){
         boolean bonCycle = true;
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022")) {
+        if(!cycle.equals("2020-2022") && !cycle.equals("2018-2020") && !cycle.equals("2016-2018")) {
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
             bonCycle = false;
         }
         return bonCycle;
     }
 
-    public void validationHeureFormat(){
+
+
+    public void validationHeureFormat() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
             JSONObject activity = (JSONObject) o;
             if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
                     Double.parseDouble((activity.get("heures")).toString()) < 1)
-                ajoutMsgErreur("L'activité " + activity.get("description")
+                causerErreurVerif("L'activité " + activity.get("description")
                         + " n'a pas un nombre valide d'heures");
         }
     }
@@ -241,8 +300,8 @@ public class Verification {
         if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
             heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
 
-        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"))
-            heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
+        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"));
+        heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
 
         return heure;
     }
@@ -252,7 +311,36 @@ public class Verification {
             categorieTotale.add(CATEGORIETOTAL[i]);
     }
 
+    public void validationNumeroPermis() throws Exception {
+        String numeroPermis = formationAVerifier.getNumeroPermis();
+        if(!numeroPermis.matches("^[ARSZ]{1}[0-9]{4}$"))
+            causerErreurVerif("Le numero de permis n'est pas du bon format (A, R, S ou Z suivit de " +
+                    "4 chiffres).");
+    }
+
+    public void validationDescription() throws Exception {
+        for (Object o : formationAVerifier.getActivites()) {
+            JSONObject activity = (JSONObject) o;
+            if (!(activity.get("description").toString()).matches("^.{21,}$"))
+                causerErreurVerif("La description de l'activité " + activity.get("description")
+                        + " ne contient pas plus de 20 caractères.");
+        }
+    }
+
+    public void verifierChampHeuresTransf() throws Exception {
+        if(formationAVerifier.isHeuresTransfereesNull())
+            causerErreurVerif("Les heures transférées doivent être un nombre");
+    }
+
+    public void causerErreurVerif(String pMessage) throws Exception {
+        System.err.println(pMessage);
+        ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est incomplet.");
+        imprimer(getFichierSortie());
+        System.exit( -1 );
+    }
+
     public void validationFinal(String fichierSortie) throws Exception {
+        validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
@@ -260,10 +348,17 @@ public class Verification {
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
-            validationHeures(40, activiteValide);
+            validationHeuresParCycle(activiteValide);
             validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
+    }
+
+    public void validationGenerale() throws Exception {
+        verifierChampHeuresTransf();
+        validationNumeroPermis();
+        validationDescription();
+        validationHeureFormat();
     }
 
     /**
