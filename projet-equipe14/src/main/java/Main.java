@@ -1,12 +1,9 @@
-import net.sf.json.JSONArray;
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import org.apache.commons.io.IOUtils;
 
 import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -26,13 +23,8 @@ public class Main {
 
     public static void verifImprime(JSONObject jsonObj,
                                     String fichierSortie) throws Exception {
-<<<<<<< HEAD
         FormationContinue formation = new FormationContinue(jsonObj,fichierSortie);
-=======
-        FormationContinue formation = new FormationContinue(jsonObj);
->>>>>>> Renzo
         Verification verificateur = new Verification(formation, fichierSortie);
-        VerificationPsychologues psychologues = new VerificationPsychologues(formation, fichierSortie);
         verificateur.imprimer(fichierSortie);
     }
 }

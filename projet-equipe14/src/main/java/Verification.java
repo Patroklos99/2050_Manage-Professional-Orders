@@ -328,7 +328,7 @@ public class Verification {
     }
 
     public void verifierChampHeuresTransf() throws Exception {
-        if(formationAVerifier.getHeuresTransferees() == -10000)
+        if(formationAVerifier.isHeuresTransfereesNull())
             causerErreurVerif("Les heures transférées doivent être un nombre");
     }
 
