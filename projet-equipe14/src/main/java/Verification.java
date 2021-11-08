@@ -21,7 +21,7 @@ public class Verification {
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
-    private static final String[] CATEGORIETOTAL = {"présentation",
+    protected static final String[] CATEGORIETOTAL = {"présentation",
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 

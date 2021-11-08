@@ -13,6 +13,10 @@ public class VerificationGeologue extends Verification{
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
+    protected static final String[] CATEGORIETOTAL = {"cours",
+            "groupe de discussion", "projet de recherche",
+            "rédaction professionnelle"};
+
     public VerificationGeologue(FormationContinue formation, String fichierSortie) throws Exception {
         super(formation, fichierSortie);
     }
@@ -64,6 +68,19 @@ public class VerificationGeologue extends Verification{
         return bonCycle;
     }
 
+    public void validationHeureMinimum(String categorie, int heureRequise, JSONArray activite){
+        int heure = 0;
+        for (Object o : activite) {
+            JSONObject activity = (JSONObject) o;
+            if(activity.get("categorie").toString().contentEquals(categorie))
+                heure += Integer.parseInt(activity.get("heures").toString());
+        }
+        if(heureRequise < heure)
+            ajoutMsgErreur("La catégorie " + categorie +
+                    "doit avoir au minimum " + heureRequise + "h");
+    }
+
+
     @Override
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide) {
         int heure = 0;
@@ -72,7 +89,7 @@ public class VerificationGeologue extends Verification{
             heure = calculHeuresMaxCategories(pCategorie, 22, pActiviteValide);
 
         if(pCategorie.equals("projet de recherche"));
-        heure = calculHeuresMaxCategories(pCategorie, 3, pActiviteValide);
+            heure = calculHeuresMaxCategories(pCategorie, 3, pActiviteValide);
 
         if(pCategorie.equals("groupe de discussion"))
             heure = calculHeuresMaxCategories(pCategorie, 1, pActiviteValide);
@@ -81,17 +98,39 @@ public class VerificationGeologue extends Verification{
     }
 
     @Override
+    public int calculHeuresMaxCategories(String categorie, int heureRequise,
+                                         JSONArray activities){
+        int heures = 0;
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+            if(activity.get("categorie").toString().contentEquals(categorie))
+                heures += Integer.parseInt(activity.get("heures").toString());
+        }
+        if(!validationNbHeuresActivite(heureRequise, heures))
+            ajoutMsgErreur("La catégorie " + categorie +
+                    "doit avoir un minimum de " + heureRequise + "h");
+        return heures;
+    }
+
+    @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
-            validationHeureFormat();
-            validationDates();
-            validationCategories(activiteValide);
-            validationHeures(55, activiteValide);
-            validationHeuresCategorieMultiple(activiteValide);
+            validationToutes(activiteValide);
         }
         imprimer(fichierSortie);
+    }
+
+    public void validationToutes(JSONArray activiteValide) throws Exception {
+        validationHeureFormat();
+        validationDates();
+        validationCategories(activiteValide);
+        validationHeures(55, activiteValide);
+        validationHeuresCategorieMultiple(activiteValide);
+        validationHeureMinimum("cours", 22, activiteValide);
+        validationHeureMinimum("projet de recherche", 3, activiteValide);
+        validationHeureMinimum("groupe de discussion", 1, activiteValide);
     }
 }

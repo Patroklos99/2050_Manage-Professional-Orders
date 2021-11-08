@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Merge de la branche Dev dans la branche Nicolas">
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Fix la branche dev">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/FormationContinue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/FormationContinue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/Verification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/main/java/VerificationGeologue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/main/java/VerificationGeologue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1636325281238</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Fix la branche dev">
+      <created>1636390758921</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1636390758921</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -257,7 +266,8 @@
     <MESSAGE value="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non." />
     <MESSAGE value="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage." />
     <MESSAGE value="Retrait de la variable isGeologue" />
-    <option name="LAST_COMMIT_MESSAGE" value="Retrait de la variable isGeologue" />
+    <MESSAGE value="Fix la branche dev" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix la branche dev" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
