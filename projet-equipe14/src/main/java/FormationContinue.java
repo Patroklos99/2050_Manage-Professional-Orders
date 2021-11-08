@@ -1,5 +1,7 @@
 import net.sf.json.*;
 
+import javax.swing.*;
+import java.util.Arrays;
 import java.io.FileWriter;
 
 public class FormationContinue {
@@ -8,6 +10,7 @@ public class FormationContinue {
     private String numeroPermis;
     private String cycle;
     private int heuresTransferees;
+    protected boolean isHeuresTransfereesNull;
     private JSONArray activites;
     private JSONObject fichier;
 
@@ -17,7 +20,8 @@ public class FormationContinue {
         this.ordre = fichier.get("ordre").toString();
         this.numeroPermis = fichier.get("numero_de_permis").toString();
         this.cycle = fichier.get("cycle").toString();
-        assignerChampHeuresTranf(fichier);
+        this.heuresTransferees = Integer.parseInt(fichier.get(
+                "heures_transferees_du_cycle_precedent").toString());
         this.activites = (JSONArray) fichier.get("activites");
 
     }
@@ -52,7 +56,10 @@ public class FormationContinue {
 
     public void verifierType(JSONObject f,String fichierSortie) throws Exception {
         if(!(f.get("activites") instanceof JSONArray))
-            Erreur("Les activités doivent être stocké dans un tableau",fichierSortie);
+            Erreur("Les activités doivent être stocké dans un tableau");
+        if(!(f.get("heures_transferees_du_cycle_precedent") instanceof Integer)
+                && f.get("heures_transferees_du_cycle_precedent") != null)
+            Erreur("Les heures transférées doivent être un chiffre", fichierSortie);
         if(!(f.get("numero_de_permis") instanceof String))
             Erreur("Le numéros de permis doit être une chaîne de caractères",fichierSortie);
         if(!(f.get("cycle") instanceof String))

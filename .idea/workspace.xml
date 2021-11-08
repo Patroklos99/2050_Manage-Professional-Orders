@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Ajout de la méthode validationFinal et optimisation de certaine partie du code">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/commons_beanutils_1_8_0.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_9_15_2021_1_19_PM__Changes_.xml" afterDir="false" />
+    <list default="true" id="c6895ab1-55e6-44ad-8430-02568306a1a5" name="Changes" comment="Retrait de la variable isGeologue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/FormationContinue.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/FormationContinue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/Verification.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/projet-equipe14/projet-equipe14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/projet-equipe14/projet-equipe14.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/projet-equipe14.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/FormationContinue.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/FormationContinue.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet-equipe14/src/Verification.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/test.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +38,6 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="13" />
     <property name="last_opened_file_path" value="$USER_HOME$" />
     <property name="project.structure.last.edited" value="Project" />
@@ -137,7 +127,91 @@
       <option name="project" value="LOCAL" />
       <updated>1632343820142</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Need to commit">
+      <created>1636320644757</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1636320644757</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Need to commit">
+      <created>1636320670273</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1636320670273</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Création de la classe Géologue">
+      <created>1636321252842</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1636321252842</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Conception de la méthode checkHeureTotal et initialisation de la classe Géologue">
+      <created>1636321773743</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1636321773743</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Conception de la méthode checkActivite">
+      <created>1636321789886</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1636321789886</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Conception de la méthode checkGeologue">
+      <created>1636322287114</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1636322287114</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Ajout de la méthode checkCycle">
+      <created>1636322853969</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1636322853969</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non.">
+      <created>1636323795836</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1636323795836</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non.">
+      <created>1636323805084</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1636323805084</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage.">
+      <created>1636325112875</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1636325112875</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage.">
+      <created>1636325164010</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1636325164010</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Retrait de la variable isGeologue">
+      <created>1636325281238</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1636325281238</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -172,7 +246,16 @@
     <MESSAGE value="Modification des méthodes validationHeuresCatégorieMultiple, calculHeuresMaxCategories et calculHeuresMaxCategories pour implémenter la méthode validationHeureFormat" />
     <MESSAGE value="Ajout de la méthode validationCycle qui à été perdu lors d'un push" />
     <MESSAGE value="Fix méthode validationCycle" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix méthode validationCycle" />
+    <MESSAGE value="Need to commit" />
+    <MESSAGE value="Création de la classe Géologue" />
+    <MESSAGE value="Conception de la méthode checkHeureTotal et initialisation de la classe Géologue" />
+    <MESSAGE value="Conception de la méthode checkActivite" />
+    <MESSAGE value="Conception de la méthode checkGeologue" />
+    <MESSAGE value="Ajout de la méthode checkCycle" />
+    <MESSAGE value="Ajout de la méthode checkHeuresTransferees et légere modification de la classe FormationContinue pour qu'elle puisse prendre une formation sans heures transférées et regarder s'il y a des heures transférées ou non." />
+    <MESSAGE value="Modification de la classe Géologue et légère modification de la classe Vérification pour implanter l'héritage." />
+    <MESSAGE value="Retrait de la variable isGeologue" />
+    <option name="LAST_COMMIT_MESSAGE" value="Retrait de la variable isGeologue" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

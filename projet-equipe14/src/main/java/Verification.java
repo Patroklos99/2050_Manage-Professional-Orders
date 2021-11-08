@@ -13,8 +13,8 @@ public class Verification {
     private FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private String fichierSortie;
-    private ArrayList<String> categorieValide = new ArrayList<String>();
-    private ArrayList<String> categorieTotale = new ArrayList<String>();
+    private ArrayList<String> categorieValide = new ArrayList<>();
+    private ArrayList<String> categorieTotale = new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
@@ -344,6 +344,7 @@ public class Verification {
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
+            validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
