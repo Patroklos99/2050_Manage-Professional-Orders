@@ -27,17 +27,8 @@ public class Main {
     public static void verifImprime(JSONObject jsonObj,
                                     String fichierSortie) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj);
-
-
-
-
-
-
-
-
-
-
         Verification verificateur = new Verification(formation, fichierSortie);
+        VerificationPsychologues psychologues = new VerificationPsychologues(formation, fichierSortie);
         verificateur.imprimer(fichierSortie);
     }
 }

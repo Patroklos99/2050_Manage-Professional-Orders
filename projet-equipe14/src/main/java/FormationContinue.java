@@ -1,7 +1,4 @@
 import net.sf.json.*;
-import org.apache.commons.io.IOUtils;
-
-import java.util.Arrays;
 
 public class FormationContinue {
 

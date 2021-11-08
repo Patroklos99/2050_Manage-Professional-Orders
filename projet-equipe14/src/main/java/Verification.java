@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.*;
 
 public class Verification {
-    private FormationContinue formationAVerifier;
+    protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private ArrayList<String> categorieValide = new ArrayList<String>();
     private ArrayList<String> categorieTotale = new ArrayList<String>();
@@ -66,18 +66,6 @@ public class Verification {
         }
     }
 
-    public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
-                                                  Date dateMax,
-                                                  String categorie){
-        boolean bonneDate = true;
-        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
-            ajoutMsgErreur("La date de la catégorie ("+ categorie
-                    + ") n'est pas valide.");
-            bonneDate = false;
-        }
-        return bonneDate;
-    }
-
     public boolean validationDatesPeriode(String date, String categorie)
             throws ParseException {
         boolean bonneDate = true;
@@ -89,6 +77,18 @@ public class Verification {
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
+                                             Date dateMax,
+                                             String categorie){
+        boolean bonneDate = true;
+        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
+            ajoutMsgErreur("La date de la catégorie ("+ categorie
+                    + ") n'est pas valide.");
+            bonneDate = false;
         }
         return bonneDate;
     }
@@ -241,7 +241,7 @@ public class Verification {
         if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
             heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
 
-        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"));
+        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"))
             heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
 
         return heure;
