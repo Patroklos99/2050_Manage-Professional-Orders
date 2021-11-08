@@ -66,9 +66,21 @@ public class Verification {
             if(Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie))
-                    categorieValide.add(categorie);
+                validationDateParCycle(date,categorie);
             }
+        }
+    }
+
+    public void validationDateParCycle(String date, String categorie) throws ParseException {
+        if(formationAVerifier.getCycle().equals("2020-2022")){
+            if (validationDatesPeriode(date, categorie))
+                categorieValide.add(categorie);
+        }else if(formationAVerifier.getCycle().equals("2018-2020")){
+            if (validationDatesPeriode18(date, categorie))
+                categorieValide.add(categorie);
+        }else{
+            if (validationDatesPeriode16(date, categorie))
+                categorieValide.add(categorie);
         }
     }
 
@@ -92,6 +104,37 @@ public class Verification {
             Date entree = sdf.parse(date);
             Date min = sdf.parse("2020-04-01");
             Date max = sdf.parse("2022-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+
+    public boolean validationDatesPeriode18(String date, String categorie)
+            throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-04-01");
+            Date max = sdf.parse("2020-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean validationDatesPeriode16(String date, String categorie)
+            throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2016-04-01");
+            Date max = sdf.parse("2018-07-01");
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,6 +172,14 @@ public class Verification {
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
     }
 
+    public void validationHeuresParCycle(JSONArray pActiviteValide){
+        if(formationAVerifier.getCycle().equals("2020-2022")){
+            validationHeures(40,pActiviteValide);
+        }else{
+            validationHeures(42,pActiviteValide);
+        }
+    }
+
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
@@ -142,7 +193,7 @@ public class Verification {
     public void ecrireMsgErrHeureTotal (int heuresTotal, int pHeureMin){
         if (heuresTotal < pHeureMin) {
             ajoutMsgErreur("L'etudiant a complete seulement "
-                    + (heuresTotal) + " de 40h");
+                    + (heuresTotal) + " de " + pHeureMin + "h");
         }
     }
 
@@ -182,12 +233,14 @@ public class Verification {
     public boolean validationCycle(){
         boolean bonCycle = true;
         String cycle = formationAVerifier.getCycle();
-        if(!cycle.equals("2020-2022")) {
+        if(!cycle.equals("2020-2022") && !cycle.equals("2018-2020") && !cycle.equals("2016-2018")) {
             ajoutMsgErreur("Le cycle de la formation n'est pas valide");
             bonCycle = false;
         }
         return bonCycle;
     }
+
+
 
     public void validationHeureFormat() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
@@ -294,7 +347,7 @@ public class Verification {
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
-            validationHeures(40, activiteValide);
+            validationHeuresParCycle(activiteValide);
             validationHeuresCategorieMultiple(activiteValide);
         }
         imprimer(fichierSortie);
