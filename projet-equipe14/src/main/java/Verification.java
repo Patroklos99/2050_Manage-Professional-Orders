@@ -163,10 +163,8 @@ public class Verification {
             heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
                     pActiviteValide);
         }
-
         for (int i = 0; i < categorieTotale.size(); i++)
             heuresTotal += regarderCategorie(categorieTotale.get(i), pActiviteValide);
-
         heuresTotal += formationAVerifier.getHeuresTransferees();
 
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
@@ -183,10 +181,11 @@ public class Verification {
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
-
-        if(categorieValide.contains(categorie) && !categorieTotale.contains(categorie))
+        System.out.println(categorie);
+        if(categorieValide.contains(categorie) && !categorieTotale.contains(categorie)) {
             heuresTotal += Integer.parseInt(activite.get("heures").toString());
-
+            System.out.println("Las horas totales sont "+heuresTotal);
+        }
         return heuresTotal;
     }
 
@@ -300,7 +299,7 @@ public class Verification {
         if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
             heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
 
-        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"));
+        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"))
         heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
 
         return heure;
@@ -344,7 +343,6 @@ public class Verification {
         JSONArray activiteValide = creationListeBonnesActivites();
         ajouterCategorieTotale();
         if(validationCycle()) {
-            validationHeureFormat();
             validationDates();
             validationCategories(activiteValide);
             validationHeuresTransferees(7, 0);
