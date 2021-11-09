@@ -23,7 +23,8 @@ public class VerificationPsychologues extends Verification {
         boolean bonCycle = true;
         String cycle = formationAVerifier.getCycle();
         if(!cycle.equals("2018-2023")) {
-            ajoutMsgErreur("Le cycle de la formation n'est pas valide");
+            ajoutMsgErreur("Le cycle de la formation pour les psychologues " +
+                    "n'est pas valide");
             bonCycle = false;
         }
         return bonCycle;
@@ -64,30 +65,12 @@ public class VerificationPsychologues extends Verification {
         int heures = 0;
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
-            if(activite.get("categorie").equals(
-                    "cours"))
+            if(activite.get("categorie").equals("cours"))
                 heures += Integer.parseInt(activite.get("heures").toString());
         }
         if(!validationNbHeuresActivite(25, heures))
-            ajoutMsgErreur("Les heures totales de la categorie cours " +
+            ajoutMsgErreur("Les heures totales de la catégorie -cours- " +
                     "n'est pas pas superieur a 25h");
-    }
-
-    public boolean validationNbHeuresActivite(int pHeuresRequises,
-                                              int pHeuresCompletes){
-        if(pHeuresRequises <= pHeuresCompletes)
-            return true;
-        return false;
-    }
-
-    public void validationHeureFormat(){
-        for (Object o : formationAVerifier.getActivites()) {
-            JSONObject activity = (JSONObject) o;
-            if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
-                    Double.parseDouble((activity.get("heures")).toString()) < 1)
-                ajoutMsgErreur("L'activité " + activity.get("description")
-                        + " n'a pas un nombre valide d'heures");
-        }
     }
 
     @Override
@@ -99,20 +82,24 @@ public class VerificationPsychologues extends Verification {
             heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
                     pActiviteValide);
         }
-
-        for (int i = 0; i < categorieTotale.size(); i++)
-            heuresTotal += regarderCategorie(categorieTotale.get(i), pActiviteValide);
-
+            heuresTotal += regarderCategorie("conférence", pActiviteValide);
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
+    }
+
+    @Override
+    public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
+                                  JSONArray pActiviteValide){
+        String categorie = activite.get("categorie").toString();
+        if(categorieValide.contains(categorie)&&!categorie.equals("conférence"))
+            heuresTotal += Integer.parseInt(activite.get("heures").toString());
+        return heuresTotal;
     }
 
     @Override
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide){
         int heure = 0;
-
         if(pCategorie.equals("conférence"))
-        heure = calculHeuresMaxCategories(pCategorie, 15, pActiviteValide);
-
+            heure = calculHeuresMaxCategories(pCategorie, 15, pActiviteValide);
         return heure;
     }
 
@@ -124,15 +111,14 @@ public class VerificationPsychologues extends Verification {
 
     @Override
     public void validationFinal(String fichierSortie) throws Exception {
-        validationGenerale();
+        validationGenerale(); //Heritage
         JSONArray activiteValide = creationListeBonnesActivites();
-        ajouterCategorieTotale();
-        if(validationCycle()) {
-            validationHeureFormat();
-            validationDates();
-            validationCategories(activiteValide);
-            validationHeures(90, activiteValide);
-            validationHeuresCategorieMultiple(activiteValide);
+        ajouterCategorieTotale(); //Heritage
+        if(validationCycle()) { //Heritage
+            validationDates(); //Class
+            validationCategories(activiteValide); //Heritage
+            validationHeures(90, activiteValide); //Class
+            validationHeuresCategorieMultiple(activiteValide); //Class
         }
         imprimer(fichierSortie);
     }
