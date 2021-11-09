@@ -15,10 +15,6 @@ public class VerificationPsychologues extends Verification {
 
 
     public VerificationPsychologues(FormationContinue formation, String fichierSortie) throws Exception {
-<<<<<<< HEAD
-            super(formation, fichierSortie);
-
-=======
         super(formation, fichierSortie);
     }
 
@@ -31,7 +27,6 @@ public class VerificationPsychologues extends Verification {
             bonCycle = false;
         }
         return bonCycle;
->>>>>>> origin/dev
     }
 
     @Override
