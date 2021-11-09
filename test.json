@@ -1,14 +1,8 @@
 {
   "numero_de_permis": "A0001",
-  "cycle": "2020-2022",
-  "ordre": "géologues",
+  "cycle": "2018-2023",
+  "ordre": "psychologues",
   "activites": [
-    {
-      "description": "Cours sur la déontologie",
-      "categorie": "présentation",
-      "heures": 1,
-      "date": "2021-12-01"
-    },
     {
       "description": "Séminaire sur l'architecture contemporaine",
       "categorie": "séminaire",
@@ -17,8 +11,14 @@
     },
     {
       "description": "Rédaction pour le magazine Architecture moderne",
-      "categorie": "rédaction professionnelle",
-      "heures": 9,
+      "categorie": "cours",
+      "heures": 100,
+      "date": "2021-10-22"
+    },
+    {
+      "description": "Rédaction pour le magazine Architecture moderne",
+      "categorie": "conférence",
+      "heures": 140,
       "date": "2021-10-22"
     }
   ]
