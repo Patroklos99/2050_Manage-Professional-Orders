@@ -1,3 +1,4 @@
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -14,14 +15,9 @@ public class Verification {
     private JSONObject fichierErreur;
     private String fichierSortie;
     protected ArrayList<String> categorieValide = new ArrayList<>();
-    protected ArrayList<String> categorieTotale = new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
-            "groupe de discussion", "projet de recherche",
-            "rédaction professionnelle"};
-
-    protected static final String[] CATEGORIETOTAL = {"présentation",
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
@@ -72,16 +68,15 @@ public class Verification {
     }
 
     public void validationDateParCycle(String date, String categorie) throws ParseException {
-        if(formationAVerifier.getCycle().equals("2020-2022")){
-            if (validationDatesPeriode(date, categorie))
+        if(formationAVerifier.getCycle().equals("2020-2022"))
+            if (validationDatesPeriode(date, categorie, "2020-04-01", "2020-04-01"))
                 categorieValide.add(categorie);
-        }else if(formationAVerifier.getCycle().equals("2018-2020")){
-            if (validationDatesPeriode18(date, categorie))
+        else if(formationAVerifier.getCycle().equals("2018-2020"))
+            if (validationDatesPeriode(date, categorie, "2018-04-01", "2020-04-01"))
                 categorieValide.add(categorie);
-        }else{
-            if (validationDatesPeriode16(date, categorie))
+        else
+            if (validationDatesPeriode(date, categorie, "2016-04-01", "2018-07-01"))
                 categorieValide.add(categorie);
-        }
     }
 
     public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
@@ -96,45 +91,14 @@ public class Verification {
         return bonneDate;
     }
 
-    public boolean validationDatesPeriode(String date, String categorie)
+    public boolean validationDatesPeriode(String date, String categorie, String dateMin, String dateMax)
             throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
-            Date min = sdf.parse("2020-04-01");
-            Date max = sdf.parse("2022-04-01");
-            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
-
-
-    public boolean validationDatesPeriode18(String date, String categorie)
-            throws ParseException {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2018-04-01");
-            Date max = sdf.parse("2020-04-01");
-            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
-
-    public boolean validationDatesPeriode16(String date, String categorie)
-            throws ParseException {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2016-04-01");
-            Date max = sdf.parse("2018-07-01");
+            Date min = sdf.parse(dateMin);
+            Date max = sdf.parse(dateMax);
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,17 +127,75 @@ public class Verification {
             heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
                     pActiviteValide);
         }
-        for (int i = 0; i < categorieTotale.size(); i++)
-            heuresTotal += regarderCategorie(categorieTotale.get(i), pActiviteValide);
-        heuresTotal += formationAVerifier.getHeuresTransferees();
+        heuresTotal = ajusterHeureTotal(heuresTotal, pActiviteValide);
+        ecrireMsgErrHeureTotal(heuresTotal, pHeureMin);
+    }
 
-        ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
+    public int ajusterHeureTotal(int pHeureTotal, JSONArray pActiviteValide){
+        //Check max heures des catégories multiples sélectionné
+        ArrayList<String> tabCat = creeTableauCategorie(pActiviteValide);
+        pHeureTotal = enleverHeureTotal(pHeureTotal, tabCat, pActiviteValide);
+
+        //Check 10h par jour par catégorie
+        ArrayList<ArrayList<String>> tabCatDate
+                = creeTableauCategorieMultiple(pActiviteValide);
+        pHeureTotal = checkSameDate(pHeureTotal, tabCatDate, pActiviteValide);
+
+        //Ajout des heures transférées
+        pHeureTotal += formationAVerifier.getHeuresTransferees();
+
+        return pHeureTotal;
+    }
+
+    public int enleverHeureTotal(int pHTotal, ArrayList<String> pTabCat,
+                                 JSONArray pActiviteValide){
+        for (int i = 0; i < pTabCat.size(); i++){
+            pHTotal = checkHeureDiff(pTabCat.get(i), pActiviteValide, pHTotal);
+        }
+        return pHTotal;
+    }
+
+    public int checkHeureDiff(String pCategorie, JSONArray pActiviteValide,
+                              int pHeureTotal){
+        int heureDiff = regarderCategorie(pCategorie, pActiviteValide);
+
+        if(heureDiff >= 0)
+            return pHeureTotal - heureDiff;
+
+        return pHeureTotal;
+    }
+
+    public int checkSameDate(int pHTotal, ArrayList<ArrayList<String>> pTabCat,
+                             JSONArray pActiviteValide){
+        for (int i = 0; i < pTabCat.size(); i++){
+            int hCat = 0;
+            for (Object o : pActiviteValide) {
+                JSONObject act = (JSONObject) o;
+                if(pTabCat.get(i).get(0).equals(act.get("categorie"))
+                   && pTabCat.get(i).get(1).equals(act.get("date")))
+                    hCat += Integer.parseInt(act.get("heure").toString());
+            }
+            pHTotal = pHTotal - calculDébordement10H(hCat, 10);
+        }
+        return pHTotal;
+    }
+
+    public int calculDébordement10H(int pHeureCategorie, int pHeuremax){
+        int heure;
+
+        if(pHeureCategorie > pHeuremax)
+            heure = pHeureCategorie - pHeuremax;
+        else
+            heure = 0;
+
+        return heure;
     }
 
     public void validationHeuresParCycle(JSONArray pActiviteValide){
         if(formationAVerifier.getCycle().equals("2020-2022")){
             validationHeures(40,pActiviteValide);
-        }else{
+        }
+        else{
             validationHeures(42,pActiviteValide);
         }
     }
@@ -182,9 +204,9 @@ public class Verification {
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
         System.out.println(categorie);
-        if(categorieValide.contains(categorie) && !categorieTotale.contains(categorie)) {
+        if(categorieValide.contains(categorie)) {
             heuresTotal += Integer.parseInt(activite.get("heures").toString());
-            System.out.println("Las horas totales sont "+heuresTotal);
+            System.out.println("Heures total: "+ heuresTotal);
         }
         return heuresTotal;
     }
@@ -221,12 +243,11 @@ public class Verification {
         int heures = 0;
         for (Object o : activities) {
             JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().contentEquals(categorie))
+            if(activity.get("categorie").toString().equals(categorie))
                 heures += Integer.parseInt(activity.get("heures").toString());
         }
-        if(validationNbHeuresActivite(heureMax, heures))
-            return heureMax;
-        return heures;
+
+        return heures - heureMax;
     }
 
     public boolean validationCycle(){
@@ -238,8 +259,6 @@ public class Verification {
         }
         return bonCycle;
     }
-
-
 
     public void validationHeureFormat() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
@@ -296,18 +315,15 @@ public class Verification {
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide){
         int heure = 0;
 
-        if(pCategorie.equals("présentation") || pCategorie.equals("projet de recherche"))
+        if(pCategorie.equals("présentation")
+                || pCategorie.equals("projet de recherche"))
             heure = calculHeuresMaxCategories(pCategorie, 23, pActiviteValide);
 
-        if(pCategorie.equals("groupe de discussion") || pCategorie.equals("redaction professionnelle"))
-        heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
+        if(pCategorie.equals("groupe de discussion")
+                || pCategorie.equals("redaction professionnelle"))
+            heure = calculHeuresMaxCategories(pCategorie, 17, pActiviteValide);
 
         return heure;
-    }
-
-    public void ajouterCategorieTotale(){
-        for (int i = 0; i < CATEGORIETOTAL.length; i++)
-            categorieTotale.add(CATEGORIETOTAL[i]);
     }
 
     public void validationNumeroPermis() throws Exception {
@@ -331,6 +347,55 @@ public class Verification {
             causerErreurVerif("Les heures transférées doivent être un nombre");
     }
 
+    public ArrayList<String> creeTableauCategorie(JSONArray tabActiviteValide){
+        ArrayList<String> tabCategorie = new ArrayList<>();
+        for (Object o : tabActiviteValide) {
+            JSONObject activite = (JSONObject) o;
+            if(!tabCategorie.contains(activite.get("categorie").toString()))
+                tabCategorie.add(activite.get("categorie").toString());
+        }
+        return tabCategorie;
+    }
+
+    public ArrayList<ArrayList<String>> creeTableauCategorieMultiple(JSONArray tabActiviteValide){
+        ArrayList<ArrayList<String>> listCategorie = new ArrayList<>();
+        ArrayList<String> listActivite = new ArrayList<>();
+        for (Object o : tabActiviteValide) {
+            JSONObject act = (JSONObject) o;
+                for (Object oo : tabActiviteValide) {
+                    JSONObject act2 = (JSONObject) oo;
+                    if(isDateAndCategorieSame(act, act2) && !isItInList(listCategorie, act)){
+                        listActivite.add(act.get("categorie").toString());
+                        listActivite.add(act.get("date").toString());
+                        listCategorie.add(listActivite);
+                    }
+                }
+        }
+        return listCategorie;
+    }
+
+    public boolean isItInList(ArrayList<ArrayList<String>> pListCategorie, JSONObject pAct){
+        boolean inList = false;
+
+        for (int i = 0; i < pListCategorie.size(); i++){
+            if(pListCategorie.get(i).get(0).equals(pAct.get("categorie"))
+                    && pListCategorie.get(i).get(1).equals(pAct.get("date")))
+                inList = true;
+        }
+
+        return inList;
+    }
+
+    public boolean isDateAndCategorieSame(JSONObject pAct, JSONObject pAct2){
+        if(pAct.get("categorie").toString().equals(
+                pAct2.get("categorie").toString())
+                && pAct.get("date").toString().equals(
+                pAct2.get("date").toString()))
+            return true;
+
+        return false;
+    }
+
     public void causerErreurVerif(String pMessage) throws Exception {
         System.err.println(pMessage);
         ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est incomplet.");
@@ -341,7 +406,6 @@ public class Verification {
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
         JSONArray activiteValide = creationListeBonnesActivites();
-        ajouterCategorieTotale();
         if(validationCycle()) {
             validationDates();
             validationCategories(activiteValide);

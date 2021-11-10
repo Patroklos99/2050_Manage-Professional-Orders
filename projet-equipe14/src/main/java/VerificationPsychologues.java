@@ -38,21 +38,21 @@ public class VerificationPsychologues extends Verification {
             if (Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie))
+                if (validationDatesPeriode(date, categorie, "2020-04-01", "2020-04-01"))
                     categorieValide.add(categorie);
             }
         }
     }
 
     @Override
-    public boolean validationDatesPeriode(String date, String categorie)
+    public boolean validationDatesPeriode(String date, String categorie, String dateMin, String dateMax)
             throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
-            Date min = sdf.parse("2018-01-01");
-            Date max = sdf.parse("2023-01-01");
+            Date min = sdf.parse(dateMin);
+            Date max = sdf.parse(dateMax);
             bonneDate = conditionValidDatePeriode(entree, min, max, categorie);
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,7 +113,6 @@ public class VerificationPsychologues extends Verification {
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale(); //Heritage
         JSONArray activiteValide = creationListeBonnesActivites();
-        ajouterCategorieTotale(); //Heritage
         if(validationCycle()) { //Heritage
             validationDates(); //Class
             validationCategories(activiteValide); //Heritage
