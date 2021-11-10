@@ -1,4 +1,7 @@
 {
-   "Complet": true,
-   "Erreurs": []
+   "Complet": false,
+   "Erreurs":    [
+      "La date de la catégorie (cours) n'est pas valide.",
+      "La date de la catégorie (conférence) n'est pas valide."
+   ]
 }

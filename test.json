@@ -4,12 +4,6 @@
   "ordre": "psychologues",
   "activites": [
     {
-      "description": "Séminaire sur l'architecture contemporaine",
-      "categorie": "séminaire",
-      "heures": 10,
-      "date": "2021-01-07"
-    },
-    {
       "description": "Rédaction pour le magazine Architecture moderne",
       "categorie": "cours",
       "heures": 100,
