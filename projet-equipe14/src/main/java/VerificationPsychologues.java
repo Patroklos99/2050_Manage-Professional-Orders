@@ -95,6 +95,31 @@ public class VerificationPsychologues extends Verification {
         return heuresTotal;
     }
 
+    public int dixHeuresMax(JSONObject activite) {
+        int heures = Integer.parseInt(activite.get("heures").toString());
+        if(Integer.parseInt(activite.get("heures").toString()) > 10){
+            heures = 10;
+            ajoutMsgErreur("Le nombre d'heures de la categorie (" +
+                    activite.get("categorie") + ") dépasse la limite permise." +
+                    " Seulement 10h seront considérées dans les calculs.");
+        }
+        return heures;
+    }
+
+    @Override
+    public int calculHeuresMaxCategories(String categorie, int heureMax,
+                                         JSONArray activities){
+        int heures = 0;
+        for (Object o : activities) {
+            JSONObject activity = (JSONObject) o;
+            if(activity.get("categorie").toString().equals(categorie))
+                heures += dixHeuresMax(activity);
+        }
+        if(heures > heureMax)
+            heures = heureMax;
+        return heures;
+    }
+
     @Override
     public int regarderCategorie(String pCategorie, JSONArray pActiviteValide){
         int heure = 0;
