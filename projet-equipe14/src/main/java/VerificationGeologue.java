@@ -108,7 +108,7 @@ public class VerificationGeologue extends Verification{
         }
         if(!validationNbHeuresActivite(heureRequise, heures))
             ajoutMsgErreur("La catégorie " + categorie +
-                    "doit avoir un minimum de " + heureRequise + "h");
+                    "doit avoir un maximum de " + heureRequise + "h");
         return heures;
     }
 

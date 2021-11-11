@@ -246,8 +246,9 @@ public class Verification {
             if(activity.get("categorie").toString().equals(categorie))
                 heures += Integer.parseInt(activity.get("heures").toString());
         }
-
-        return heures - heureMax;
+        if(heures > heureMax)
+            heures = heureMax;
+        return heures;
     }
 
     public boolean validationCycle(){
