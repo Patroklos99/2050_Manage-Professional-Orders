@@ -38,7 +38,7 @@ public class VerificationPsychologues extends Verification {
             if (Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie, "2020-04-01", "2020-04-01"))
+                if (validationDatesPeriode(date, categorie, "2018-01-01", "2023-01-01"))
                     categorieValide.add(categorie);
             }
         }

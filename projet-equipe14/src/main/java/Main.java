@@ -24,7 +24,27 @@ public class Main {
     public static void verifImprime(JSONObject jsonObj,
                                     String fichierSortie) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj,fichierSortie);
-        Verification verificateur = new VerificationPsychologues(formation, fichierSortie);
+        Verification verificateur = choisiVerif(formation,fichierSortie);
+        verifNonNull(fichierSortie,verificateur);
         verificateur.imprimer(fichierSortie);
+    }
+
+    public static Verification choisiVerif(FormationContinue formation,String fichierSortie) throws Exception {
+        Verification verificateur = null;
+        if(formation.getOrdre().equals("architectes"))
+            verificateur = new Verification(formation,fichierSortie);
+        if(formation.getOrdre().equals("géologues"))
+            verificateur = new VerificationGeologue(formation,fichierSortie);
+        if(formation.getOrdre().equals("psychologues"))
+            verificateur = new VerificationPsychologues(formation, fichierSortie);
+        return verificateur;
+    }
+
+    public static void verifNonNull(String fichierSortie, Verification verificateur) throws Exception {
+        if(verificateur == null) {
+            System.err.println("L'ordre est incorrect");
+            FormationContinue.imprimerErreurStructure(fichierSortie);
+            System.exit(-1);
+        }
     }
 }
