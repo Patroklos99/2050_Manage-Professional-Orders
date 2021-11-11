@@ -112,7 +112,7 @@ public class VerificationPsychologues extends Verification {
         if(Integer.parseInt(activite.get("heures").toString()) > 10){
             heures = 10;
             ajoutMsgErreur("Le nombre d'heures de la categorie (" +
-                    activite.get("categorie") + ") depasse la limite permise." +
+                    activite.get("categorie") + ") dépasse la limite permise." +
                     " Seulement 10h seront considérées dans les calculs.");
         }
         return heures;
