@@ -38,7 +38,7 @@ public class VerificationPsychologues extends Verification {
             if (Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie, "2020-04-01", "2022-04-01"))
+                if (validationDatesPeriode(date, categorie, "2018-01-01", "2023-01-01"))
                     categorieValide.add(categorie);
             }
         }
@@ -82,20 +82,8 @@ public class VerificationPsychologues extends Verification {
             heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
                     pActiviteValide);
         }
-        heuresTotal += regarderCategorie("conférence", pActiviteValide);
+            heuresTotal += regarderCategorie("conférence", pActiviteValide);
         ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
-    }
-
-    public void validationHeureMinimum(String categorie, int heureRequise, JSONArray activite){
-        int heure = 0;
-        for (Object o : activite) {
-            JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().contentEquals(categorie))
-                heure += Integer.parseInt(activity.get("heures").toString());
-        }
-        if(heure < heureRequise)
-            ajoutMsgErreur("La catégorie " + categorie +
-                    " doit avoir au minimum " + heureRequise + "h");
     }
 
     @Override
@@ -103,33 +91,8 @@ public class VerificationPsychologues extends Verification {
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
         if(categorieValide.contains(categorie)&&!categorie.equals("conférence"))
-            heuresTotal += dixHeuresMax(activite);
+            heuresTotal += Integer.parseInt(activite.get("heures").toString());
         return heuresTotal;
-    }
-
-    public int dixHeuresMax(JSONObject activite) {
-        int heures = Integer.parseInt(activite.get("heures").toString());
-        if(Integer.parseInt(activite.get("heures").toString()) > 10){
-            heures = 10;
-            ajoutMsgErreur("Le nombre d'heures de la categorie (" +
-                    activite.get("categorie") + ") depasse la limite permise." +
-                    " Seulement 10h seront considérées dans les calculs.");
-        }
-        return heures;
-    }
-
-    @Override
-    public int calculHeuresMaxCategories(String categorie, int heureMax,
-                                         JSONArray activities){
-        int heures = 0;
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().equals(categorie))
-                heures += dixHeuresMax(activity);
-        }
-        if(heures > heureMax)
-            heures = heureMax;
-        return heures;
     }
 
     @Override
@@ -149,14 +112,12 @@ public class VerificationPsychologues extends Verification {
     @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale(); //Heritage
-        validationGenerale(); //Heritage
         JSONArray activiteValide = creationListeBonnesActivites();
         if(validationCycle()) { //Heritage
             validationDates(); //Class
             validationCategories(activiteValide); //Heritage
             validationHeures(90, activiteValide); //Class
-            //validationHeuresCategorieMultiple(activiteValide); //Class
-            validationHeureMinimum("cours", 25, activiteValide);
+            validationHeuresCategorieMultiple(activiteValide); //Class
         }
         imprimer(fichierSortie);
     }
