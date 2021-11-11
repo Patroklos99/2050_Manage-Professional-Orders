@@ -75,9 +75,9 @@ public class VerificationGeologue extends Verification{
             if(activity.get("categorie").toString().contentEquals(categorie))
                 heure += Integer.parseInt(activity.get("heures").toString());
         }
-        if(heureRequise < heure)
+        if(heureRequise > heure)
             ajoutMsgErreur("La catégorie " + categorie +
-                    "doit avoir au minimum " + heureRequise + "h");
+                    " doit avoir au minimum " + heureRequise + "h");
     }
 
 
@@ -108,7 +108,7 @@ public class VerificationGeologue extends Verification{
         }
         if(!validationNbHeuresActivite(heureRequise, heures))
             ajoutMsgErreur("La catégorie " + categorie +
-                    "doit avoir un maximum de " + heureRequise + "h");
+                    " doit avoir un maximum de " + heureRequise + "h");
         return heures;
     }
 
