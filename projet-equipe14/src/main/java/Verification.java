@@ -173,7 +173,7 @@ public class Verification {
                 JSONObject act = (JSONObject) o;
                 if(pTabCat.get(i).get(0).equals(act.get("categorie"))
                    && pTabCat.get(i).get(1).equals(act.get("date")))
-                    hCat += Integer.parseInt(act.get("heure").toString());
+                    hCat += Integer.parseInt(act.get("heures").toString());
             }
             pHTotal = pHTotal - calculDébordement10H(hCat, 10);
         }
@@ -203,10 +203,8 @@ public class Verification {
     public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
                                   JSONArray pActiviteValide){
         String categorie = activite.get("categorie").toString();
-        System.out.println(categorie);
         if(categorieValide.contains(categorie)) {
             heuresTotal += Integer.parseInt(activite.get("heures").toString());
-            System.out.println("Heures total: "+ heuresTotal);
         }
         return heuresTotal;
     }
