@@ -68,15 +68,15 @@ public class Verification {
     }
 
     public void validationDateParCycle(String date, String categorie) throws ParseException {
-        if(formationAVerifier.getCycle().equals("2020-2022"))
+        if (formationAVerifier.getCycle().equals("2020-2022")) {
             if (validationDatesPeriode(date, categorie, "2020-04-01", "2022-04-01"))
                 categorieValide.add(categorie);
-        else if(formationAVerifier.getCycle().equals("2018-2020"))
+        } else if (formationAVerifier.getCycle().equals("2018-2020")) {
             if (validationDatesPeriode(date, categorie, "2018-04-01", "2020-04-01"))
                 categorieValide.add(categorie);
-        else
-            if (validationDatesPeriode(date, categorie, "2016-04-01", "2018-07-01"))
-                categorieValide.add(categorie);
+        } else if (validationDatesPeriode(date, categorie, "2016-04-01", "2018-07-01")){
+            categorieValide.add(categorie);
+        }
     }
 
     public boolean conditionValidDatePeriode(Date dateEntree,Date dateMin,
