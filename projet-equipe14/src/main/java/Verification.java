@@ -1,4 +1,3 @@
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -312,7 +311,7 @@ public class Verification {
 
     public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
         if (formationAVerifier.getCycle().equals("2020-2022")) {
-            if (validDatePeriode20(date))
+            if (validDatePeriode(date))
                 bonneActivites.add(activite);
         } else if (formationAVerifier.getCycle().equals("2018-2020")) {
             if (validDatePeriode18(date))
@@ -323,7 +322,7 @@ public class Verification {
         }
     }
 
-    public boolean validDatePeriode20(String date){
+    public boolean validDatePeriode(String date){
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

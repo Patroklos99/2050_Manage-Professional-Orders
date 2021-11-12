@@ -51,6 +51,29 @@ public class VerificationGeologue extends Verification{
     }
 
     @Override
+    public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
+        if (formationAVerifier.getCycle().equals("2018-2021")) {
+            if (validDatePeriode(date))
+                bonneActivites.add(activite);
+        }
+    }
+
+    @Override
+    public boolean validDatePeriode(String date) {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-06-01");
+            Date max = sdf.parse("2021-06-01");
+            bonneDate = conditValidDate(entree,min, max);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    @Override
     public void verifierChampHeuresTransf() throws Exception {
         if(!formationAVerifier.isHeuresTransfereesNull())
             causerErreurVerif("Il ne devrait pas avoir des heures transférées");
@@ -83,8 +106,8 @@ public class VerificationGeologue extends Verification{
     @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
-        JSONArray activiteValide = creationListeBonnesActivites();
         if(validationCycle()) {
+            JSONArray activiteValide = creationListeBonnesActivites();
             validationToutes(activiteValide);
         }
         imprimer(fichierSortie);
@@ -93,7 +116,7 @@ public class VerificationGeologue extends Verification{
     public void validationToutes(JSONArray activiteValide) throws Exception {
         validationHeureFormat();
         validationDates();
-        validationCategories(activiteValide);
+        validationCategories();
         validationHeures(55, activiteValide);
         validationHeuresCategorieMultiple(activiteValide);
         validationHeureMinimum("cours", 22, activiteValide);
