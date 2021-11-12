@@ -74,8 +74,10 @@ public class Verification {
         } else if (formationAVerifier.getCycle().equals("2018-2020")) {
             if (validationDatesPeriode(date, categorie, "2018-04-01", "2020-04-01"))
                 categorieValide.add(categorie);
-        } else if (validationDatesPeriode(date, categorie, "2016-04-01", "2018-07-01")){
-            categorieValide.add(categorie);
+        } else {
+            if (validationDatesPeriode(date, categorie, "2016-04-01", "2018-07-01")){
+                categorieValide.add(categorie);
+            }
         }
     }
 
