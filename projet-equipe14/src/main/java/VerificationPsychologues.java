@@ -60,6 +60,29 @@ public class VerificationPsychologues extends Verification {
     }
 
     @Override
+    public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
+        if (formationAVerifier.getCycle().equals("2018-2023")) {
+            if (validDatePeriode(date))
+                bonneActivites.add(activite);
+        }
+    }
+
+    @Override
+    public boolean validDatePeriode(String date) {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-01-01");
+            Date max = sdf.parse("2023-01-01");
+            bonneDate = conditValidDate(entree,min, max);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    @Override
     public void validationHeuresCategorieMultiple(JSONArray activites){
         int heures = 0;
         for (Object o : activites) {
@@ -136,10 +159,10 @@ public class VerificationPsychologues extends Verification {
     @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale(); //Heritage
-        JSONArray activiteValide = creationListeBonnesActivites();
         if(validationCycle()) { //Heritage
+            JSONArray activiteValide = creationListeBonnesActivites();
             validationDates(); //Class
-            validationCategories(activiteValide); //Heritage
+            validationCategories(); //Heritage
             validationHeures(90, activiteValide); //Class
             validationHeuresCategorieMultiple(activiteValide); //Class
         }
