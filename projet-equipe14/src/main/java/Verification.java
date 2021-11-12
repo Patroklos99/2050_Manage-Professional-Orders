@@ -44,8 +44,8 @@ public class Verification {
         return fichierErreur;
     }
 
-    public void validationCategories(JSONArray activites){
-        for (Object o : activites) {
+    public void validationCategories(){
+        for (Object o : formationAVerifier.getActivites()) {
             JSONObject activite = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activite.get("categorie"))){
                 String nom = activite.get("categorie").toString();
@@ -499,7 +499,7 @@ public class Verification {
             validationDates();
             JSONArray activiteValide = creationListeBonnesActivites();
             System.out.println(activiteValide);
-            validationCategories(activiteValide);
+            validationCategories();
             validationHeuresTransferees(7, 0);
             validationHeuresParCycle(activiteValide);
             validationHeuresCategorieMultiple(activiteValide);
