@@ -1,4 +1,3 @@
-import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -44,8 +43,8 @@ public class Verification {
         return fichierErreur;
     }
 
-    public void validationCategories(JSONArray activites){
-        for (Object o : activites) {
+    public void validationCategories(){
+        for (Object o : formationAVerifier.getActivites()) {
             JSONObject activite = (JSONObject) o;
             if (!Arrays.asList(CATEGORIE).contains(activite.get("categorie"))){
                 String nom = activite.get("categorie").toString();
@@ -69,15 +68,14 @@ public class Verification {
 
     public void validationDateParCycle(String date, String categorie) throws ParseException {
         if (formationAVerifier.getCycle().equals("2020-2022")) {
-            if (validationDatesPeriode(date, categorie, "2020-04-01", "2022-04-01"))
+            if (validationDatesPeriode(date, categorie))
                 categorieValide.add(categorie);
         } else if (formationAVerifier.getCycle().equals("2018-2020")) {
-            if (validationDatesPeriode(date, categorie, "2018-04-01", "2020-04-01"))
+            if (validationDatesPeriode18(date, categorie))
                 categorieValide.add(categorie);
         } else {
-            if (validationDatesPeriode(date, categorie, "2016-04-01", "2018-07-01")){
+            if (validationDatesPeriode16(date, categorie))
                 categorieValide.add(categorie);
-            }
         }
     }
 
@@ -85,7 +83,7 @@ public class Verification {
                                              Date dateMax,
                                              String categorie){
         boolean bonneDate = true;
-        if (!(dateEntree.after(dateMin)) || !(dateEntree.before(dateMax))) {
+        if (dateEntree.before(dateMin) || dateEntree.after(dateMax)) {
             ajoutMsgErreur("La date de la catégorie ("+ categorie
                     + ") n'est pas valide.");
             bonneDate = false;
@@ -93,14 +91,41 @@ public class Verification {
         return bonneDate;
     }
 
-    public boolean validationDatesPeriode(String date, String categorie, String dateMin, String dateMax)
-            throws ParseException {
+    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
-            Date min = sdf.parse(dateMin);
-            Date max = sdf.parse(dateMax);
+            Date min = sdf.parse("2020-04-01");
+            Date max = sdf.parse("2022-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean validationDatesPeriode18(String date, String categorie) throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-04-01");
+            Date max = sdf.parse("2020-04-01");
+            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean validationDatesPeriode16(String date, String categorie) throws ParseException {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2016-04-01");
+            Date max = sdf.parse("2018-07-01");
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
@@ -273,15 +298,78 @@ public class Verification {
 
     public JSONArray creationListeBonnesActivites(){
         JSONArray bonneActivites = new JSONArray();
-        for (Object o : formationAVerifier.getActivites()){
+        JSONArray activities = validationFormatDate();
+        for (Object o : activities){
             JSONObject activite = (JSONObject) o;
-            if((activite.get("heures").toString()).matches("^[0-9]+$") &&
-                    Double.parseDouble((activite.get("heures")).toString())
-                            >= 1) {
-                bonneActivites.add(activite);
+            if(Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
+                String date = (String) activite.get("date");
+                validDateCycleListe(date,bonneActivites,activite);
             }
         }
         return bonneActivites;
+    }
+
+    public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
+        if (formationAVerifier.getCycle().equals("2020-2022")) {
+            if (validDatePeriode(date))
+                bonneActivites.add(activite);
+        } else if (formationAVerifier.getCycle().equals("2018-2020")) {
+            if (validDatePeriode18(date))
+                bonneActivites.add(activite);
+        } else {
+            if (validDatePeriode16(date))
+                bonneActivites.add(activite);
+        }
+    }
+
+    public boolean validDatePeriode(String date){
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2020-04-01");
+            Date max = sdf.parse("2022-04-01");
+            bonneDate = conditValidDate(entree,min, max);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean validDatePeriode18(String date){
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-04-01");
+            Date max = sdf.parse("2020-04-01");
+            bonneDate = conditValidDate(entree,min, max);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean validDatePeriode16(String date){
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2016-04-01");
+            Date max = sdf.parse("2018-07-01");
+            bonneDate = conditValidDate(entree,min, max);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    public boolean conditValidDate(Date dateEntree, Date dateMin, Date dateMax){
+        boolean bonneDate = true;
+        if (dateEntree.before(dateMin) || dateEntree.after(dateMax)) {
+            bonneDate = false;
+        }
+        return bonneDate;
     }
 
     public JSONArray validationFormatDate(){
@@ -406,10 +494,11 @@ public class Verification {
 
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
-        JSONArray activiteValide = creationListeBonnesActivites();
         if(validationCycle()) {
             validationDates();
-            validationCategories(activiteValide);
+            JSONArray activiteValide = creationListeBonnesActivites();
+            System.out.println(activiteValide);
+            validationCategories();
             validationHeuresTransferees(7, 0);
             validationHeuresParCycle(activiteValide);
             validationHeuresCategorieMultiple(activiteValide);

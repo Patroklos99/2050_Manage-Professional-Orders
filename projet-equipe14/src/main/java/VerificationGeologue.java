@@ -29,22 +29,44 @@ public class VerificationGeologue extends Verification{
             if (Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie, "2018-06-01", "2021-06-01"))
+                if (validationDatesPeriode(date, categorie))
                     categorieValide.add(categorie);
             }
         }
     }
 
     @Override
-    public boolean validationDatesPeriode(String date, String categorie, String dateMin, String dateMax)
-            throws ParseException {
+    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
-            Date min = sdf.parse(dateMin);
-            Date max = sdf.parse(dateMax);
+            Date min = sdf.parse("2018-06-01");
+            Date max = sdf.parse("2021-06-01");
             bonneDate = conditionValidDatePeriode(entree, min, max, categorie);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bonneDate;
+    }
+
+    @Override
+    public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
+        if (formationAVerifier.getCycle().equals("2018-2021")) {
+            if (validDatePeriode(date))
+                bonneActivites.add(activite);
+        }
+    }
+
+    @Override
+    public boolean validDatePeriode(String date) {
+        boolean bonneDate = true;
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date entree = sdf.parse(date);
+            Date min = sdf.parse("2018-06-01");
+            Date max = sdf.parse("2021-06-01");
+            bonneDate = conditValidDate(entree,min, max);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -82,41 +104,10 @@ public class VerificationGeologue extends Verification{
 
 
     @Override
-    public int regarderCategorie(String pCategorie, JSONArray pActiviteValide) {
-        int heure = 0;
-
-        if(pCategorie.equals("cours"))
-            heure = calculHeuresMaxCategories(pCategorie, 22, pActiviteValide);
-
-        if(pCategorie.equals("projet de recherche"));
-            heure = calculHeuresMaxCategories(pCategorie, 3, pActiviteValide);
-
-        if(pCategorie.equals("groupe de discussion"))
-            heure = calculHeuresMaxCategories(pCategorie, 1, pActiviteValide);
-
-        return heure;
-    }
-
-    @Override
-    public int calculHeuresMaxCategories(String categorie, int heureRequise,
-                                         JSONArray activities){
-        int heures = 0;
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().contentEquals(categorie))
-                heures += Integer.parseInt(activity.get("heures").toString());
-        }
-        if(!validationNbHeuresActivite(heureRequise, heures))
-            ajoutMsgErreur("La catégorie " + categorie +
-                    " doit avoir un maximum de " + heureRequise + "h");
-        return heures;
-    }
-
-    @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
-        JSONArray activiteValide = creationListeBonnesActivites();
         if(validationCycle()) {
+            JSONArray activiteValide = creationListeBonnesActivites();
             validationToutes(activiteValide);
         }
         imprimer(fichierSortie);
@@ -125,7 +116,7 @@ public class VerificationGeologue extends Verification{
     public void validationToutes(JSONArray activiteValide) throws Exception {
         validationHeureFormat();
         validationDates();
-        validationCategories(activiteValide);
+        validationCategories();
         validationHeures(55, activiteValide);
         validationHeuresCategorieMultiple(activiteValide);
         validationHeureMinimum("cours", 22, activiteValide);
