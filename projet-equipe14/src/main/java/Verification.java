@@ -5,6 +5,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.*;
@@ -298,7 +302,7 @@ public class Verification {
 
     public JSONArray creationListeBonnesActivites(){
         JSONArray bonneActivites = new JSONArray();
-        JSONArray activities = validationFormatDate();
+        JSONArray activities = validationFormatDate1();
         for (Object o : activities){
             JSONObject activite = (JSONObject) o;
             if(Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
@@ -377,15 +381,44 @@ public class Verification {
         JSONArray dateValide = new JSONArray();
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
-            if (((activite.get("date").toString()).matches(
-                    "[0-9]{4}[-]{1}[0-1]{1}[0-9]{1}[-]{1}[0-3]{1}[0-9]{1}"))) {
-                dateValide.add(activite);
-            }else {
-                afficherErrFormatDate(activite);
-            }
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+                    .withResolverStyle(ResolverStyle.STRICT);
+            validationBonneDate(dateValide,activite,dateTimeFormatter);
         }
         return dateValide;
     }
+
+    public void validationBonneDate(JSONArray dateValide, JSONObject activite, DateTimeFormatter dateTimeFormatter){
+        try {
+            LocalDate date = LocalDate.parse(activite.get("date").toString(), dateTimeFormatter);
+            dateValide.add(activite);
+        } catch (DateTimeParseException e){
+            afficherErrFormatDate(activite);
+        }
+    }
+
+    public JSONArray validationFormatDate1(){
+        JSONArray activites = formationAVerifier.getActivites();
+        JSONArray dateValide = new JSONArray();
+        for (Object o : activites) {
+            JSONObject activite = (JSONObject) o;
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+                    .withResolverStyle(ResolverStyle.STRICT);
+            validationBonneDate1(dateValide,activite,dateTimeFormatter);
+        }
+        return dateValide;
+    }
+
+    public void validationBonneDate1(JSONArray dateValide, JSONObject activite, DateTimeFormatter dateTimeFormatter){
+        try {
+            LocalDate date = LocalDate.parse(activite.get("date").toString(), dateTimeFormatter);
+            dateValide.add(activite);
+        } catch (DateTimeParseException e){
+
+        }
+    }
+
+
 
     public void afficherErrFormatDate(JSONObject activite){
         String categorie = (String) activite.get("categorie");
@@ -497,7 +530,6 @@ public class Verification {
         if(validationCycle()) {
             validationDates();
             JSONArray activiteValide = creationListeBonnesActivites();
-            System.out.println(activiteValide);
             validationCategories();
             validationHeuresTransferees(7, 0);
             validationHeuresParCycle(activiteValide);
