@@ -17,7 +17,8 @@ public class VerificationGeologue extends Verification{
             "groupe de discussion", "projet de recherche",
             "rédaction professionnelle"};
 
-    public VerificationGeologue(FormationContinue formation, String fichierSortie) throws Exception {
+    public VerificationGeologue(FormationContinue formation,
+                                String fichierSortie) throws Exception {
         super(formation, fichierSortie);
     }
 
@@ -30,13 +31,14 @@ public class VerificationGeologue extends Verification{
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
                 if (validationDatesPeriode(date, categorie))
-                    categorieValide.add(categorie);
+                    ajoutCategorieListe(categorie);
             }
         }
     }
 
     @Override
-    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
+    public boolean validationDatesPeriode(String date, String categorie)
+            throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -51,7 +53,8 @@ public class VerificationGeologue extends Verification{
     }
 
     @Override
-    public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
+    public void validDateCycleListe(String date, JSONArray bonneActivites,
+                                    JSONObject activite){
         if (formationAVerifier.getCycle().equals("2018-2021")) {
             if (validDatePeriode(date))
                 bonneActivites.add(activite);
@@ -74,9 +77,32 @@ public class VerificationGeologue extends Verification{
     }
 
     @Override
+    public void validationHeures1(int pHeureMin, JSONArray pActiviteValide){
+        JSONObject activite;
+        creationListeCategorieHeure();
+        for (Object o : pActiviteValide) {
+            activite = (JSONObject) o;
+            ajoutHeureListe(activite);
+        }
+        calculHeureTotal(pHeureMin);
+    }
+
+    @Override
+    public void calculHeureTotal(int heureReq){
+        int heureTotal = 0;
+        for(int i = 0; i < heureCategorie.size(); i++){
+            heureTotal = heureTotal + heureCategorie.get(i).getHeure();
+        }
+        if(heureTotal < heureReq)
+            ajoutMsgErreur("L'etudiant a complete seulement " +
+                    heureTotal + " de " + heureReq + "h");
+    }
+
+    @Override
     public void verifierChampHeuresTransf() throws Exception {
         if(!formationAVerifier.isHeuresTransfereesNull())
-            causerErreurVerif("Il ne devrait pas avoir des heures transférées");
+            causerErreurVerif("Il ne devrait pas avoir des heures " +
+                    "transférées");
     }
 
     @Override
@@ -90,12 +116,13 @@ public class VerificationGeologue extends Verification{
         return bonCycle;
     }
 
-    public void validationHeureMinimum(String categorie, int heureRequise, JSONArray activite){
+    public void validationHeureMinimum(String categorie, int heureRequise){
+        CalculHeureCategorie calculHeure;
         int heure = 0;
-        for (Object o : activite) {
-            JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().contentEquals(categorie))
-                heure += Integer.parseInt(activity.get("heures").toString());
+        for (int i = 0; i < heureCategorie.size(); i++){
+            calculHeure = heureCategorie.get(i);
+            if(calculHeure.getCategorie().equals(categorie))
+                heure = calculHeure.getHeure();
         }
         if(heureRequise > heure)
             ajoutMsgErreur("La catégorie " + categorie +
@@ -114,13 +141,11 @@ public class VerificationGeologue extends Verification{
     }
 
     public void validationToutes(JSONArray activiteValide) throws Exception {
-        validationHeureFormat();
         validationDates();
         validationCategories();
-        validationHeures(55, activiteValide);
-        validationHeuresCategorieMultiple(activiteValide);
-        validationHeureMinimum("cours", 22, activiteValide);
-        validationHeureMinimum("projet de recherche", 3, activiteValide);
-        validationHeureMinimum("groupe de discussion", 1, activiteValide);
+        validationHeures1(55, activiteValide);
+        validationHeureMinimum("cours", 22);
+        validationHeureMinimum("projet de recherche", 3);
+        validationHeureMinimum("groupe de discussion", 1);
     }
 }
