@@ -39,50 +39,21 @@ public class VerificationPsychologues extends Verification {
             if (Arrays.asList(CATEGORIE).contains(activite.get("categorie"))) {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
-                if (validationDatesPeriode(date, categorie))
+                if (validationDatesPeriode(date,categorie,"2018-01-01",
+                        "2023-01-01"))
                     ajoutCategorieListe(categorie);
             }
         }
     }
 
-    @Override
-    public boolean validationDatesPeriode(String date, String categorie)
-            throws ParseException {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2018-01-01");
-            Date max = sdf.parse("2023-01-01");
-            bonneDate = conditionValidDatePeriode(entree, min, max, categorie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
 
     @Override
     public void validDateCycleListe(String date, JSONArray bonneActivites,
                                     JSONObject activite){
         if (formationAVerifier.getCycle().equals("2018-2023")) {
-            if (validDatePeriode(date))
+            if (validDatePeriode(date,"2018-01-01","2023-01-01"))
                 bonneActivites.add(activite);
         }
-    }
-
-    @Override
-    public boolean validDatePeriode(String date) {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2018-01-01");
-            Date max = sdf.parse("2023-01-01");
-            bonneDate = conditValidDate(entree,min, max);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
     }
 
 

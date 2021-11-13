@@ -70,13 +70,13 @@ public class Verification {
     public void validationDateParCycle(String date, String categorie)
             throws ParseException {
         if (formationAVerifier.getCycle().equals("2020-2022")) {
-            if (validationDatesPeriode(date, categorie))
+            if(validationDatesPeriode(date,categorie,"2020-04-01","2022-04-01"))
                 ajoutCategorieListe(categorie);
         } else if (formationAVerifier.getCycle().equals("2018-2020")) {
-            if (validationDatesPeriode18(date, categorie))
+            if(validationDatesPeriode(date,categorie,"2018-04-01","2020-04-01"))
                 ajoutCategorieListe(categorie);
         } else {
-            if (validationDatesPeriode16(date, categorie))
+            if(validationDatesPeriode(date,categorie,"2016-04-01","2018-07-01"))
                 ajoutCategorieListe(categorie);
         }
     }
@@ -99,44 +99,15 @@ public class Verification {
         return bonneDate;
     }
 
-    public boolean validationDatesPeriode(String date, String categorie)
+    public boolean validationDatesPeriode(String date, String categorie,
+                                          String dateMin, String dateMax)
             throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
-            Date min = sdf.parse("2020-04-01");
-            Date max = sdf.parse("2022-04-01");
-            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
-
-    public boolean validationDatesPeriode18(String date, String categorie)
-            throws ParseException {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2018-04-01");
-            Date max = sdf.parse("2020-04-01");
-            bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
-
-    public boolean validationDatesPeriode16(String date, String categorie)
-            throws ParseException {
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2016-04-01");
-            Date max = sdf.parse("2018-07-01");
+            Date min = sdf.parse(dateMin);
+            Date max = sdf.parse(dateMax);
             bonneDate = conditionValidDatePeriode(entree,min, max,categorie);
         } catch (Exception e) {
             e.printStackTrace();
@@ -320,52 +291,24 @@ public class Verification {
     public void validDateCycleListe(String date, JSONArray bonneActivites,
                                     JSONObject activite){
         if (formationAVerifier.getCycle().equals("2020-2022")) {
-            if (validDatePeriode(date))
+            if (validDatePeriode(date,"2020-04-01","2022-04-01"))
                 bonneActivites.add(activite);
         } else if (formationAVerifier.getCycle().equals("2018-2020")) {
-            if (validDatePeriode18(date))
+            if (validDatePeriode(date,"2018-04-01","2020-04-01"))
                 bonneActivites.add(activite);
         } else {
-            if (validDatePeriode16(date))
+            if (validDatePeriode(date,"2016-04-01","2018-07-01"))
                 bonneActivites.add(activite);
         }
     }
 
-    public boolean validDatePeriode(String date){
+    public boolean validDatePeriode(String date,String dateMin,String dateMax){
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date entree = sdf.parse(date);
-            Date min = sdf.parse("2020-04-01");
-            Date max = sdf.parse("2022-04-01");
-            bonneDate = conditValidDate(entree,min, max);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
-
-    public boolean validDatePeriode18(String date){
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2018-04-01");
-            Date max = sdf.parse("2020-04-01");
-            bonneDate = conditValidDate(entree,min, max);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bonneDate;
-    }
-
-    public boolean validDatePeriode16(String date){
-        boolean bonneDate = true;
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date entree = sdf.parse(date);
-            Date min = sdf.parse("2016-04-01");
-            Date max = sdf.parse("2018-07-01");
+            Date min = sdf.parse(dateMin);
+            Date max = sdf.parse(dateMax);
             bonneDate = conditValidDate(entree,min, max);
         } catch (Exception e) {
             e.printStackTrace();
