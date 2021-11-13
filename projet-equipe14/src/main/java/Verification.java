@@ -1,16 +1,10 @@
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.*;
+import java.text.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
-import java.util.Arrays;
-import java.util.Date;
+import java.time.format.*;
 import java.util.*;
 
 public class Verification {
@@ -18,7 +12,8 @@ public class Verification {
     private JSONObject fichierErreur;
     private String fichierSortie;
     protected ArrayList<String> categorieValide = new ArrayList<>();
-    protected ArrayList<CalculHeureCategorie> heureCategorie = new ArrayList<>();
+    protected ArrayList<CalculHeureCategorie> heureCategorie =
+            new ArrayList<>();
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée", "présentation",
@@ -28,7 +23,8 @@ public class Verification {
     private String[] categoriesRequise = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée"};
 
-    public Verification(FormationContinue formation, String fichierSortie) throws Exception {
+    public Verification(FormationContinue formation, String fichierSortie)
+            throws Exception {
         this.formationAVerifier = formation;
         this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
@@ -71,7 +67,8 @@ public class Verification {
         }
     }
 
-    public void validationDateParCycle(String date, String categorie) throws ParseException {
+    public void validationDateParCycle(String date, String categorie)
+            throws ParseException {
         if (formationAVerifier.getCycle().equals("2020-2022")) {
             if (validationDatesPeriode(date, categorie))
                 ajoutCategorieListe(categorie);
@@ -102,7 +99,8 @@ public class Verification {
         return bonneDate;
     }
 
-    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
+    public boolean validationDatesPeriode(String date, String categorie)
+            throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -116,7 +114,8 @@ public class Verification {
         return bonneDate;
     }
 
-    public boolean validationDatesPeriode18(String date, String categorie) throws ParseException {
+    public boolean validationDatesPeriode18(String date, String categorie)
+            throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -130,7 +129,8 @@ public class Verification {
         return bonneDate;
     }
 
-    public boolean validationDatesPeriode16(String date, String categorie) throws ParseException {
+    public boolean validationDatesPeriode16(String date, String categorie)
+            throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -298,7 +298,8 @@ public class Verification {
             JSONObject activity = (JSONObject) o;
             if (!(activity.get("heures").toString()).matches("^[0-9]+$") ||
                     Double.parseDouble((activity.get("heures")).toString()) < 1)
-                causerErreurVerif("L'activité " + activity.get("description")
+                causerErreurVerif("L'activité "
+                        + activity.get("description")
                         + " n'a pas un nombre valide d'heures");
         }
     }
@@ -392,9 +393,11 @@ public class Verification {
         return dateValide;
     }
 
-    public void validationBonneDate(JSONArray dateValide, JSONObject activite, DateTimeFormatter dateTimeFormatter){
+    public void validationBonneDate(JSONArray dateValide, JSONObject activite,
+                                    DateTimeFormatter dateTimeFormatter){
         try {
-            LocalDate date = LocalDate.parse(activite.get("date").toString(), dateTimeFormatter);
+            LocalDate date = LocalDate.parse(activite.get("date").toString(),
+                    dateTimeFormatter);
             dateValide.add(activite);
         } catch (DateTimeParseException e){
             afficherErrFormatDate(activite);
@@ -406,16 +409,19 @@ public class Verification {
         JSONArray dateValide = new JSONArray();
         for (Object o : activites) {
             JSONObject activite = (JSONObject) o;
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd")
+            DateTimeFormatter dateTimeFormatter =
+                    DateTimeFormatter.ofPattern("uuuu-MM-dd")
                     .withResolverStyle(ResolverStyle.STRICT);
             validationBonneDate1(dateValide,activite,dateTimeFormatter);
         }
         return dateValide;
     }
 
-    public void validationBonneDate1(JSONArray dateValide, JSONObject activite, DateTimeFormatter dateTimeFormatter){
+    public void validationBonneDate1(JSONArray dateValide, JSONObject activite,
+                                     DateTimeFormatter dateTimeFormatter){
         try {
-            LocalDate date = LocalDate.parse(activite.get("date").toString(), dateTimeFormatter);
+            LocalDate date = LocalDate.parse(activite.get("date").toString(),
+                    dateTimeFormatter);
             dateValide.add(activite);
         } catch (DateTimeParseException e){
             e.getClass();
@@ -443,28 +449,32 @@ public class Verification {
     public void validationNumeroPermis() throws Exception {
         String numeroPermis = formationAVerifier.getNumeroPermis();
         if(!numeroPermis.matches("^[ARSZ]{1}[0-9]{4}$"))
-            causerErreurVerif("Le numero de permis n'est pas du bon format (A, R, S ou Z suivit de " +
-                    "4 chiffres).");
+            causerErreurVerif("Le numero de permis n'est pas du bon " +
+                    "format (A, R, S ou Z suivit de 4 chiffres).");
     }
 
     public void validationDescription() throws Exception {
         for (Object o : formationAVerifier.getActivites()) {
             JSONObject activity = (JSONObject) o;
-            if (!(activity.get("description").toString()).matches("^.{21,}$"))
-                causerErreurVerif("La description de l'activité " + activity.get("description")
+            if (!(activity.get("description").toString()).
+                    matches( "^.{21,}$"))
+                causerErreurVerif("La description de l'activité " +
+                        activity.get("description")
                         + " ne contient pas plus de 20 caractères.");
         }
     }
 
     public void verifierChampHeuresTransf() throws Exception {
         if(formationAVerifier.isHeuresTransfereesNull())
-            causerErreurVerif("Les heures transférées doivent être un nombre");
+            causerErreurVerif("Les heures transférées doivent être " +
+                    "un nombre");
     }
 
 
     public void causerErreurVerif(String pMessage) throws Exception {
         System.err.println(pMessage);
-        ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est incomplet.");
+        ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est " +
+                "incomplet.");
         imprimer(getFichierSortie());
         System.exit( -1 );
     }
