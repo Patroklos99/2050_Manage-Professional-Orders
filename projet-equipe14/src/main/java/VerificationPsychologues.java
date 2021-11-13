@@ -14,7 +14,8 @@ public class VerificationPsychologues extends Verification {
             "rédaction professionnelle"};
 
 
-    public VerificationPsychologues(FormationContinue formation, String fichierSortie) throws Exception {
+    public VerificationPsychologues(FormationContinue formation,
+                                    String fichierSortie) throws Exception {
         super(formation, fichierSortie);
     }
 
@@ -39,13 +40,14 @@ public class VerificationPsychologues extends Verification {
                 String date = (String) activite.get("date");
                 String categorie = (String) activite.get("categorie");
                 if (validationDatesPeriode(date, categorie))
-                    categorieValide.add(categorie);
+                    ajoutCategorieListe(categorie);
             }
         }
     }
 
     @Override
-    public boolean validationDatesPeriode(String date, String categorie) throws ParseException {
+    public boolean validationDatesPeriode(String date, String categorie)
+            throws ParseException {
         boolean bonneDate = true;
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -60,7 +62,8 @@ public class VerificationPsychologues extends Verification {
     }
 
     @Override
-    public void validDateCycleListe(String date, JSONArray bonneActivites, JSONObject activite){
+    public void validDateCycleListe(String date, JSONArray bonneActivites,
+                                    JSONObject activite){
         if (formationAVerifier.getCycle().equals("2018-2023")) {
             if (validDatePeriode(date))
                 bonneActivites.add(activite);
@@ -82,78 +85,44 @@ public class VerificationPsychologues extends Verification {
         return bonneDate;
     }
 
-    @Override
-    public void validationHeuresCategorieMultiple(JSONArray activites){
-        int heures = 0;
-        for (Object o : activites) {
-            JSONObject activite = (JSONObject) o;
-            if(activite.get("categorie").equals("cours"))
-                heures += Integer.parseInt(activite.get("heures").toString());
-        }
-        if(!validationNbHeuresActivite(25, heures))
-            ajoutMsgErreur("Les heures totales de la catégorie -cours- " +
-                    "n'est pas pas superieur a 25h");
-    }
 
     @Override
-    public void validationHeures(int pHeureMin, JSONArray pActiviteValide){
-        int heuresTotal = 0;
-        JSONObject activite;
-        for (Object o : pActiviteValide) {
-            activite = (JSONObject) o;
-            heuresTotal = ecrireHeuresTotal(heuresTotal, activite,
-                    pActiviteValide);
-        }
-            heuresTotal += regarderCategorie("conférence", pActiviteValide);
-        ecrireMsgErrHeureTotal(heuresTotal, pHeureMin );
-    }
-
-    @Override
-    public int ecrireHeuresTotal (int heuresTotal, JSONObject activite,
-                                  JSONArray pActiviteValide){
-        String categorie = activite.get("categorie").toString();
-        if(categorieValide.contains(categorie)&&!categorie.equals("conférence"))
-            heuresTotal += Integer.parseInt(activite.get("heures").toString());
-        return heuresTotal;
-    }
-
-    public int dixHeuresMax(JSONObject activite) {
-        int heures = Integer.parseInt(activite.get("heures").toString());
-        if(Integer.parseInt(activite.get("heures").toString()) > 10){
-            heures = 10;
-            ajoutMsgErreur("Le nombre d'heures de la categorie (" +
-                    activite.get("categorie") + ") dépasse la limite permise." +
-                    " Seulement 10h seront considérées dans les calculs.");
-        }
-        return heures;
-    }
-
-    @Override
-    public int calculHeuresMaxCategories(String categorie, int heureMax,
-                                         JSONArray activities){
-        int heures = 0;
-        for (Object o : activities) {
-            JSONObject activity = (JSONObject) o;
-            if(activity.get("categorie").toString().equals(categorie))
-                heures += dixHeuresMax(activity);
-        }
-        if(heures > heureMax)
-            heures = heureMax;
-        return heures;
-    }
-
-    @Override
-    public int regarderCategorie(String pCategorie, JSONArray pActiviteValide){
-        int heure = 0;
+    public int regarderCategorie(String pCategorie, int heureCat){
+        int heure = heureCat;
         if(pCategorie.equals("conférence"))
-            heure = calculHeuresMaxCategories(pCategorie, 15, pActiviteValide);
+            heure = calculHeuresMaxCategories(heureCat, 15);
         return heure;
+    }
+
+    @Override
+    public void calculHeureTotal(int heureReq){
+        int heureTotal = 0;
+        for(int i = 0; i < heureCategorie.size(); i++){
+            heureTotal = heureTotal + heureCategorie.get(i).getHeure();
+        }
+        if(heureTotal < heureReq)
+            ajoutMsgErreur("L'etudiant a complete seulement " +
+                    heureTotal + " de " + heureReq + "h");
+    }
+
+    public void validationHeureMinimum(String categorie, int heureRequise){
+        CalculHeureCategorie calculHeure;
+        int heure = 0;
+        for (int i = 0; i < heureCategorie.size(); i++){
+            calculHeure = heureCategorie.get(i);
+            if(calculHeure.getCategorie().equals(categorie))
+                heure = calculHeure.getHeure();
+        }
+        if(heureRequise > heure)
+            ajoutMsgErreur("La catégorie " + categorie +
+                    " doit avoir au minimum " + heureRequise + "h");
     }
 
     @Override
     public void verifierChampHeuresTransf() throws Exception {
         if(!formationAVerifier.isHeuresTransfereesNull())
-            causerErreurVerif("Il ne devrait pas avoir des heures transférées");
+            causerErreurVerif("Il ne devrait pas avoir des heures " +
+                    "transférées");
     }
 
     @Override
@@ -163,8 +132,8 @@ public class VerificationPsychologues extends Verification {
             JSONArray activiteValide = creationListeBonnesActivites();
             validationDates(); //Class
             validationCategories(); //Heritage
-            validationHeures(90, activiteValide); //Class
-            validationHeuresCategorieMultiple(activiteValide); //Class
+            validationHeures1(90, activiteValide); //Class
+            validationHeureMinimum("cours", 25);
         }
         imprimer(fichierSortie);
     }
