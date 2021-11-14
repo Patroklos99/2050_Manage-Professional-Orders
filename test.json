@@ -6,7 +6,14 @@
     {
       "description": "Rédaction pour le magazine Architecture moderne",
       "categorie": "rédaction professionnelle",
+      "heures": "1",
       "date": "2018-06-01"
-
+    },
+    {
+      "description": "Rédaction pour le magazine Architecture moderne",
+      "categorie": "rédaction professionnelle",
+      "heures": "10",
+      "date": "2018-06-01"
+    }
   ]
 }

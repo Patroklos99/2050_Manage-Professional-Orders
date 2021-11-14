@@ -1,7 +1,7 @@
 {
    "Complet": false,
    "Erreurs":    [
-      "L'etudiant a complete seulement 24 de 55h",
+      "L'etudiant a complete seulement 11 de 55h",
       "La catégorie cours doit avoir au minimum 22h",
       "La catégorie projet de recherche doit avoir au minimum 3h",
       "La catégorie groupe de discussion doit avoir au minimum 1h"
