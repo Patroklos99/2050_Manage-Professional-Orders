@@ -32,7 +32,6 @@ public class Verification {
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
 
-
         validationFinal(fichierSortie);
     }
 
@@ -128,7 +127,6 @@ public class Verification {
         }
     }
 
-
     public void validationHeuresParCycle(JSONArray pActiviteValide){
         if(formationAVerifier.getCycle().equals("2020-2022")){
             validationHeures1(40,pActiviteValide);
@@ -137,7 +135,6 @@ public class Verification {
             validationHeures1(42,pActiviteValide);
         }
     }
-
 
     public void validationHeuresCategorieMultiple(JSONArray activites){
         int heures = 0;
@@ -166,7 +163,6 @@ public class Verification {
         return heures;
     }
 
-
     public int regarderCategorie(String pCategorie, int heureCat){
         int heure = heureCat;
 
@@ -180,7 +176,6 @@ public class Verification {
 
         return heure;
     }
-
 
     public void validationHeures1(int pHeureMin, JSONArray pActiviteValide){
         JSONObject activite;
@@ -247,11 +242,13 @@ public class Verification {
         for(int i = 0; i < heureCategorie.size(); i++){
             heureTotal = heureTotal + heureCategorie.get(i).getHeure();
         }
+
+        System.out.println(heureTotal + " Heures complété");
+
         if(heureTotal < heureReq)
             ajoutMsgErreur("L'etudiant a complete seulement " + heureTotal +
                     " de " + heureReq + "h");
     }
-
 
     public boolean validationCycle(){
         boolean bonCycle = true;
@@ -370,8 +367,6 @@ public class Verification {
             e.getClass();
         }
     }
-
-
 
     public void afficherErrFormatDate(JSONObject activite){
         String categorie = (String) activite.get("categorie");

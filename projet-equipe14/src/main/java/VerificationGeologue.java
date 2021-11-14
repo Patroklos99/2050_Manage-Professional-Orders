@@ -101,7 +101,6 @@ public class VerificationGeologue extends Verification{
                     " doit avoir au minimum " + heureRequise + "h");
     }
 
-
     @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();

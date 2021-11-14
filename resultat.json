@@ -1,7 +1,9 @@
 {
    "Complet": false,
    "Erreurs":    [
-      "La date de la catégorie (cours) n'est pas valide.",
-      "La date de la catégorie (conférence) n'est pas valide."
+      "L'etudiant a complete seulement 11 de 55h",
+      "La catégorie cours doit avoir au minimum 22h",
+      "La catégorie projet de recherche doit avoir au minimum 3h",
+      "La catégorie groupe de discussion doit avoir au minimum 1h"
    ]
 }

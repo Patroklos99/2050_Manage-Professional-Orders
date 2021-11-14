@@ -1,19 +1,19 @@
 {
   "numero_de_permis": "A0001",
-  "cycle": "2018-2023",
-  "ordre": "psychologues",
+  "cycle": "2018-2021",
+  "ordre": "géologues",
   "activites": [
     {
       "description": "Rédaction pour le magazine Architecture moderne",
-      "categorie": "cours",
-      "heures": 100,
-      "date": "2021-10-22"
+      "categorie": "rédaction professionnelle",
+      "heures": "1",
+      "date": "2018-06-01"
     },
     {
       "description": "Rédaction pour le magazine Architecture moderne",
-      "categorie": "conférence",
-      "heures": 140,
-      "date": "2021-10-22"
+      "categorie": "rédaction professionnelle",
+      "heures": "10",
+      "date": "2018-06-01"
     }
   ]
 }

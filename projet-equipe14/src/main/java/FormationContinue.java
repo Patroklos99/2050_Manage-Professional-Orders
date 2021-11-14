@@ -10,8 +10,9 @@ public class FormationContinue {
     protected boolean isHeuresTransfereesNull;
     private JSONArray activites;
     private JSONObject fichier;
-    final private String msgErrAct = "Les activités doivent être stocké dans " +
+    final private String msgErrAct = "Les activités doivent être stocké dans "+
             "un tableau";
+    final private String msgErrActMiss = "Il manque un champs dans une activité";
     final private String msgErrNo = "Le numéros de permis doit être une " +
             "chaîne de caractères";
     final private String msgErrCyc = "Le cycle doit être une chaîne de " +
@@ -28,7 +29,7 @@ public class FormationContinue {
         this.cycle = fichier.get("cycle").toString();
         assignerChampHeuresTranf(fichier);
         this.activites = (JSONArray) fichier.get("activites");
-
+        verifierAct(fichier,fichierSortie);
     }
 
     public JSONObject getFichier(){
@@ -75,13 +76,23 @@ public class FormationContinue {
             afficheErreur(msgErrOrd,fichierSortie);
     }
 
+    public void verifierAct(JSONObject f,String fichierSortie)
+            throws Exception {
+        for (int i = 0; i < this.activites.size(); i++){
+            JSONObject objectAct = (JSONObject) this.activites.get(i);
+            JSONArray caractAct = objectAct.toJSONArray(objectAct.names());
+
+            if(caractAct.size() < 4)
+                afficheErreur(msgErrActMiss, fichierSortie);
+        }
+    }
+
     public void afficheErreur(String pMessage, String fichierSortie)
             throws Exception {
         System.err.println(pMessage);
         imprimerErreurStructure(fichierSortie);
         System.exit( -1 );
     }
-
 
     /**
      * Code inspire de la methode save() du projet json-lib-ex ecrit par
