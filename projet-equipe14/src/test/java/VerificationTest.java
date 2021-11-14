@@ -28,6 +28,12 @@ class VerificationTest {
         activity.put("heures", 10);
         activity.put("date", "2018-01-01");
         activities.add(0,activity);
+        JSONObject activity2 = new JSONObject();
+        activity2.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity2.put("categorie", "conférence");
+        activity2.put("heures", 8);
+        activity2.put("date", "2018-01-01");
+        activities.add(1,activity2);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json");
         verif = new MockVerification(formation, "resultat.json");
@@ -35,10 +41,9 @@ class VerificationTest {
 
     @Test
     void getFichierSortie() {
-    }
-
-    @Test
-    void resultat() {
+        String actual = verif.getFichierSortie();
+        String expected = "resultat.json";
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -66,7 +71,7 @@ class VerificationTest {
 
         verif.validationCategories();
         String actual2 =  verif.getErreur();
-        String expected2 = "La catégorie bidon n'existe pas dans la banque de catégories";
+        String expected2 = "";
         assertEquals(expected2, actual2);
     }
 
@@ -74,7 +79,7 @@ class VerificationTest {
     void validationDates() throws Exception {
         verif.validationDates();
         int actual =  verif.categorieValide.size();
-        int expected = 1;
+        int expected = 2;
         assertEquals(expected, actual);
 
         activities = new JSONArray();
@@ -146,10 +151,8 @@ class VerificationTest {
     @Test
     void validationHeuresTransferees() throws Exception {
         verif.validationHeuresTransferees(7, 0);
-        String actual =  verif.getErreur();
-        String expected = "Le nombre d'heures transferees ("+ 15
-                +") depasse la limite permise, seulement" +
-                " 7h seront transferees";
+        int actual =  verif.formationAVerifier.getHeuresTransferees();
+        int expected = 7;
         assertEquals(expected, actual);
 
         activities = new JSONArray();
@@ -157,7 +160,7 @@ class VerificationTest {
         fichier.put("numero_de_permis","A0001");
         fichier.put("cycle", "2018-2023");
         fichier.put("ordre", "");
-        fichier.put("heures_transferees_du_cycle_precedent", 5);
+        fichier.put("heures_transferees_du_cycle_precedent", 3);
         JSONObject activity = new JSONObject();
         activity.put("description", "Rédaction pour le magazine Architecture moderne");
         activity.put("categorie", "cours");
@@ -168,133 +171,106 @@ class VerificationTest {
         formation = new FormationContinue(fichier, "resultat.json");
         verif = new MockVerification(formation, "resultat.json");
 
-        verif.validationHeuresTransferees(7, 0);
-        String actual2 =  verif.getErreur();
-        String expected2 = "";
+        verif.validationHeuresTransferees(7, 5);
+        int actual2 =  verif.formationAVerifier.getHeuresTransferees();
+        int expected2 = 5;
         assertEquals(expected2, actual2);
     }
 
     @Test
-    void validationHeuresParCycle() {
-    }
-
-    @Test
     void validationHeuresCategorieMultiple() {
-    }
-
-    @Test
-    void validationNbHeuresActivite() {
-    }
-
-    @Test
-    void calculHeuresMaxCategories() {
-    }
-
-    @Test
-    void regarderCategorie() {
-    }
-
-    @Test
-    void validationHeures1() {
-    }
-
-    @Test
-    void creationListeCategorieHeure() {
-    }
-
-    @Test
-    void ajoutHeureListe() {
-    }
-
-    @Test
-    void ajoutHeureParCategorie() {
+        verif.validationHeuresCategorieMultiple(this.activities);
     }
 
     @Test
     void calculHeure10Max() {
+        int actual = verif.calculHeure10Max( 15,"cours");
+        int expected = 10;
+        assertEquals(expected, actual);
     }
 
     @Test
-    void ajustementMaxHeures() {
-    }
+    void validDateCycleListe() throws Exception {
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis","A0001");
+        fichier.put("cycle", "2018-2023");
+        fichier.put("ordre", "");
+        fichier.put("heures_transferees_du_cycle_precedent", 15);
+        JSONObject activity = new JSONObject();
+        activity.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity.put("categorie", "cours");
+        activity.put("heures", 10);
+        activity.put("date", "2018-01-01");
+        activities.add(0,activity);
+        JSONObject activity2 = new JSONObject();
+        activity2.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity2.put("categorie", "conférence");
+        activity2.put("heures", 8);
+        activity2.put("date", "2018-01-01");
+        activities.add(1,activity2);
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json");
+        JSONArray bonnes = verif.creationListeBonnesActivites();
 
-    @Test
-    void calculHeureTotal() {
-    }
+        int actual = bonnes.size();
+        int expected = 2;
+        assertEquals(expected, actual);
 
-    @Test
-    void validationCycle() {
-    }
 
-    @Test
-    void validationHeureFormat() {
-    }
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis","A0001");
+        fichier.put("cycle", "2020-2022");
+        fichier.put("ordre", "");
+        fichier.put("heures_transferees_du_cycle_precedent", 15);
+        activity = new JSONObject();
+        activity.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity.put("categorie", "cours");
+        activity.put("heures", 10);
+        activity.put("date", "2021-01-01");
+        activities.add(0,activity);
+        activity2 = new JSONObject();
+        activity2.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity2.put("categorie", "conférence");
+        activity2.put("heures", 8);
+        activity2.put("date", "2021-01-01");
+        activities.add(1,activity2);
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json");
+        JSONArray bonnes2 = verif.creationListeBonnesActivites();
 
-    @Test
-    void creationListeBonnesActivites() {
-    }
+        int actual2 = bonnes2.size();
+        int expected2 = 2;
+        assertEquals(expected2, actual2);
 
-    @Test
-    void validDateCycleListe() {
-    }
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis","A0001");
+        fichier.put("cycle", "2018-2020");
+        fichier.put("ordre", "");
+        fichier.put("heures_transferees_du_cycle_precedent", 15);
+        activity = new JSONObject();
+        activity.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity.put("categorie", "cours");
+        activity.put("heures", 10);
+        activity.put("date", "2019-01-01");
+        activities.add(0,activity);
+        activity2 = new JSONObject();
+        activity2.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity2.put("categorie", "conférence");
+        activity2.put("heures", 8);
+        activity2.put("date", "2019-01-01");
+        activities.add(1,activity2);
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json");
+        JSONArray bonnes3 = verif.creationListeBonnesActivites();
 
-    @Test
-    void validDatePeriode() {
-    }
-
-    @Test
-    void conditValidDate() {
-    }
-
-    @Test
-    void validationFormatDate() {
-    }
-
-    @Test
-    void validationBonneDate() {
-    }
-
-    @Test
-    void validationFormatDate1() {
-    }
-
-    @Test
-    void validationBonneDate1() {
-    }
-
-    @Test
-    void afficherErrFormatDate() {
-    }
-
-    @Test
-    void ajoutMsgErreur() {
-    }
-
-    @Test
-    void validationNumeroPermis() {
-    }
-
-    @Test
-    void validationDescription() {
-    }
-
-    @Test
-    void verifierChampHeuresTransf() {
-    }
-
-    @Test
-    void causerErreurVerif() {
-    }
-
-    @Test
-    void validationFinal() {
-    }
-
-    @Test
-    void validationGenerale() {
-    }
-
-    @Test
-    void imprimer() {
+        int actual3 = bonnes3.size();
+        int expected3 = 2;
+        assertEquals(expected3, actual3);
     }
 }
