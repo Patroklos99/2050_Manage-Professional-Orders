@@ -7,11 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 class FormationContinueTest {
 
     private MockFormationContinue formation;
-    private JSONArray activities = new JSONArray();
-    private JSONObject fichier = new JSONObject();
+    private JSONArray activities;
+    private JSONObject fichier;
 
     @BeforeEach
     void beforeEach() throws Exception {
+        activities = new JSONArray();
+        fichier = new JSONObject();
         fichier.put("numero_de_permis","A0001");
         fichier.put("cycle", "2018-2023");
         fichier.put("ordre", "psychologues");
