@@ -27,6 +27,19 @@ public class MockVerification extends Verification{
         }
     }
 
+    public void validationHeuresTransferees(int pHeureMax, int pHeureMin){
+        long heures = formationAVerifier.getHeuresTransferees();
+        long heuresFixe = heures;
+        if (heures < pHeureMin)
+            formationAVerifier.setHeuresTransferees(pHeureMin);
+        if (heures > pHeureMax){
+            formationAVerifier.setHeuresTransferees(7);
+            erreur = "Le nombre d'heures transferees ("+ heuresFixe
+                    +") depasse la limite permise, seulement" +
+                    " 7h seront transferees";
+        }
+    }
+
     public String getErreur(){
         return erreur;
     }

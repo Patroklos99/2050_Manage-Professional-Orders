@@ -100,24 +100,78 @@ class VerificationTest {
     }
 
     @Test
-    void validationDateParCycle() throws ParseException {
-        verif.validationDateParCycle("2018-01-01", "cours");
+    void validationDateParCycle() throws Exception {
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis","A0001");
+        fichier.put("cycle", "2020-2022");
+        fichier.put("ordre", "");
+        fichier.put("heures_transferees_du_cycle_precedent", 15);
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json");
+        verif.validationDateParCycle("2021-01-01", "cours");
+        int actual =  verif.categorieValide.size();
+        int expected = 1;
+        assertEquals(expected, actual);
+
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis","A0001");
+        fichier.put("cycle", "2018-2020");
+        fichier.put("ordre", "");
+        fichier.put("heures_transferees_du_cycle_precedent", 15);
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json");
+        verif.validationDateParCycle("2019-01-01", "cours");
+        int actual2 =  verif.categorieValide.size();
+        int expected2 = 1;
+        assertEquals(expected2, actual2);
     }
 
     @Test
-    void ajoutCategorieListe() {
+    void validationDatesPeriode() throws ParseException {
+        boolean actual =  verif.validationDatesPeriode("2020-01-01", "cours", "2017-01-01",
+                "2018-01-01");
+        boolean expected = false;
+        assertEquals(expected, actual);
+
+        boolean actual2 =  verif.validationDatesPeriode("2020-01-01", "cours", "2017-01-01",
+                "2025-01-01");
+        boolean expected2 = true;
+        assertEquals(expected2, actual2);
     }
 
     @Test
-    void conditionValidDatePeriode() {
-    }
+    void validationHeuresTransferees() throws Exception {
+        verif.validationHeuresTransferees(7, 0);
+        String actual =  verif.getErreur();
+        String expected = "Le nombre d'heures transferees ("+ 15
+                +") depasse la limite permise, seulement" +
+                " 7h seront transferees";
+        assertEquals(expected, actual);
 
-    @Test
-    void validationDatesPeriode() {
-    }
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis","A0001");
+        fichier.put("cycle", "2018-2023");
+        fichier.put("ordre", "");
+        fichier.put("heures_transferees_du_cycle_precedent", 5);
+        JSONObject activity = new JSONObject();
+        activity.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity.put("categorie", "cours");
+        activity.put("heures", 10);
+        activity.put("date", "2018-01-01");
+        activities.add(0,activity);
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json");
 
-    @Test
-    void validationHeuresTransferees() {
+        verif.validationHeuresTransferees(7, 0);
+        String actual2 =  verif.getErreur();
+        String expected2 = "";
+        assertEquals(expected2, actual2);
     }
 
     @Test
