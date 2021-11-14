@@ -1,4 +1,9 @@
 {
    "Complet": false,
-   "Erreurs": ["Les heures totales de l'ensemble des categories n'est pas pas superieur a 17h"]
+   "Erreurs":    [
+      "L'etudiant a complete seulement 11 de 55h",
+      "La catégorie cours doit avoir au minimum 22h",
+      "La catégorie projet de recherche doit avoir au minimum 3h",
+      "La catégorie groupe de discussion doit avoir au minimum 1h"
+   ]
 }
