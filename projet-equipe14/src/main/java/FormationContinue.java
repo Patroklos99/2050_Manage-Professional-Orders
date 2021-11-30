@@ -4,6 +4,8 @@ import java.io.FileWriter;
 public class FormationContinue {
 
     private String ordre;
+    private String nom;
+    private String prenom;
     private String numeroPermis;
     private String cycle;
     private int heuresTransferees;
@@ -20,11 +22,13 @@ public class FormationContinue {
     final private String msgErrOrd = "L'ordre doit être une chaîne de " +
             "caractères";
 
-    public FormationContinue (JSONObject fichier,String fichierSortie)
+    public FormationContinue (JSONObject fichier, String fichierSortie)
             throws Exception {
         verifierType(fichier,fichierSortie);
         this.fichier = fichier;
         this.ordre = fichier.get("ordre").toString();
+        this.nom = fichier.get("nom").toString();
+        this.prenom = fichier.get("prenom").toString();
         this.numeroPermis = fichier.get("numero_de_permis").toString();
         this.cycle = fichier.get("cycle").toString();
         assignerChampHeuresTranf(fichier);
@@ -38,6 +42,14 @@ public class FormationContinue {
 
     public String getOrdre(){
         return ordre;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
     }
 
     public String getNumeroPermis() {

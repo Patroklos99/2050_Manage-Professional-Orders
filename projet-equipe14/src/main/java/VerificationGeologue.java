@@ -102,6 +102,16 @@ public class VerificationGeologue extends Verification{
     }
 
     @Override
+    public void validationNumeroPermis() throws Exception {
+        String numeroPermis = formationAVerifier.getNumeroPermis();
+        String initialesPermis = numeroPermis.substring(0,2);
+        String initialesReels = formationAVerifier.getNom().charAt(0) + "" + formationAVerifier.getPrenom().charAt(0);
+        if(!numeroPermis.matches("^[A-Z]{2}[0-9]{4}$") || !initialesPermis.equals(initialesReels))
+            causerErreurVerif("Le numero de permis du geologue n'est pas du bon " +
+                    "format (2 lettres, égales aux initiales du nom et prenom, suivis de 4 chiffres).");
+    }
+
+    @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
         if(validationCycle()) {

@@ -37,6 +37,8 @@ public class Main {
             verificateur = new VerificationGeologue(formation,fichierSortie);
         if(formation.getOrdre().equals("psychologues"))
             verificateur = new VerificationPsychologues(formation, fichierSortie);
+        if(formation.getOrdre().equals("podiatres"))
+            verificateur = new VerificationPodiatres(formation, fichierSortie);
         return verificateur;
     }
 
