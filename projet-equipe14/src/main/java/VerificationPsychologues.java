@@ -97,6 +97,14 @@ public class VerificationPsychologues extends Verification {
     }
 
     @Override
+    public void validationNumeroPermis() throws Exception {
+        String numeroPermis = formationAVerifier.getNumeroPermis();
+        if(!numeroPermis.matches("^[0-9]{5}[-][0-9]{2}$"))
+            causerErreurVerif("Le numero de permis du psychologue n'est pas du bon " +
+                    "format (5 Chiffres suivit d'un trait d'union et 2 chiffres de plus).");
+    }
+
+    @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale(); //Heritage
         if(validationCycle()) { //Heritage
