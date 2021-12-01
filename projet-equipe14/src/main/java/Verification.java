@@ -136,7 +136,7 @@ public class Verification {
         }
     }
 
-    public void validationHeuresCategorieMultiple(JSONArray activites){
+    public void validationHeuresCategorieMultiple(){
         int heures = 0;
         for (CalculHeureCategorie o : heureCategorie) {
             if(Arrays.asList(categoriesRequise).contains(o.getCategorie()))
@@ -419,7 +419,7 @@ public class Verification {
             validationCategories();
             validationHeuresTransferees(7, 0);
             validationHeuresParCycle(activiteValide);
-            validationHeuresCategorieMultiple(activiteValide);
+            validationHeuresCategorieMultiple();
         }
         imprimer(fichierSortie);
     }
