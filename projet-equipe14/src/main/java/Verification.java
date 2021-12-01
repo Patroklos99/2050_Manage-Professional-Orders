@@ -138,11 +138,9 @@ public class Verification {
 
     public void validationHeuresCategorieMultiple(JSONArray activites){
         int heures = 0;
-        for (Object o : activites) {
-            JSONObject activite = (JSONObject) o;
-            if(Arrays.asList(categoriesRequise).contains(
-                    activite.get("categorie")))
-                heures += Integer.parseInt(activite.get("heures").toString());
+        for (CalculHeureCategorie o : heureCategorie) {
+            if(Arrays.asList(categoriesRequise).contains(o.getCategorie()))
+                heures += o.getHeure();
         }
         if(!validationNbHeuresActivite(17, heures))
             ajoutMsgErreur("Les heures totales de l'ensemble des categories " +
@@ -242,9 +240,6 @@ public class Verification {
         for(int i = 0; i < heureCategorie.size(); i++){
             heureTotal = heureTotal + heureCategorie.get(i).getHeure();
         }
-
-        System.out.println(heureTotal + " Heures complété");
-
         if(heureTotal < heureReq)
             ajoutMsgErreur("L'etudiant a complete seulement " + heureTotal +
                     " de " + heureReq + "h");
