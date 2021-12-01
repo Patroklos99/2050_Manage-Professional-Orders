@@ -15,7 +15,7 @@ public class MockVerification extends Verification{
             "rédaction professionnelle"};
 
     private String erreur = "";
-
+/*
     public void validationCategories(){
         for (Object o : formationAVerifier.getActivites()) {
             JSONObject activite = (JSONObject) o;
@@ -26,7 +26,8 @@ public class MockVerification extends Verification{
             }
         }
     }
-
+    */
+/*
     public void validationHeuresTransferees(int pHeureMax, int pHeureMin){
         long heures = formationAVerifier.getHeuresTransferees();
         long heuresFixe = heures;
@@ -39,7 +40,7 @@ public class MockVerification extends Verification{
                     " 7h seront transferees";
         }
     }
-
+*/
     public String getErreur(){
         return erreur;
     }

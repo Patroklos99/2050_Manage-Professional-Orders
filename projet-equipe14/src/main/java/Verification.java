@@ -383,12 +383,11 @@ public class Verification {
     }
 
 
-
     public void validationNumeroPermis() throws Exception {
         String numeroPermis = formationAVerifier.getNumeroPermis();
-        if(!numeroPermis.matches("^[ARSZ]{1}[0-9]{4}$"))
-            causerErreurVerif("Le numero de permis n'est pas du bon " +
-                    "format (A, R, S ou Z suivit de 4 chiffres).");
+        if(!numeroPermis.matches("^[AT]{1}[0-9]{4}$"))
+            causerErreurVerif("Le numero de permis du architecten'est pas du bon " +
+                    "format (A ou T suivit de 4 chiffres).");
     }
 
     public void validationDescription() throws Exception {
