@@ -179,7 +179,7 @@ class VerificationTest {
 
     @Test
     void validationHeuresCategorieMultiple() {
-        verif.validationHeuresCategorieMultiple(this.activities);
+        verif.validationHeuresCategorieMultiple();
     }
 
     @Test
