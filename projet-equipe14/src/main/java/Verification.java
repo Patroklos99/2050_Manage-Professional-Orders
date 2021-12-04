@@ -381,7 +381,8 @@ public class Verification {
     public void validationNumeroPermis() throws Exception {
         String numeroPermis = formationAVerifier.getNumeroPermis();
         if(!numeroPermis.matches("^[AT]{1}[0-9]{4}$"))
-            causerErreurVerif("Le numero de permis du architecten'est pas du bon " +
+            causerErreurVerif("Le numero de permis du architecte " +
+                    "n'est pas du bon " +
                     "format (A ou T suivit de 4 chiffres).");
     }
 
@@ -393,6 +394,12 @@ public class Verification {
                 causerErreurVerif("La description de l'activité " +
                         activity.get("description")
                         + " ne contient pas plus de 20 caractères.");
+        }
+    }
+    public void validationSexe(){
+        int sexe = formationAVerifier.getSexe();
+        if(sexe < 0 || sexe > 2){
+            ajoutMsgErreur("Le sexe n'a pas une valeur acceptée (0, 1 ou 2)");
         }
     }
 
@@ -427,6 +434,7 @@ public class Verification {
     public void validationGenerale() throws Exception {
         verifierChampHeuresTransf();
         validationNumeroPermis();
+        validationSexe();
         validationDescription();
         validationHeureFormat();
     }
