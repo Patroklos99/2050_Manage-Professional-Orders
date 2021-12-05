@@ -3,6 +3,7 @@ import net.sf.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -47,18 +48,6 @@ public class VerificationGeologue extends Verification{
         }
     }
 
-
-    @Override
-    public void validationHeures1(int pHeureMin, JSONArray pActiviteValide){
-        JSONObject activite;
-        creationListeCategorieHeure();
-        for (Object o : pActiviteValide) {
-            activite = (JSONObject) o;
-            ajoutHeureListe(activite);
-        }
-        calculHeureTotal(pHeureMin);
-    }
-
     @Override
     public void calculHeureTotal(int heureReq){
         int heureTotal = 0;
@@ -86,6 +75,17 @@ public class VerificationGeologue extends Verification{
             bonCycle = false;
         }
         return bonCycle;
+    }
+
+    @Override
+    public void validationHeures2(int pHeureMin, JSONArray pActiviteValide,
+                                  ArrayList<String> listeDate){
+        creationListeCategorieHeure();
+        for(String date : listeDate) {
+            int heureDate = 0;
+            verifierActivitePourHeure(pActiviteValide,date,heureDate);
+        }
+        calculHeureTotal(pHeureMin);
     }
 
     public void validationHeureMinimum(String categorie, int heureRequise){
@@ -123,8 +123,9 @@ public class VerificationGeologue extends Verification{
 
     public void validationToutes(JSONArray activiteValide) throws Exception {
         validationDates();
+        ArrayList<String> listeDate = creationListeDates(activiteValide);
         validationCategories();
-        validationHeures1(55, activiteValide);
+        validationHeures2(55, activiteValide,listeDate);
         validationHeureMinimum("cours", 22);
         validationHeureMinimum("projet de recherche", 3);
         validationHeureMinimum("groupe de discussion", 1);

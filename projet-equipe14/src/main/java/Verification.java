@@ -127,12 +127,13 @@ public class Verification {
         }
     }
 
-    public void validationHeuresParCycle(JSONArray pActiviteValide){
+    public void validationHeuresParCycle(JSONArray pActiviteValide,
+                                         ArrayList<String> listeDate){
         if(formationAVerifier.getCycle().equals("2020-2022")){
-            validationHeures1(40,pActiviteValide);
+            validationHeures2(40,pActiviteValide,listeDate);
         }
         else{
-            validationHeures1(42,pActiviteValide);
+            validationHeures2(42,pActiviteValide,listeDate);
         }
     }
 
@@ -175,15 +176,66 @@ public class Verification {
         return heure;
     }
 
-    public void validationHeures1(int pHeureMin, JSONArray pActiviteValide){
-        JSONObject activite;
+    public void validationHeures2(int pHeureMin, JSONArray pActiviteValide,
+                                 ArrayList<String> listeDate){
         creationListeCategorieHeure();
-        for (Object o : pActiviteValide) {
-            activite = (JSONObject) o;
-            ajoutHeureListe(activite);
+        for(String date : listeDate) {
+            int heureDate = 0;
+            verifierActivitePourHeure(pActiviteValide,date,heureDate);
         }
         ajustementMaxHeures();
         calculHeureTotal(pHeureMin);
+    }
+
+    public void verifierActivitePourHeure(JSONArray pActiviteValide,
+                                          String date, int heureDate){
+        for (Object o : pActiviteValide) {
+            JSONObject activite = (JSONObject) o;
+            if(date.equals(activite.get("date").toString())){
+                int heurePrec = heureDate;
+                heureDate = verifieHeurePrec(activite, heurePrec,heureDate);
+            }
+        }
+    }
+
+    public int verifieHeurePrec(JSONObject activite, int heurePrec,
+                                int heureDate){
+        if(heurePrec == 10){
+            String description = activite.get("description").toString();
+            ajoutMsgErreur("L'activité " + description +
+                    " ne sera pas comptabilisé dans le calcul d'heures, car " +
+                    "il dépasse la limite de 10 heures par jour");
+        }else{
+            heureDate += Integer.parseInt(activite.get("heures").toString());
+            heureDate = verifieHeureDate(activite,heurePrec,heureDate);
+        }
+        return heureDate;
+    }
+
+
+    public int verifieHeureDate(JSONObject activite, int heurePrec,
+                                int heureDate){
+        int heure;
+        if(heureDate > 10){
+            heureDate = ajoutHeureReduitCat(activite, heurePrec, heureDate);
+        }else{
+            heure = Integer.parseInt(activite.get("heures").toString());
+            ajoutHeureListe(activite, heure);
+        }
+        return heureDate;
+    }
+
+
+    public int ajoutHeureReduitCat(JSONObject activite, int heurePrec,
+                                   int heureDate){
+        String desc2 = activite.get("description").toString();
+        int heure = 10 - heurePrec;
+        ajoutHeureListe(activite, heure);
+        ajoutMsgErreur("Certaines des heures de l'activité " + desc2 +
+                " n'ont pas été comptabilisé lors du calcul d'heures " +
+                "(limite de 10 heures par jour)");
+        heureDate = 10;
+        return heureDate;
     }
 
     public void creationListeCategorieHeure(){
@@ -194,10 +246,8 @@ public class Verification {
         }
     }
 
-    public void ajoutHeureListe(JSONObject activite){
+    public void ajoutHeureListe(JSONObject activite, int heureAct){
         String categorieAct = activite.get("categorie").toString();
-        int heureAct = calculHeure10Max(Integer.parseInt(activite.get("heures")
-                .toString()),categorieAct);
         CalculHeureCategorie calculHeure;
         for(int i = 0; i < heureCategorie.size(); i++){
             calculHeure = heureCategorie.get(i);
@@ -211,18 +261,6 @@ public class Verification {
                                        int heure){
         int heureAjoute = calculHeure.getHeure() + heure;
         calculHeure.setHeure(heureAjoute);
-    }
-
-    public int calculHeure10Max(int heure,String categorie){
-        int bonneHeure;
-        if(heure > 10){
-            bonneHeure = 10;
-            ajoutMsgErreur("Le nombre d'heures d'une activité de catégorie "
-                    + categorie + " dépasse 10 heures.");
-        }else{
-            bonneHeure = heure;
-        }
-        return bonneHeure;
     }
 
     public void ajustementMaxHeures(){
@@ -418,14 +456,26 @@ public class Verification {
         System.exit( -1 );
     }
 
+    public ArrayList<String> creationListeDates(JSONArray activiteValide){
+        ArrayList<String> listeDate = new ArrayList<>();
+        for(Object o : activiteValide){
+            JSONObject activite = (JSONObject) o;
+            if(!listeDate.contains(activite.get("date").toString()))
+                listeDate.add(activite.get("date").toString());
+        }
+        return listeDate;
+    }
+
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale();
         if(validationCycle()) {
             validationDates();
             JSONArray activiteValide = creationListeBonnesActivites();
+            ArrayList<String> listeDate = creationListeDates(activiteValide);
             validationCategories();
             validationHeuresTransferees(7, 0);
-            validationHeuresParCycle(activiteValide);
+            validationHeuresParCycle(activiteValide,listeDate);
+            System.out.println(heureCategorie);
             validationHeuresCategorieMultiple();
         }
         imprimer(fichierSortie);

@@ -3,6 +3,7 @@ import net.sf.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -46,6 +47,16 @@ public class VerificationPsychologues extends Verification {
         }
     }
 
+    @Override
+    public void validationHeures2(int pHeureMin, JSONArray pActiviteValide,
+                                  ArrayList<String> listeDate){
+        creationListeCategorieHeure();
+        for(String date : listeDate) {
+            int heureDate = 0;
+            verifierActivitePourHeure(pActiviteValide,date,heureDate);
+        }
+        calculHeureTotal(pHeureMin);
+    }
 
     @Override
     public void validDateCycleListe(String date, JSONArray bonneActivites,
@@ -110,8 +121,9 @@ public class VerificationPsychologues extends Verification {
         if(validationCycle()) { //Heritage
             JSONArray activiteValide = creationListeBonnesActivites();
             validationDates(); //Class
+            ArrayList<String> listeDate = creationListeDates(activiteValide);
             validationCategories(); //Heritage
-            validationHeures1(90, activiteValide); //Class
+            validationHeures2(90, activiteValide,listeDate); //Class
             validationHeureMinimum("cours", 25);
         }
         imprimer(fichierSortie);

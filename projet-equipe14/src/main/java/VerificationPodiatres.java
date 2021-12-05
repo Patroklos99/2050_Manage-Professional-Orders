@@ -1,5 +1,7 @@
 import net.sf.json.JSONArray;
 
+import java.util.ArrayList;
+
 public class VerificationPodiatres extends VerificationGeologue{
 
     public VerificationPodiatres(FormationContinue formation, String fichierSortie) throws Exception {
@@ -27,8 +29,9 @@ public class VerificationPodiatres extends VerificationGeologue{
     @Override
     public void validationToutes(JSONArray activiteValide) throws Exception {
         validationDates();
+        ArrayList<String> listeDate = creationListeDates(activiteValide);
         validationCategories();
-        validationHeures1(60, activiteValide);
+        validationHeures2(60, activiteValide,listeDate);
         validationHeureMinimum("cours", 22);
         validationHeureMinimum("projet de recherche", 3);
         validationHeureMinimum("groupe de discussion", 1);

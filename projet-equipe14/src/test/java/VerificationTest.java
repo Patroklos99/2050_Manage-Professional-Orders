@@ -183,13 +183,6 @@ class VerificationTest {
     }
 
     @Test
-    void calculHeure10Max() {
-        int actual = verif.calculHeure10Max( 15,"cours");
-        int expected = 10;
-        assertEquals(expected, actual);
-    }
-
-    @Test
     void validDateCycleListe() throws Exception {
         activities = new JSONArray();
         fichier = new JSONObject();
