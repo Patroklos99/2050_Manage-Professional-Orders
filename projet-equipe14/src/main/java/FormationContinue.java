@@ -6,6 +6,7 @@ public class FormationContinue {
     private String ordre;
     private String nom;
     private String prenom;
+    private int sexe;
     private String numeroPermis;
     private String cycle;
     private int heuresTransferees;
@@ -21,19 +22,29 @@ public class FormationContinue {
             "caractères";
     final private String msgErrOrd = "L'ordre doit être une chaîne de " +
             "caractères";
+    final private String msgErrNom = "Le nom doit être une chaîne de caractères";
+    final private String msgErrPre = "Le prénom doit être une chaîne de " +
+            "caractères";
+    final private String msgErrSexe = "Le sexe doit être un chiffre";
 
     public FormationContinue (JSONObject fichier, String fichierSortie)
             throws Exception {
         verifierType(fichier,fichierSortie);
+        verifierType2(fichier,fichierSortie);
+        assignerSeptChamps(fichier);
+        assignerChampHeuresTranf(fichier);
+        this.activites = (JSONArray) fichier.get("activites");
+        verifierAct(fichier,fichierSortie);
+    }
+
+    public void assignerSeptChamps(JSONObject fichier){
         this.fichier = fichier;
         this.ordre = fichier.get("ordre").toString();
         this.nom = fichier.get("nom").toString();
         this.prenom = fichier.get("prenom").toString();
+        this.sexe = Integer.parseInt(fichier.get("sexe").toString());
         this.numeroPermis = fichier.get("numero_de_permis").toString();
         this.cycle = fichier.get("cycle").toString();
-        assignerChampHeuresTranf(fichier);
-        this.activites = (JSONArray) fichier.get("activites");
-        verifierAct(fichier,fichierSortie);
     }
 
     public JSONObject getFichier(){
@@ -50,6 +61,10 @@ public class FormationContinue {
 
     public String getPrenom() {
         return prenom;
+    }
+
+    public int getSexe() {
+        return sexe;
     }
 
     public String getNumeroPermis() {
@@ -86,6 +101,16 @@ public class FormationContinue {
             afficheErreur(msgErrCyc,fichierSortie);
         if(!(f.get("ordre") instanceof String))
             afficheErreur(msgErrOrd,fichierSortie);
+    }
+
+    public void verifierType2(JSONObject f,String fichierSortie)
+            throws Exception {
+        if(!(f.get("nom") instanceof String))
+            afficheErreur(msgErrNom,fichierSortie);
+        if(!(f.get("prenom") instanceof String))
+            afficheErreur(msgErrPre,fichierSortie);
+        if(!(f.get("sexe") instanceof Integer))
+            afficheErreur(msgErrSexe,fichierSortie);
     }
 
     public void verifierAct(JSONObject f,String fichierSortie)
