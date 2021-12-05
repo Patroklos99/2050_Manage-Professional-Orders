@@ -475,7 +475,6 @@ public class Verification {
             validationCategories();
             validationHeuresTransferees(7, 0);
             validationHeuresParCycle(activiteValide,listeDate);
-            System.out.println(heureCategorie);
             validationHeuresCategorieMultiple();
         }
         imprimer(fichierSortie);
