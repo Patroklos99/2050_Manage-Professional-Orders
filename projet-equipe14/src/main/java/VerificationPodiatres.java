@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class VerificationPodiatres extends VerificationGeologue{
 
-    public VerificationPodiatres(FormationContinue formation, String fichierSortie) throws Exception {
-        super(formation, fichierSortie);
+    public VerificationPodiatres(FormationContinue formation, String fichierSortie, Statistiques stats) throws Exception {
+        super(formation, fichierSortie, stats);
     }
 
     @Override

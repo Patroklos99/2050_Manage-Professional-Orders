@@ -8,6 +8,7 @@ import java.time.format.*;
 import java.util.*;
 
 public class Verification {
+    protected Statistiques stats;
     protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private String fichierSortie;
@@ -23,11 +24,12 @@ public class Verification {
     private String[] categoriesRequise = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée"};
 
-    public Verification(FormationContinue formation, String fichierSortie)
+    public Verification(FormationContinue formation, String fichierSortie, Statistiques stats)
             throws Exception {
         this.formationAVerifier = formation;
         this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
+        this.stats = stats;
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
@@ -498,8 +500,10 @@ public class Verification {
         }catch(IOException e){
             throw new Exception(e.toString());
         }
-        //get.resultat()
-        //2. declaration completes.
+        if (fichierSortie.matches("true")) {
+            stats.setRapportComplete(stats.getRapportComplete()+1);
+            stats.save();
+        }
 
     }
 }

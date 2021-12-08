@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 @SuppressWarnings("ALL")
 public class MockVerification extends Verification{
-    public MockVerification(FormationContinue formation, String fichierSortie)
+    public MockVerification(FormationContinue formation, String fichierSortie, Statistiques stats)
             throws Exception {
-        super(formation, fichierSortie);
+        super(formation, fichierSortie, stats);
     }
 
     private static final String[] CATEGORIE = {"cours", "atelier", "séminaire",
