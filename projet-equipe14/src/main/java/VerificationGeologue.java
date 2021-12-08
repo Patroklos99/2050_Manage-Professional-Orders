@@ -118,7 +118,6 @@ public class VerificationGeologue extends Verification{
             JSONArray activiteValide = creationListeBonnesActivites();
             validationToutes(activiteValide);
         }
-        imprimer(fichierSortie);
     }
 
     public void validationToutes(JSONArray activiteValide) throws Exception {

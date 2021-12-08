@@ -126,7 +126,6 @@ public class VerificationPsychologues extends Verification {
             validationHeures2(90, activiteValide,listeDate); //Class
             validationHeureMinimum("cours", 25);
         }
-        imprimer(fichierSortie);
     }
 
 

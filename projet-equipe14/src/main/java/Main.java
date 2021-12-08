@@ -30,7 +30,7 @@ public class Main {
         FormationContinue formation = new FormationContinue(jsonObj,fichierSortie, stats);
         Verification verificateur = choisiVerif(formation,fichierSortie, stats);
         verifNonNull(fichierSortie,verificateur, stats);
-        verificateur.imprimer(fichierSortie);
+        verificateur.imprimer(fichierSortie, formation.getOrdre());
     }
 
     public static Verification choisiVerif(FormationContinue formation,String fichierSortie, Statistiques stats) throws Exception {
