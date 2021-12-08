@@ -29,7 +29,7 @@ public class Main {
                                     String fichierSortie, Statistiques stats) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj,fichierSortie);
         Verification verificateur = choisiVerif(formation,fichierSortie);
-        verifNonNull(fichierSortie,verificateur);
+        verifNonNull(fichierSortie,verificateur, stats);
         verificateur.imprimer(fichierSortie);
     }
 
@@ -46,8 +46,10 @@ public class Main {
         return verificateur;
     }
 
-    public static void verifNonNull(String fichierSortie, Verification verificateur) throws Exception {
+    public static void verifNonNull(String fichierSortie, Verification verificateur, Statistiques stats) throws Exception {
         if(verificateur == null) {
+            stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+            stats.save();
             System.err.println("L'ordre est incorrect");
             FormationContinue.imprimerErreurStructure(fichierSortie);
             System.exit(-1);
