@@ -11,6 +11,8 @@ class VerificationPsychologuesTest {
     private FormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
+    private Statistiques stats;
+
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -31,7 +33,7 @@ class VerificationPsychologuesTest {
 
 
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         psychologues = new VerificationPsychologues(formation, "resultat.json");
     }
 
