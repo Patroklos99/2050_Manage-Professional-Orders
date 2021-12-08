@@ -4,10 +4,13 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.HashMap;
 
 public class Statistiques {
     private static final String SQUELETTE = "{\n   \"Completé\": \"0\",\n   \"Traités\": \"0\"\n}";
     private JSONObject jObject = new JSONObject();
+
+    //RENZO
     private int rapportTraiter = 0;
     private int rapportComplete = 0;
     private int incompleteInvalide = 0;
@@ -15,7 +18,56 @@ public class Statistiques {
     private int rapportFemmes = 0;
     private int rapportInconnus = 0;
 
+    //NIC
+    private int rapportActivite = 0;
+    private HashMap<String, Integer> rapportActiviteCategorie;
+    private HashMap<String, Integer> rapportOrdreCompletes;
+    private HashMap<String, Integer> rapportOrdreIncompletes;
+    private int rapportPermisValide = 0;
 
+    public int getRapportActivite() {
+        return rapportActivite;
+    }
+
+    public void setRapportActivite(int rapportActivite) {
+        this.rapportActivite = rapportActivite;
+    }
+
+    public HashMap<String, Integer> getRapportActiviteCategorie() {
+        return rapportActiviteCategorie;
+    }
+
+    public void setRapportActiviteCategorie(HashMap<String, Integer> rapportActiviteCategorie) {
+        this.rapportActiviteCategorie = rapportActiviteCategorie;
+    }
+
+    public HashMap<String, Integer> getRapportOrdreCompletes() {
+        return rapportOrdreCompletes;
+    }
+
+    public void setRapportOrdreCompletes(HashMap<String, Integer> rapportOrdreCompletes) {
+        this.rapportOrdreCompletes = rapportOrdreCompletes;
+    }
+
+    public HashMap<String, Integer> getRapportOrdreIncompletes() {
+        return rapportOrdreIncompletes;
+    }
+
+    public void setRapportOrdreIncompletes(HashMap<String, Integer> rapportOrdreIncompletes) {
+        this.rapportOrdreIncompletes = rapportOrdreIncompletes;
+    }
+
+    public int getRapportPermisValide() {
+        return rapportPermisValide;
+    }
+
+    public void setRapportPermisValide(int rapportPermisValide) {
+        this.rapportPermisValide = rapportPermisValide;
+    }
+
+    //*******************************************************************************************************************
+
+    //RENZO
     public int getRapportComplete() {
         return rapportComplete;
     }
@@ -93,7 +145,6 @@ public class Statistiques {
         this.rapportFemmes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Femmes")));
         this.rapportInconnus = Integer.parseInt(String.valueOf(jObject.get("Rapports_Sex_Inconnus")));
     }
-
 
     public void save() {
         ecrireJson(jObject);
