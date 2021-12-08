@@ -30,6 +30,7 @@ public class FormationContinue {
 
     public FormationContinue (JSONObject fichier, String fichierSortie, Statistiques stats)
             throws Exception {
+        this.stats = stats;
         verifierType(fichier,fichierSortie);
         verifierType2(fichier,fichierSortie);
         assignerSeptChamps(fichier, stats);
@@ -46,7 +47,6 @@ public class FormationContinue {
         this.sexe = Integer.parseInt(fichier.get("sexe").toString());
         this.numeroPermis = fichier.get("numero_de_permis").toString();
         this.cycle = fichier.get("cycle").toString();
-        this.stats = stats;
     }
 
     public JSONObject getFichier(){

@@ -19,8 +19,8 @@ public class VerificationGeologue extends Verification{
             "rédaction professionnelle"};
 
     public VerificationGeologue(FormationContinue formation,
-                                String fichierSortie) throws Exception {
-        super(formation, fichierSortie);
+                                String fichierSortie, Statistiques stats) throws Exception {
+        super(formation, fichierSortie, stats);
     }
 
     @Override

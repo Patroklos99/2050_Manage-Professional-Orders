@@ -28,21 +28,21 @@ public class Main {
     public static void verifImprime(JSONObject jsonObj,
                                     String fichierSortie, Statistiques stats) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj,fichierSortie, stats);
-        Verification verificateur = choisiVerif(formation,fichierSortie);
+        Verification verificateur = choisiVerif(formation,fichierSortie, stats);
         verifNonNull(fichierSortie,verificateur, stats);
         verificateur.imprimer(fichierSortie);
     }
 
-    public static Verification choisiVerif(FormationContinue formation,String fichierSortie) throws Exception {
+    public static Verification choisiVerif(FormationContinue formation,String fichierSortie, Statistiques stats) throws Exception {
         Verification verificateur = null;
         if(formation.getOrdre().equals("architectes"))
-            verificateur = new Verification(formation,fichierSortie);
+            verificateur = new Verification(formation,fichierSortie, stats);
         if(formation.getOrdre().equals("géologues"))
-            verificateur = new VerificationGeologue(formation,fichierSortie);
+            verificateur = new VerificationGeologue(formation,fichierSortie, stats);
         if(formation.getOrdre().equals("psychologues"))
-            verificateur = new VerificationPsychologues(formation, fichierSortie);
+            verificateur = new VerificationPsychologues(formation, fichierSortie, stats);
         if(formation.getOrdre().equals("podiatres"))
-            verificateur = new VerificationPodiatres(formation, fichierSortie);
+            verificateur = new VerificationPodiatres(formation, fichierSortie, stats);
         return verificateur;
     }
 

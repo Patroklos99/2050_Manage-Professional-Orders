@@ -34,7 +34,7 @@ class VerificationPsychologuesTest {
 
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        psychologues = new VerificationPsychologues(formation, "resultat.json");
+        psychologues = new VerificationPsychologues(formation, "resultat.json", stats);
     }
 
     @Test

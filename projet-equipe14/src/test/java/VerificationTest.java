@@ -37,7 +37,7 @@ class VerificationTest {
         activities.add(1,activity2);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
     }
 
     @Test
@@ -68,7 +68,7 @@ class VerificationTest {
         activities.add(0,activity);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
 
         verif.validationCategories();
         String actual2 =  verif.getErreur();
@@ -97,7 +97,7 @@ class VerificationTest {
         activities.add(0,activity);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
 
         verif.validationDates();
         int actual2 =  verif.categorieValide.size();
@@ -115,7 +115,7 @@ class VerificationTest {
         fichier.put("heures_transferees_du_cycle_precedent", 15);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
         verif.validationDateParCycle("2021-01-01", "cours");
         int actual =  verif.categorieValide.size();
         int expected = 1;
@@ -129,7 +129,7 @@ class VerificationTest {
         fichier.put("heures_transferees_du_cycle_precedent", 15);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
         verif.validationDateParCycle("2019-01-01", "cours");
         int actual2 =  verif.categorieValide.size();
         int expected2 = 1;
@@ -170,7 +170,7 @@ class VerificationTest {
         activities.add(0,activity);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
 
         verif.validationHeuresTransferees(7, 5);
         int actual2 =  verif.formationAVerifier.getHeuresTransferees();
@@ -205,7 +205,7 @@ class VerificationTest {
         activities.add(1,activity2);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
         JSONArray bonnes = verif.creationListeBonnesActivites();
 
         int actual = bonnes.size();
@@ -233,7 +233,7 @@ class VerificationTest {
         activities.add(1,activity2);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
         JSONArray bonnes2 = verif.creationListeBonnesActivites();
 
         int actual2 = bonnes2.size();
@@ -260,7 +260,7 @@ class VerificationTest {
         activities.add(1,activity2);
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        verif = new MockVerification(formation, "resultat.json");
+        verif = new MockVerification(formation, "resultat.json", stats);
         JSONArray bonnes3 = verif.creationListeBonnesActivites();
 
         int actual3 = bonnes3.size();

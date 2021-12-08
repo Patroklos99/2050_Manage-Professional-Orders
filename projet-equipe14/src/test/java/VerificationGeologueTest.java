@@ -63,7 +63,7 @@ class VerificationGeologueTest{
 
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        geologues = new VerificationGeologue(formation, "resultat.json");
+        geologues = new VerificationGeologue(formation, "resultat.json", stats);
     }
 
     @Test
@@ -92,7 +92,7 @@ class VerificationGeologueTest{
 
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        geologues = new VerificationGeologue(formation, "resultat.json");
+        geologues = new VerificationGeologue(formation, "resultat.json", stats);
 
         boolean actual = geologues.validationCycle();
         boolean expected = false;
