@@ -500,10 +500,13 @@ public class Verification {
         }catch(IOException e){
             throw new Exception(e.toString());
         }
-        if (fichierSortie.matches("true")) {
+        additionComplete();
+    }
+
+    private void additionComplete() {
+        if (fichierErreur.get("Complet").toString().matches("true")) {
             stats.setRapportComplete(stats.getRapportComplete()+1);
             stats.save();
         }
-
     }
 }
