@@ -13,6 +13,7 @@ class VerificationTest {
     private FormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
+    private Statistiques stats;
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -35,7 +36,7 @@ class VerificationTest {
         activity2.put("date", "2018-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
     }
 
@@ -66,7 +67,7 @@ class VerificationTest {
         activity.put("date", "2018-01-01");
         activities.add(0,activity);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
 
         verif.validationCategories();
@@ -95,7 +96,7 @@ class VerificationTest {
         activity.put("date", "2050-01-01");
         activities.add(0,activity);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
 
         verif.validationDates();
@@ -113,7 +114,7 @@ class VerificationTest {
         fichier.put("ordre", "");
         fichier.put("heures_transferees_du_cycle_precedent", 15);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
         verif.validationDateParCycle("2021-01-01", "cours");
         int actual =  verif.categorieValide.size();
@@ -127,7 +128,7 @@ class VerificationTest {
         fichier.put("ordre", "");
         fichier.put("heures_transferees_du_cycle_precedent", 15);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
         verif.validationDateParCycle("2019-01-01", "cours");
         int actual2 =  verif.categorieValide.size();
@@ -168,7 +169,7 @@ class VerificationTest {
         activity.put("date", "2018-01-01");
         activities.add(0,activity);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
 
         verif.validationHeuresTransferees(7, 5);
@@ -203,7 +204,7 @@ class VerificationTest {
         activity2.put("date", "2018-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
         JSONArray bonnes = verif.creationListeBonnesActivites();
 
@@ -231,7 +232,7 @@ class VerificationTest {
         activity2.put("date", "2021-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
         JSONArray bonnes2 = verif.creationListeBonnesActivites();
 
@@ -258,7 +259,7 @@ class VerificationTest {
         activity2.put("date", "2019-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
         verif = new MockVerification(formation, "resultat.json");
         JSONArray bonnes3 = verif.creationListeBonnesActivites();
 

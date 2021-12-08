@@ -13,6 +13,7 @@ public class FormationContinue {
     protected boolean isHeuresTransfereesNull;
     private JSONArray activites;
     private JSONObject fichier;
+    private Statistiques stats;
     final private String msgErrAct = "Les activités doivent être stocké dans "+
             "un tableau";
     final private String msgErrActMiss = "Il manque un champs dans une activité";
@@ -27,17 +28,17 @@ public class FormationContinue {
             "caractères";
     final private String msgErrSexe = "Le sexe doit être un chiffre";
 
-    public FormationContinue (JSONObject fichier, String fichierSortie)
+    public FormationContinue (JSONObject fichier, String fichierSortie, Statistiques stats)
             throws Exception {
         verifierType(fichier,fichierSortie);
         verifierType2(fichier,fichierSortie);
-        assignerSeptChamps(fichier);
+        assignerSeptChamps(fichier, stats);
         assignerChampHeuresTranf(fichier);
         this.activites = (JSONArray) fichier.get("activites");
         verifierAct(fichier,fichierSortie);
     }
 
-    public void assignerSeptChamps(JSONObject fichier){
+    public void assignerSeptChamps(JSONObject fichier, Statistiques stats){
         this.fichier = fichier;
         this.ordre = fichier.get("ordre").toString();
         this.nom = fichier.get("nom").toString();
@@ -45,6 +46,7 @@ public class FormationContinue {
         this.sexe = Integer.parseInt(fichier.get("sexe").toString());
         this.numeroPermis = fichier.get("numero_de_permis").toString();
         this.cycle = fichier.get("cycle").toString();
+        this.stats = stats;
     }
 
     public JSONObject getFichier(){
@@ -126,6 +128,8 @@ public class FormationContinue {
 
     public void afficheErreur(String pMessage, String fichierSortie)
             throws Exception {
+        stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+        stats.save();
         System.err.println(pMessage);
         imprimerErreurStructure(fichierSortie);
         System.exit( -1 );
