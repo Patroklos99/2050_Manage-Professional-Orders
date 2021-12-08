@@ -9,6 +9,8 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
+
+        System.out.println(args[2]);
         JSONObject jsonObj;
 
         Statistiques stats = new Statistiques();

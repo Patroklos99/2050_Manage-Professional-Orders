@@ -4,7 +4,6 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Statistiques {
@@ -36,15 +35,12 @@ public class Statistiques {
             "Rapports_Geologue_Incomplet", "Rapports_Podiatres_Incomplet",
             "Rapports_Psychologue_Incomplet"};
 
-    //RENZO
     private int rapportTraiter = 0;
     private int rapportComplete = 0;
     private int incompleteInvalide = 0;
     private int rapportHommes = 0;
     private int rapportFemmes = 0;
     private int rapportInconnus = 0;
-
-    //NIC
     private int rapportActivite = 0;
     private HashMap<String, Integer> rapportActiviteCategorie = new HashMap<>();
     private HashMap<String, Integer> rapportOrdreCompletes = new HashMap<>();
@@ -91,9 +87,6 @@ public class Statistiques {
         this.rapportPermisValide = rapportPermisValide;
     }
 
-    //*******************************************************************************************************************
-
-    //RENZO
     public int getRapportComplete() {
         return rapportComplete;
     }
@@ -208,13 +201,11 @@ public class Statistiques {
         jsonObj.put("Rapports_Sex_Inconnus", getRapportInconnus());
         jsonObj.put("Rapports_Activite", getRapportActivite());
 
-        for (int i = 0; i < CAT.length; i++) jsonObj.put(CATJSON[i], getRapportActiviteCategorie().get(CAT[i]));
+        for (int i = 0; i < CAT.length; i++) jsonObj.put(CATJSON[i], 0);
 
         for (int i = 0; i < ORDRE.length; i++){
-            jsonObj.put(ORDRECOMPLET[i],
-                    getRapportOrdreCompletes().get(ORDRE[i]));
-            jsonObj.put(ORDREINCOMPLET[i],
-                    getRapportOrdreIncompletes().get(ORDRE[i]));
+            jsonObj.put(ORDRECOMPLET[i],0);
+            jsonObj.put(ORDREINCOMPLET[i],0);
         }
 
         jsonObj.put("Rapports_Permis_Valide", getRapportPermisValide());
