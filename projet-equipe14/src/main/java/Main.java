@@ -9,8 +9,9 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
+        String fichierStats = args[2];
 
-        Statistiques stats = new Statistiques();
+        Statistiques stats = new Statistiques(fichierStats);
         //()delartiontraite.statistqiues
         String stringJson = IOUtils.toString(new
                 FileInputStream(fichierEntree), "UTF-8");

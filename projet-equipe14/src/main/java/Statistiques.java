@@ -1,19 +1,19 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONSerializer;
+import org.apache.commons.io.IOUtils;
+import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
 public class Statistiques {
     private static final String SQUELETTE = "{\n   \"Completé\": \"0\",\n   \"Traités\": \"0\"\n}";
+    private JSONObject jObject = new JSONObject();
     private int rapportComplete = 0;
-    private int rapportTraiter = 0 ;
+    private int rapportTraiter = 0;
     private int incompleteInvalide = 0;
     private int rapportHommes = 0;
     private int rapportFemmes = 0;
     private int rapportInconnus = 0;
-
 
 
     public int getRapportComplete() {
@@ -65,33 +65,51 @@ public class Statistiques {
     }
 
 
-    public Statistiques() {
-        this.load();
+    public Statistiques(String fichierStats) throws IOException {
+        this.load(fichierStats);
     }
 
-    public void load() {
-        Path path = FileSystems.getDefault().getPath("C:\\Users\\home\\IdeaProjects\\inf2050-a21-projet-equipe14\\stats.json");
+    public void load(String fichierStats) throws IOException {
+        Path path = FileSystems.getDefault().getPath("stats.json");
         File file = new File(String.valueOf(path));
         if (file.exists()) {
-            System.out.println("existe");
-            //setfiles
+            String stringJson = IOUtils.toString(new
+                    FileInputStream(fichierStats), "UTF-8");
+            jObject = (JSONObject) JSONSerializer.toJSON(stringJson);
+            System.out.println("Existe");
+            assignerChamps(jObject);
         } else {
-            System.out.println("inexistant, le fichier stats.json sera créé maitenant");
-            ecrireJson();
+            System.out.println("Le fichier n'existe pas, il sera créé maintenant");
+            ecrireJson(jObject);
         }
-
     }
+
+    public void assignerChamps(JSONObject jObject) {
+        System.out.println(jObject.toString());
+        this.rapportTraiter = Integer.parseInt(String.valueOf(jObject.get("Rapports_Traités")));
+        this.rapportComplete = Integer.parseInt(String.valueOf(jObject.get("Rapports_Completés")));
+        this.incompleteInvalide = Integer.parseInt(String.valueOf(jObject.get("Rapports_Incomplets_Invalides")));
+        this.rapportHommes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Hommes")));
+        this.rapportFemmes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Femmes")));
+        this.rapportInconnus = Integer.parseInt(String.valueOf(jObject.get("Rapports_Sex_Inconnus")));
+    }
+
 
     public void save() {
-
     }
 
-    private void ecrireJson() {
+    public void ecrireJson(JSONObject jsonObj) {
         String stats = "stats.json";
         File file = new File(stats);
+        jsonObj.put("Rapports_Traités", 0);
+        jsonObj.put("Rapports_Completés", 0);
+        jsonObj.put("Rapports_Incomplets_Invalides", 0);
+        jsonObj.put("Rapports_Hommes", 0);
+        jsonObj.put("Rapports_Femmes", 0);
+        jsonObj.put("Rapports_Sex_Inconnus", 0);
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-            bw.write(SQUELETTE);
+            bw.write(jsonObj.toString(3));
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,5 +117,7 @@ public class Statistiques {
     }
 
 }
+
+
 
 
