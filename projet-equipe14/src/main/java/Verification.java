@@ -26,10 +26,10 @@ public class Verification {
 
     public Verification(FormationContinue formation, String fichierSortie, Statistiques stats)
             throws Exception {
+        this.stats = stats;
         this.formationAVerifier = formation;
         this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
-        this.stats = stats;
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
