@@ -10,7 +10,8 @@ public class Main {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
 
-
+        Statistiques stats = new Statistiques();
+        //()delartiontraite.statistqiues
         String stringJson = IOUtils.toString(new
                 FileInputStream(fichierEntree), "UTF-8");
         try {
@@ -18,6 +19,8 @@ public class Main {
             verifImprime(jsonObj,fichierSortie);
         }catch(JSONException e){
             System.out.println("Le fichier d'entrée n'est pas valide.");
+            stats.setRapportComplete(stats.getRapportComplete()+1);
+            stats.save();
         }
     }
 
