@@ -209,6 +209,9 @@ public class Statistiques {
         }
 
         jsonObj.put("Rapports_Permis_Valide", getRapportPermisValide());
+
+        this.peuplerHashMapCategorie();
+        this.peuplerHashMapOrdres();
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(jsonObj.toString(3));
