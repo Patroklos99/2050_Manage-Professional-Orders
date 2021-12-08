@@ -9,24 +9,24 @@ public class Main {
     public static void main(String[] args) throws Exception {
         String fichierEntree = args[0];
         String fichierSortie = args[1];
-        String fichierStats = args[2];
 
-        Statistiques stats = new Statistiques(fichierStats);
-        //()delartiontraite.statistqiues
+        Statistiques stats = new Statistiques();
+        stats.setRapportTraiter(stats.getRapportTraiter()+1);
+        stats.save();
         String stringJson = IOUtils.toString(new
                 FileInputStream(fichierEntree), "UTF-8");
         try {
             JSONObject jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
-            verifImprime(jsonObj,fichierSortie);
+            verifImprime(jsonObj,fichierSortie, stats);
         }catch(JSONException e){
             System.out.println("Le fichier d'entrée n'est pas valide.");
-            stats.setRapportComplete(stats.getRapportComplete()+1);
+            stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
             stats.save();
         }
     }
 
     public static void verifImprime(JSONObject jsonObj,
-                                    String fichierSortie) throws Exception {
+                                    String fichierSortie, Statistiques stats) throws Exception {
         FormationContinue formation = new FormationContinue(jsonObj,fichierSortie);
         Verification verificateur = choisiVerif(formation,fichierSortie);
         verifNonNull(fichierSortie,verificateur);

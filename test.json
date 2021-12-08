@@ -1,0 +1,64 @@
+{
+  "numero_de_permis": "A4578",
+  "ordre": "architectes",
+  "cycle": "",
+  "nom" : "kjeswrgnhbeksjr",
+  "prenom": "jkiudhstikusreki",
+  "sexe": 0,
+  "heures_transferees_du_cycle_precedent": 2,
+  "activites": [{
+    "description": "Cours sur la déontologie",
+    "categorie": "cours",
+    "heures": 7,
+    "date": "2017-03-20"
+  },
+    {
+      "description": "Laboratoire de programmation",
+      "categorie": "atelier",
+      "heures": 8,
+      "date": "2017-02-07"
+    },
+    {
+      "description": "Séminaire sur l'architecture contemporaine",
+      "categorie": "séminaire",
+      "heures": 7,
+      "date": "2017-01-07"
+    },
+    {
+      "description": "Réunion des profhtruhyth",
+      "categorie": "colloque",
+      "heures": 5,
+      "date": "2017-01-07"
+    },
+    {
+      "description": "conférence sur l'architecture contemporaine",
+      "categorie": "conférence",
+      "heures": 5,
+      "date": "2017-01-07"
+    },
+    {
+      "description": "Lectures scientifiques",
+      "categorie": "lecture dirigée",
+      "heures": 5,
+      "date": "2017-03-01"
+    },
+    {
+      "description": "Rédaction pour le magazine Architecture moderne",
+      "categorie": "rédaction professionnelle",
+      "heures": 1,
+      "date": "2017-10-22"
+    },
+    {
+      "description": "Participation à un groupe de discussion",
+      "categorie": "groupe de discussion",
+      "heures": 1,
+      "date": "2017-04-01"
+    },
+    {
+      "description": "Analyse des impactes des violations de SLA",
+      "categorie": "projet de recherche",
+      "heures": 10,
+      "date": "2016-04-11"
+    }
+  ]
+}
