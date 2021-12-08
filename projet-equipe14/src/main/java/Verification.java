@@ -460,7 +460,7 @@ public class Verification {
         System.err.println(pMessage);
         ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est " +
                 "incomplet.");
-        imprimer(getFichierSortie());
+        imprimer(getFichierSortie(), formationAVerifier.getOrdre());
         System.exit( -1 );
     }
 
@@ -485,7 +485,6 @@ public class Verification {
             validationHeuresParCycle(activiteValide,listeDate);
             validationHeuresCategorieMultiple();
         }
-        imprimer(fichierSortie);
     }
 
     public void validationGenerale() throws Exception {
@@ -507,11 +506,11 @@ public class Verification {
         }catch(IOException e){
             throw new Exception(e.toString());
         }
-        additionComplete();
+        additionComplete(ordre);
         stats.save();
     }
 
-    private void additionComplete() {
+    private void additionComplete(String ordre) {
         if ((boolean)fichierErreur.get("Complet")) {
             stats.setRapportComplete(stats.getRapportComplete()+1);
 
@@ -520,6 +519,8 @@ public class Verification {
             stats.setRapportOrdreCompletes(tempMap);
         }
         else{
+            stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+
             HashMap<String, Integer> tempMap = stats.getRapportOrdreIncompletes();
             tempMap.put(ordre, stats.getRapportOrdreIncompletes().get(ordre)+1);
             stats.setRapportOrdreIncompletes(tempMap);
