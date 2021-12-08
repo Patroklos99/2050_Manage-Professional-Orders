@@ -101,12 +101,12 @@ public class Statistiques {
     public void ecrireJson(JSONObject jsonObj) {
         String stats = "stats.json";
         File file = new File(stats);
-        jsonObj.put("Rapports_Traités", 0);
-        jsonObj.put("Rapports_Completés", 0);
-        jsonObj.put("Rapports_Incomplets_Invalides", 0);
-        jsonObj.put("Rapports_Hommes", 0);
-        jsonObj.put("Rapports_Femmes", 0);
-        jsonObj.put("Rapports_Sex_Inconnus", 0);
+        jsonObj.put("Rapports_Traités", getRapportTraiter());
+        jsonObj.put("Rapports_Completés", getRapportTraiter());
+        jsonObj.put("Rapports_Incomplets_Invalides", getRapportTraiter());
+        jsonObj.put("Rapports_Hommes", getRapportTraiter());
+        jsonObj.put("Rapports_Femmes", getRapportTraiter());
+        jsonObj.put("Rapports_Sex_Inconnus", getRapportTraiter());
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(jsonObj.toString(3));
