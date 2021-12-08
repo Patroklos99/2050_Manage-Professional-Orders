@@ -50,7 +50,7 @@ public class Main {
         Verification verificateur = choisiVerif(formation,fichierSortie, stats);
         verifNonNull(fichierSortie,verificateur, stats);
         additionSex(jsonObj, stats);
-        ///verificateur.imprimer(fichierSortie);
+        verificateur.imprimer(fichierSortie, formation.getOrdre());
     }
 
     public static Verification choisiVerif(FormationContinue formation,String fichierSortie, Statistiques stats) throws Exception {

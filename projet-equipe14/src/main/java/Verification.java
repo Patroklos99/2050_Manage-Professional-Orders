@@ -84,7 +84,12 @@ public class Verification {
     public void ajoutCategorieListe(String categorie){
         if(!categorieValide.contains(categorie)){
             categorieValide.add(categorie);
+
             stats.setRapportActivite(stats.getRapportActivite()+1);
+
+            HashMap<String, Integer> tempMap = stats.getRapportActiviteCategorie();
+            tempMap.put(categorie, stats.getRapportActiviteCategorie().get(categorie)+1);
+            stats.setRapportActiviteCategorie(tempMap);
         }
     }
 
@@ -424,6 +429,7 @@ public class Verification {
             causerErreurVerif("Le numero de permis du architecte " +
                     "n'est pas du bon " +
                     "format (A ou T suivit de 4 chiffres).");
+        stats.setRapportPermisValide(stats.getRapportPermisValide()+1);
     }
 
     public void validationDescription() throws Exception {
@@ -454,7 +460,7 @@ public class Verification {
         System.err.println(pMessage);
         ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est " +
                 "incomplet.");
-        imprimer(getFichierSortie());
+        imprimer(getFichierSortie(), formationAVerifier.getOrdre());
         System.exit( -1 );
     }
 
@@ -479,7 +485,6 @@ public class Verification {
             validationHeuresParCycle(activiteValide,listeDate);
             validationHeuresCategorieMultiple();
         }
-        imprimer(fichierSortie);
     }
 
     public void validationGenerale() throws Exception {
@@ -494,20 +499,31 @@ public class Verification {
      * Code inspire de la methode save() du projet json-lib-ex ecrit par
      * Dogny, Gnagnely Serge
      */
-    public void imprimer(String fichierSortie) throws Exception {
+    public void imprimer(String fichierSortie, String ordre) throws Exception {
         try (FileWriter f = new FileWriter(fichierSortie)) {
             f.write(fichierErreur.toString(3));
             f.flush();
         }catch(IOException e){
             throw new Exception(e.toString());
         }
-        additionComplete();
+        additionComplete(ordre);
+        stats.save();
     }
 
-    private void additionComplete() {
-        if (fichierErreur.get("Complet").toString().matches("true")) {
+    private void additionComplete(String ordre) {
+        if ((boolean)fichierErreur.get("Complet")) {
             stats.setRapportComplete(stats.getRapportComplete()+1);
-            stats.save();
+
+            HashMap<String, Integer> tempMap = stats.getRapportOrdreCompletes();
+            tempMap.put(ordre, stats.getRapportOrdreCompletes().get(ordre)+1);
+            stats.setRapportOrdreCompletes(tempMap);
+        }
+        else{
+            stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+
+            HashMap<String, Integer> tempMap = stats.getRapportOrdreIncompletes();
+            tempMap.put(ordre, stats.getRapportOrdreIncompletes().get(ordre)+1);
+            stats.setRapportOrdreIncompletes(tempMap);
         }
     }
 }

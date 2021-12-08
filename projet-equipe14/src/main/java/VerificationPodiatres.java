@@ -23,7 +23,6 @@ public class VerificationPodiatres extends VerificationGeologue{
             JSONArray activiteValide = creationListeBonnesActivites();
             validationToutes(activiteValide);
         }
-        imprimer(fichierSortie);
     }
 
     @Override

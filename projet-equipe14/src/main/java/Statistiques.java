@@ -25,8 +25,8 @@ public class Statistiques {
             "Rapports_Activite_Projet_De_Recherche",
             "Rapports_Activite_Redaction_Professionnelle"};
 
-    private static final String[] ORDRE = {"architecte", "géologue",
-                                           "podiatre", "psychologue"};
+    private static final String[] ORDRE = {"architectes", "géologues",
+                                           "podiatres", "psychologues"};
 
     private static final String[] ORDRECOMPLET = {"Rapports_Architecte_Complet",
             "Rapports_Geologue_Complet", "Rapports_Podiatres_Complet",
@@ -175,7 +175,6 @@ public class Statistiques {
         this.peuplerHashMapCategorie();
         this.peuplerHashMapOrdres();
         this.rapportPermisValide = Integer.parseInt(String.valueOf(jObject.get("Rapports_Permis_Valide")));
-
     }
 
     public void peuplerHashMapCategorie(){
@@ -208,25 +207,17 @@ public class Statistiques {
         jsonObj.put("Rapports_Femmes", getRapportFemmes());
         jsonObj.put("Rapports_Sex_Inconnus", getRapportInconnus());
         jsonObj.put("Rapports_Activite", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Cours", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Atelier", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Seminaire", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Colloque", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Conference", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Lecture_Dirigee", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Presentation", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Groupe_De_Discussion", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Projet_De_Recherche", getRapportActivite());
-        jsonObj.put("Rapports_Activite_Redaction_Professionnelle", getRapportActivite());
-        jsonObj.put("Rapports_Architecte_Complet", getRapportActivite());
-        jsonObj.put("Rapports_Geologue_Complet", getRapportActivite());
-        jsonObj.put("Rapports_Podiatres_Complet", getRapportActivite());
-        jsonObj.put("Rapports_Psychologue_Complet", getRapportActivite());
-        jsonObj.put("Rapports_Architecte_Incomplet", getRapportActivite());
-        jsonObj.put("Rapports_Geologue_Incomplet", getRapportActivite());
-        jsonObj.put("Rapports_Podiatres_Incomplet", getRapportActivite());
-        jsonObj.put("Rapports_Psychologue_Incomplet", getRapportActivite());
-        jsonObj.put("Rapports_Permis_Valide", getRapportActivite());
+
+        for (int i = 0; i < CAT.length; i++) jsonObj.put(CATJSON[i], getRapportActiviteCategorie().get(CAT[i]));
+
+        for (int i = 0; i < ORDRE.length; i++){
+            jsonObj.put(ORDRECOMPLET[i],
+                    getRapportOrdreCompletes().get(ORDRE[i]));
+            jsonObj.put(ORDREINCOMPLET[i],
+                    getRapportOrdreIncompletes().get(ORDRE[i]));
+        }
+
+        jsonObj.put("Rapports_Permis_Valide", getRapportPermisValide());
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(jsonObj.toString(3));
