@@ -2,9 +2,9 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class MockFormationContinue extends FormationContinue{
-    public MockFormationContinue(JSONObject fichier, String fichierSortie)
+    public MockFormationContinue(JSONObject fichier, String fichierSortie, Statistiques stats)
             throws Exception {
-        super(fichier, fichierSortie);
+        super(fichier, fichierSortie, stats);
     }
 
     private String msgErrAct = "Les activités doivent être stocké dans " +

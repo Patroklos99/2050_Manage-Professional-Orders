@@ -27,7 +27,7 @@ public class Main {
 
     public static void verifImprime(JSONObject jsonObj,
                                     String fichierSortie, Statistiques stats) throws Exception {
-        FormationContinue formation = new FormationContinue(jsonObj,fichierSortie);
+        FormationContinue formation = new FormationContinue(jsonObj,fichierSortie, stats);
         Verification verificateur = choisiVerif(formation,fichierSortie);
         verifNonNull(fichierSortie,verificateur, stats);
         verificateur.imprimer(fichierSortie);
