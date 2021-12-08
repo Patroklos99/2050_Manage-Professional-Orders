@@ -84,6 +84,7 @@ public class Verification {
     public void ajoutCategorieListe(String categorie){
         if(!categorieValide.contains(categorie)){
             categorieValide.add(categorie);
+            stats.setRapportActivite(stats.getRapportActivite()+1);
         }
     }
 

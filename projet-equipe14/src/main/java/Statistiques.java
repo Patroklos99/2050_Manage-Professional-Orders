@@ -4,10 +4,39 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Statistiques {
     private static final String SQUELETTE = "{\n   \"Completé\": \"0\",\n   \"Traités\": \"0\"\n}";
     private JSONObject jObject = new JSONObject();
+
+    private static final String[] CAT = {"cours", "atelier", "séminaire",
+            "colloque", "conférence", "lecture dirigée", "présentation",
+            "groupe de discussion", "projet de recherche",
+            "rédaction professionnelle"};
+
+    private static final String[] CATJSON = {"Rapports_Activite_Cours",
+            "Rapports_Activite_Atelier", "Rapports_Activite_Seminaire",
+            "Rapports_Activite_Colloque", "Rapports_Activite_Conference",
+            "Rapports_Activite_Lecture_Dirigee",
+            "Rapports_Activite_Presentation",
+            "Rapports_Activite_Groupe_De_Discussion",
+            "Rapports_Activite_Projet_De_Recherche",
+            "Rapports_Activite_Redaction_Professionnelle"};
+
+    private static final String[] ORDRE = {"architecte", "géologue",
+                                           "podiatre", "psychologue"};
+
+    private static final String[] ORDRECOMPLET = {"Rapports_Architecte_Complet",
+            "Rapports_Geologue_Complet", "Rapports_Podiatres_Complet",
+            "Rapports_Psychologue_Complet"};
+
+    private static final String[] ORDREINCOMPLET = {"Rapports_Architecte_Incomplet",
+            "Rapports_Geologue_Incomplet", "Rapports_Podiatres_Incomplet",
+            "Rapports_Psychologue_Incomplet"};
+
+    //RENZO
     private int rapportTraiter = 0;
     private int rapportComplete = 0;
     private int incompleteInvalide = 0;
@@ -15,7 +44,56 @@ public class Statistiques {
     private int rapportFemmes = 0;
     private int rapportInconnus = 0;
 
+    //NIC
+    private int rapportActivite = 0;
+    private HashMap<String, Integer> rapportActiviteCategorie = new HashMap<>();
+    private HashMap<String, Integer> rapportOrdreCompletes = new HashMap<>();
+    private HashMap<String, Integer> rapportOrdreIncompletes = new HashMap<>();
+    private int rapportPermisValide = 0;
 
+    public int getRapportActivite() {
+        return rapportActivite;
+    }
+
+    public void setRapportActivite(int rapportActivite) {
+        this.rapportActivite = rapportActivite;
+    }
+
+    public HashMap<String, Integer> getRapportActiviteCategorie() {
+        return rapportActiviteCategorie;
+    }
+
+    public void setRapportActiviteCategorie(HashMap<String, Integer> rapportActiviteCategorie) {
+        this.rapportActiviteCategorie = rapportActiviteCategorie;
+    }
+
+    public HashMap<String, Integer> getRapportOrdreCompletes() {
+        return rapportOrdreCompletes;
+    }
+
+    public void setRapportOrdreCompletes(HashMap<String, Integer> rapportOrdreCompletes) {
+        this.rapportOrdreCompletes = rapportOrdreCompletes;
+    }
+
+    public HashMap<String, Integer> getRapportOrdreIncompletes() {
+        return rapportOrdreIncompletes;
+    }
+
+    public void setRapportOrdreIncompletes(HashMap<String, Integer> rapportOrdreIncompletes) {
+        this.rapportOrdreIncompletes = rapportOrdreIncompletes;
+    }
+
+    public int getRapportPermisValide() {
+        return rapportPermisValide;
+    }
+
+    public void setRapportPermisValide(int rapportPermisValide) {
+        this.rapportPermisValide = rapportPermisValide;
+    }
+
+    //*******************************************************************************************************************
+
+    //RENZO
     public int getRapportComplete() {
         return rapportComplete;
     }
@@ -28,8 +106,8 @@ public class Statistiques {
         return rapportTraiter;
     }
 
-    public void setRapportTraiter(int rapportTraité) {
-        this.rapportTraiter = rapportTraité;
+    public void setRapportTraiter(int rapportTraiter) {
+        this.rapportTraiter = rapportTraiter;
     }
 
     public int getIncompleteInvalide() {
@@ -92,8 +170,29 @@ public class Statistiques {
         this.rapportHommes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Hommes")));
         this.rapportFemmes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Femmes")));
         this.rapportInconnus = Integer.parseInt(String.valueOf(jObject.get("Rapports_Sex_Inconnus")));
+
+        this.rapportActivite = Integer.parseInt(String.valueOf(jObject.get("Rapports_Activite")));
+        this.peuplerHashMapCategorie();
+        this.peuplerHashMapOrdres();
+        this.rapportPermisValide = Integer.parseInt(String.valueOf(jObject.get("Rapports_Permis_Valide")));
+
     }
 
+    public void peuplerHashMapCategorie(){
+        for (int i = 0; i < CAT.length; i++){
+            int stats = Integer.parseInt((jObject.get(CATJSON[i])).toString());
+            rapportActiviteCategorie.put(CAT[i], stats);
+        }
+    }
+
+    public void peuplerHashMapOrdres(){
+        for (int i = 0; i < ORDRE.length; i++){
+            int stats = Integer.parseInt((jObject.get(ORDRECOMPLET[i])).toString());
+            rapportOrdreCompletes.put(ORDRE[i], stats);
+            stats = Integer.parseInt((jObject.get(ORDREINCOMPLET[i])).toString());
+            rapportOrdreIncompletes.put(ORDRE[i], stats);
+        }
+    }
 
     public void save() {
         ecrireJson(jObject);
@@ -108,6 +207,26 @@ public class Statistiques {
         jsonObj.put("Rapports_Hommes", getRapportHommes());
         jsonObj.put("Rapports_Femmes", getRapportFemmes());
         jsonObj.put("Rapports_Sex_Inconnus", getRapportInconnus());
+        jsonObj.put("Rapports_Activite", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Cours", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Atelier", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Seminaire", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Colloque", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Conference", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Lecture_Dirigee", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Presentation", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Groupe_De_Discussion", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Projet_De_Recherche", getRapportActivite());
+        jsonObj.put("Rapports_Activite_Redaction_Professionnelle", getRapportActivite());
+        jsonObj.put("Rapports_Architecte_Complet", getRapportActivite());
+        jsonObj.put("Rapports_Geologue_Complet", getRapportActivite());
+        jsonObj.put("Rapports_Podiatres_Complet", getRapportActivite());
+        jsonObj.put("Rapports_Psychologue_Complet", getRapportActivite());
+        jsonObj.put("Rapports_Architecte_Incomplet", getRapportActivite());
+        jsonObj.put("Rapports_Geologue_Incomplet", getRapportActivite());
+        jsonObj.put("Rapports_Podiatres_Incomplet", getRapportActivite());
+        jsonObj.put("Rapports_Psychologue_Incomplet", getRapportActivite());
+        jsonObj.put("Rapports_Permis_Valide", getRapportActivite());
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(jsonObj.toString(3));
