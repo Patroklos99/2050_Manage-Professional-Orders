@@ -135,7 +135,6 @@ public class Statistiques {
         this.rapportInconnus = rapportInconnus;
     }
 
-
     public Statistiques() throws IOException {
         this.load();
     }
@@ -147,23 +146,20 @@ public class Statistiques {
             String stringJson = IOUtils.toString(new
                     FileInputStream(file), "UTF-8");
             jObject = (JSONObject) JSONSerializer.toJSON(stringJson);
-            System.out.println("Existe");
             assignerChamps(jObject);
-        } else {
-            System.out.println("Le fichier n'existe pas, il sera créé maintenant");
+        } else{
+            clear();
             ecrireJson(jObject);
         }
     }
 
     public void assignerChamps(JSONObject jObject) {
-        System.out.println(jObject.toString());
-        this.rapportTraiter = Integer.parseInt(String.valueOf(jObject.get("Rapports_Traités")));
-        this.rapportComplete = Integer.parseInt(String.valueOf(jObject.get("Rapports_Completés")));
+        this.rapportTraiter = Integer.parseInt(String.valueOf(jObject.get("Rapports_Traites")));
+        this.rapportComplete = Integer.parseInt(String.valueOf(jObject.get("Rapports_Completes")));
         this.incompleteInvalide = Integer.parseInt(String.valueOf(jObject.get("Rapports_Incomplets_Invalides")));
         this.rapportHommes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Hommes")));
         this.rapportFemmes = Integer.parseInt(String.valueOf(jObject.get("Rapports_Femmes")));
         this.rapportInconnus = Integer.parseInt(String.valueOf(jObject.get("Rapports_Sex_Inconnus")));
-
         this.rapportActivite = Integer.parseInt(String.valueOf(jObject.get("Rapports_Activite")));
         this.peuplerHashMapCategorie();
         this.peuplerHashMapOrdres();
@@ -193,25 +189,23 @@ public class Statistiques {
     public void ecrireJson(JSONObject jsonObj) {
         String stats = "stats.json";
         File file = new File(stats);
-        jsonObj.put("Rapports_Traités", getRapportTraiter());
-        jsonObj.put("Rapports_Completés", getRapportComplete());
+        jsonObj.put("Rapports_Traites", getRapportTraiter());
+        jsonObj.put("Rapports_Completes", getRapportComplete());
         jsonObj.put("Rapports_Incomplets_Invalides", getIncompleteInvalide());
         jsonObj.put("Rapports_Hommes", getRapportHommes());
         jsonObj.put("Rapports_Femmes", getRapportFemmes());
         jsonObj.put("Rapports_Sex_Inconnus", getRapportInconnus());
         jsonObj.put("Rapports_Activite", getRapportActivite());
 
-        for (int i = 0; i < CAT.length; i++) jsonObj.put(CATJSON[i], 0);
+        for (int i = 0; i < CAT.length; i++) jsonObj.put(CATJSON[i], getRapportActiviteCategorie().get(CAT[i]));
 
         for (int i = 0; i < ORDRE.length; i++){
-            jsonObj.put(ORDRECOMPLET[i],0);
-            jsonObj.put(ORDREINCOMPLET[i],0);
+            jsonObj.put(ORDRECOMPLET[i], getRapportOrdreCompletes().get(ORDRE[i]));
+            jsonObj.put(ORDREINCOMPLET[i], getRapportOrdreIncompletes().get(ORDRE[i]));
         }
 
         jsonObj.put("Rapports_Permis_Valide", getRapportPermisValide());
 
-        this.peuplerHashMapCategorie();
-        this.peuplerHashMapOrdres();
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(file));
             bw.write(jsonObj.toString(3));
@@ -221,6 +215,53 @@ public class Statistiques {
         }
     }
 
+    public void clear(){
+        rapportTraiter = 0;
+        rapportComplete = 0;
+        incompleteInvalide = 0;
+        rapportHommes = 0;
+        rapportFemmes = 0;
+        rapportInconnus = 0;
+        rapportActivite = 0;
+        for (int i = 0; i < CAT.length; i++) rapportActiviteCategorie.put(CAT[i], 0);
+        for (int i = 0; i < ORDRE.length; i++){
+            rapportOrdreCompletes.put(ORDRE[i], 0);
+            rapportOrdreIncompletes.put(ORDRE[i], 0);
+        }
+        rapportPermisValide = 0;
+
+        save();
+    }
+
+    @Override
+    public String toString() {
+        return "Rapports Traités: " + rapportTraiter + "\n" +
+                "Rapports Completés: " + rapportComplete + "\n" +
+                "Rapports Incomplets Invalides: " + incompleteInvalide + "\n" +
+                "Rapports Hommes: " + rapportHommes + "\n" +
+                "Rapports Femmes: " + rapportFemmes + "\n" +
+                "Rapports Sex Inconnus: " + rapportInconnus + "\n" +
+                "Rapports Activite: " + rapportActivite + "\n" +
+                "Rapports Activite Cours: " + rapportActiviteCategorie.get(CAT[0]) + "\n" +
+                "Rapports Activite Atelier: " + rapportActiviteCategorie.get(CAT[1])  + "\n" +
+                "Rapports Activite Seminaire: " + rapportActiviteCategorie.get(CAT[2])  + "\n" +
+                "Rapports Activite Colloque: " + rapportActiviteCategorie.get(CAT[3])  + "\n" +
+                "Rapports Activite Conference: " + rapportActiviteCategorie.get(CAT[4])  + "\n" +
+                "Rapports Activite Lecture Dirigee: " + rapportActiviteCategorie.get(CAT[5])  + "\n" +
+                "Rapports Activite Presentation: " + rapportActiviteCategorie.get(CAT[6])  + "\n" +
+                "Rapports Activite Groupe De Discussion: " + rapportActiviteCategorie.get(CAT[7])  + "\n" +
+                "Rapports Activite Projet De Recherche: " + rapportActiviteCategorie.get(CAT[8])  + "\n" +
+                "Rapports Activite Redaction Professionnelle: " + rapportActiviteCategorie.get(CAT[9])  + "\n" +
+                "Rapports Architecte Complet: " + rapportOrdreCompletes.get(ORDRE[0]) + "\n" +
+                "Rapports Architecte Incomplet: " + rapportOrdreIncompletes.get(ORDRE[0]) + "\n" +
+                "Rapports Geologue Complet: " + rapportOrdreCompletes.get(ORDRE[1]) + "\n" +
+                "Rapports Geologue Incomplet: " + rapportOrdreIncompletes.get(ORDRE[1]) + "\n" +
+                "Rapports Podiatres Complet: " + rapportOrdreCompletes.get(ORDRE[2]) + "\n" +
+                "Rapports Podiatres Incomplet: " + rapportOrdreIncompletes.get(ORDRE[2]) + "\n" +
+                "Rapports Psychologue Complet: " + rapportOrdreCompletes.get(ORDRE[3]) + "\n" +
+                "Rapports Psychologue Incomplet: " + rapportOrdreIncompletes.get(ORDRE[3]) + "\n" +
+                "Rapports Permis Valide: " + rapportPermisValide + "\n";
+    }
 }
 
 

@@ -7,24 +7,40 @@ import java.io.FileInputStream;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        String fichierEntree = args[0];
-        String fichierSortie = args[1];
+        if(args.length < 1){
+            System.out.println("Il faut spécifier un argument S ou SR");
+            System.exit(1);
+        }
+        if(args[0].equals("-SR")){
+            Statistiques stats = new Statistiques();
+            System.out.println(stats);
+            stats.clear();
+            System.exit(1);
+        }
+        else if (args[0].equals("-S")){
+            Statistiques stats = new Statistiques();
+            System.out.println(stats);
+            System.exit(1);
+        }
+        else if(args[0].equals("test.json")){
+            String fichierEntree = args[0];
+            String fichierSortie = args[1];
 
-        System.out.println(args[2]);
-        JSONObject jsonObj;
+            JSONObject jsonObj;
 
-        Statistiques stats = new Statistiques();
-        stats.setRapportTraiter(stats.getRapportTraiter()+1);
-        stats.save();
-        String stringJson = IOUtils.toString(new
-                FileInputStream(fichierEntree), "UTF-8");
-        try {
-            jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
-            verifImprime(jsonObj,fichierSortie, stats);
-        }catch(JSONException e){
-            System.out.println("Le fichier d'entrée n'est pas valide.");
-            stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+            Statistiques stats = new Statistiques();
+            stats.setRapportTraiter(stats.getRapportTraiter()+1);
             stats.save();
+            String stringJson = IOUtils.toString(new
+                    FileInputStream(fichierEntree), "UTF-8");
+            try {
+                jsonObj = (JSONObject) JSONSerializer.toJSON(stringJson);
+                verifImprime(jsonObj,fichierSortie, stats);
+            }catch(JSONException e){
+                System.out.println("Le fichier d'entrée n'est pas valide.");
+                stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+                stats.save();
+            }
         }
     }
 
