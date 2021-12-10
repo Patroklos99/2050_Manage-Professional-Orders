@@ -13,8 +13,8 @@ public class Main {
         }
         if(args[0].equals("-SR")){
             Statistiques stats = new Statistiques();
-            System.out.println(stats);
             stats.clear();
+            System.out.println("Le fichier à été réinitialisé");
             System.exit(1);
         }
         else if (args[0].equals("-S")){
