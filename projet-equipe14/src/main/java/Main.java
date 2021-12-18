@@ -22,7 +22,7 @@ public class Main {
             System.out.println(stats);
             System.exit(1);
         }
-        else if(args[0].equals("test.json")){
+        else if(args.length == 2){
             String fichierEntree = args[0];
             String fichierSortie = args[1];
 
