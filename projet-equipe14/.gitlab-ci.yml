@@ -23,7 +23,6 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-    - cd projet-equipe14
     - mvn clean install
     - echo "Compiling the code..."
     - echo "Compile complete."
