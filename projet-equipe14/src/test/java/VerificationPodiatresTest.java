@@ -5,13 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import java.text.ParseException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-
-class VerificationGeologueTest{
-
-    private VerificationGeologue geologues;
+public class VerificationPodiatresTest {
+    private VerificationPodiatres podiatres;
     private FormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
@@ -21,9 +18,9 @@ class VerificationGeologueTest{
     void beforeEach() throws Exception {
         activities = new JSONArray();
         fichier = new JSONObject();
-        fichier.put("numero_de_permis", "FW1234");
+        fichier.put("numero_de_permis", "12345");
         fichier.put("cycle", "2018-2021");
-        fichier.put("ordre", "geologues");
+        fichier.put("ordre", "podiatres");
         fichier.put("nom", "Frazilien");
         fichier.put("prenom", "William");
         fichier.put("sexe", 1);
@@ -66,13 +63,13 @@ class VerificationGeologueTest{
         fichier.put("activites", activities);
         stats = new Statistiques();
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        geologues = new VerificationGeologue(formation, "resultat.json", stats);
+        podiatres = new VerificationPodiatres(formation, "resultat.json", stats);
     }
 
     @Test
     void validationDates() throws ParseException {
-        geologues.validationDates();
-        int actual = geologues.categorieValide.size();
+        podiatres.validationDates();
+        int actual = podiatres.categorieValide.size();
         int expected = 3;
         assertEquals(expected, actual);
 
@@ -82,9 +79,9 @@ class VerificationGeologueTest{
     void validationCycle() throws Exception {
         activities = new JSONArray();
         fichier = new JSONObject();
-        fichier.put("numero_de_permis", "FW1234");
-        fichier.put("cycle", "2018-2022");
-        fichier.put("ordre", "geologues");
+        fichier.put("numero_de_permis", "12345");
+        fichier.put("cycle", "2018-2025");
+        fichier.put("ordre", "podiatres");
         fichier.put("nom", "Frazilien");
         fichier.put("prenom", "William");
         fichier.put("sexe", 1);
@@ -97,9 +94,35 @@ class VerificationGeologueTest{
 
         fichier.put("activites", activities);
         formation = new FormationContinue(fichier, "resultat.json", stats);
-        geologues = new VerificationGeologue(formation, "resultat.json", stats);
+        podiatres = new VerificationPodiatres(formation, "resultat.json", stats);
 
-        boolean actual = geologues.validationCycle();
+        boolean actual = podiatres.validationCycle();
+        boolean expected = false;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void validationPermis() throws Exception {
+        activities = new JSONArray();
+        fichier = new JSONObject();
+        fichier.put("numero_de_permis", "12345");
+        fichier.put("cycle", "2018-2025");
+        fichier.put("ordre", "podiatres");
+        fichier.put("nom", "Frazilien");
+        fichier.put("prenom", "William");
+        fichier.put("sexe", 1);
+        JSONObject activity = new JSONObject();
+        activity.put("description", "Rédaction pour le magazine Architecture moderne");
+        activity.put("categorie", "cours");
+        activity.put("heures", 10);
+        activity.put("date", "2019-10-22");
+        activities.add(0, activity);
+
+        fichier.put("activites", activities);
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        podiatres = new VerificationPodiatres(formation, "resultat.json", stats);
+
+        boolean actual = podiatres.validationCycle();
         boolean expected = false;
         assertEquals(expected, actual);
     }

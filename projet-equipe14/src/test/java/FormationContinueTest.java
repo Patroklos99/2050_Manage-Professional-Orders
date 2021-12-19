@@ -19,6 +19,9 @@ class FormationContinueTest {
         fichier.put("numero_de_permis","A0001");
         fichier.put("cycle", "2018-2023");
         fichier.put("ordre", "psychologues");
+        fichier.put("nom", "Frazilien");
+        fichier.put("prenom", "William");
+        fichier.put("sexe", 1);
         JSONObject activity = new JSONObject();
         activity.put("description", "Rédaction pour le magazine Architecture moderne");
         activity.put("categorie", "cours");
@@ -101,6 +104,9 @@ class FormationContinueTest {
         fichierType.put("numero_de_permis","A0001");
         fichierType.put("cycle", "2018-2023");
         fichierType.put("ordre", "psychologues");
+        fichierType.put("nom", "Frazilien");
+        fichierType.put("prenom", "William");
+        fichierType.put("sexe", 1);
         fichierType.put("activites", activities);
         formation.verifierType(fichierType, "resultat.json");
         String expected = "Les activités doivent être stocké dans un tableau";
@@ -115,6 +121,9 @@ class FormationContinueTest {
         fichierType.put("numero_de_permis", 12345);
         fichierType.put("cycle", "2018-2023");
         fichierType.put("ordre", "psychologues");
+        fichierType.put("nom", "Frazilien");
+        fichierType.put("prenom", "William");
+        fichierType.put("sexe", 1);
         fichierType.put("activites", activities);
         formation.verifierType(fichierType, "resultat.json");
         String expected = "Le numéros de permis doit être une chaîne de caractères";
@@ -129,6 +138,9 @@ class FormationContinueTest {
         fichierType.put("numero_de_permis", "A0001");
         fichierType.put("cycle", 2018-2023);
         fichierType.put("ordre", "psychologues");
+        fichierType.put("nom", "Frazilien");
+        fichierType.put("prenom", "William");
+        fichierType.put("sexe", 1);
         fichierType.put("activites", activities);
         formation.verifierType(fichierType, "resultat.json");
         String expected = "Le cycle doit être une chaîne de caractères";
@@ -143,6 +155,9 @@ class FormationContinueTest {
         fichierType.put("numero_de_permis", "A0001");
         fichierType.put("cycle", "2018-2023");
         fichierType.put("ordre", 56);
+        fichierType.put("nom", "Frazilien");
+        fichierType.put("prenom", "William");
+        fichierType.put("sexe", 1);
         fichierType.put("activites", activities);
         formation.verifierType(fichierType, "resultat.json");
         String expected = "L'ordre doit être une chaîne de caractères";
@@ -158,6 +173,9 @@ class FormationContinueTest {
         fichier.put("numero_de_permis","A0001");
         fichier.put("cycle", "2018-2023");
         fichier.put("ordre", "psychologues");
+        fichier.put("nom", "Frazilien");
+        fichier.put("prenom", "William");
+        fichier.put("sexe", 1);
         fichier.put("activites", activities);
         formation = new MockFormationContinue(fichier, "resultat.json", stats);
         int expected = 24;
