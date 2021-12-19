@@ -3,6 +3,7 @@ import net.sf.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -18,8 +19,8 @@ public class VerificationGeologue extends Verification{
             "rédaction professionnelle"};
 
     public VerificationGeologue(FormationContinue formation,
-                                String fichierSortie) throws Exception {
-        super(formation, fichierSortie);
+                                String fichierSortie, Statistiques stats) throws Exception {
+        super(formation, fichierSortie, stats);
     }
 
     @Override
@@ -45,18 +46,6 @@ public class VerificationGeologue extends Verification{
             if (validDatePeriode(date,"2018-06-01","2021-06-01"))
                 bonneActivites.add(activite);
         }
-    }
-
-
-    @Override
-    public void validationHeures1(int pHeureMin, JSONArray pActiviteValide){
-        JSONObject activite;
-        creationListeCategorieHeure();
-        for (Object o : pActiviteValide) {
-            activite = (JSONObject) o;
-            ajoutHeureListe(activite);
-        }
-        calculHeureTotal(pHeureMin);
     }
 
     @Override
@@ -88,6 +77,17 @@ public class VerificationGeologue extends Verification{
         return bonCycle;
     }
 
+    @Override
+    public void validationHeures2(int pHeureMin, JSONArray pActiviteValide,
+                                  ArrayList<String> listeDate){
+        creationListeCategorieHeure();
+        for(String date : listeDate) {
+            int heureDate = 0;
+            verifierActivitePourHeure(pActiviteValide,date,heureDate);
+        }
+        calculHeureTotal(pHeureMin);
+    }
+
     public void validationHeureMinimum(String categorie, int heureRequise){
         CalculHeureCategorie calculHeure;
         int heure = 0;
@@ -106,7 +106,7 @@ public class VerificationGeologue extends Verification{
         String numeroPermis = formationAVerifier.getNumeroPermis();
         String initialesPermis = numeroPermis.substring(0,2);
         String initialesReels = formationAVerifier.getNom().charAt(0) + "" + formationAVerifier.getPrenom().charAt(0);
-        if(!numeroPermis.matches("^[A-Z]{2}[0-9]{4}$") || !initialesPermis.equals(initialesReels))
+        if(!numeroPermis.matches("^[a-zA-Z]{2}[0-9]{4}$") || !initialesPermis.equals(initialesReels))
             causerErreurVerif("Le numero de permis du geologue n'est pas du bon " +
                     "format (2 lettres, égales aux initiales du nom et prenom, suivis de 4 chiffres).");
     }
@@ -118,13 +118,13 @@ public class VerificationGeologue extends Verification{
             JSONArray activiteValide = creationListeBonnesActivites();
             validationToutes(activiteValide);
         }
-        imprimer(fichierSortie);
     }
 
     public void validationToutes(JSONArray activiteValide) throws Exception {
         validationDates();
+        ArrayList<String> listeDate = creationListeDates(activiteValide);
         validationCategories();
-        validationHeures1(55, activiteValide);
+        validationHeures2(55, activiteValide,listeDate);
         validationHeureMinimum("cours", 22);
         validationHeureMinimum("projet de recherche", 3);
         validationHeureMinimum("groupe de discussion", 1);

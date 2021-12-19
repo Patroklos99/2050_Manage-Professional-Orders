@@ -1,9 +1,11 @@
 import net.sf.json.JSONArray;
 
+import java.util.ArrayList;
+
 public class VerificationPodiatres extends VerificationGeologue{
 
-    public VerificationPodiatres(FormationContinue formation, String fichierSortie) throws Exception {
-        super(formation, fichierSortie);
+    public VerificationPodiatres(FormationContinue formation, String fichierSortie, Statistiques stats) throws Exception {
+        super(formation, fichierSortie, stats);
     }
 
     @Override
@@ -21,14 +23,14 @@ public class VerificationPodiatres extends VerificationGeologue{
             JSONArray activiteValide = creationListeBonnesActivites();
             validationToutes(activiteValide);
         }
-        imprimer(fichierSortie);
     }
 
     @Override
     public void validationToutes(JSONArray activiteValide) throws Exception {
         validationDates();
+        ArrayList<String> listeDate = creationListeDates(activiteValide);
         validationCategories();
-        validationHeures1(60, activiteValide);
+        validationHeures2(60, activiteValide,listeDate);
         validationHeureMinimum("cours", 22);
         validationHeureMinimum("projet de recherche", 3);
         validationHeureMinimum("groupe de discussion", 1);

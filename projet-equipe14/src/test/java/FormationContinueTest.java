@@ -9,6 +9,8 @@ class FormationContinueTest {
     private MockFormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
+    private Statistiques stats;
+
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -30,7 +32,7 @@ class FormationContinueTest {
         activity2.put("date", "2021-10-22");
         activities.add(1, activity2);
         fichier.put("activites", activities);
-        formation = new MockFormationContinue(fichier, "resultat.json");
+        formation = new MockFormationContinue(fichier, "resultat.json", stats);
     }
 
     @Test
@@ -157,7 +159,7 @@ class FormationContinueTest {
         fichier.put("cycle", "2018-2023");
         fichier.put("ordre", "psychologues");
         fichier.put("activites", activities);
-        formation = new MockFormationContinue(fichier, "resultat.json");
+        formation = new MockFormationContinue(fichier, "resultat.json", stats);
         int expected = 24;
         int actual = formation.getHeuresTransferees();
         assertEquals(expected, actual);

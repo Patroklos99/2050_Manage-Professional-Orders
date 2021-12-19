@@ -13,6 +13,7 @@ class VerificationTest {
     private FormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
+    private Statistiques stats;
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -35,8 +36,8 @@ class VerificationTest {
         activity2.put("date", "2018-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
     }
 
     @Test
@@ -66,8 +67,8 @@ class VerificationTest {
         activity.put("date", "2018-01-01");
         activities.add(0,activity);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
 
         verif.validationCategories();
         String actual2 =  verif.getErreur();
@@ -95,8 +96,8 @@ class VerificationTest {
         activity.put("date", "2050-01-01");
         activities.add(0,activity);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
 
         verif.validationDates();
         int actual2 =  verif.categorieValide.size();
@@ -113,8 +114,8 @@ class VerificationTest {
         fichier.put("ordre", "");
         fichier.put("heures_transferees_du_cycle_precedent", 15);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
         verif.validationDateParCycle("2021-01-01", "cours");
         int actual =  verif.categorieValide.size();
         int expected = 1;
@@ -127,8 +128,8 @@ class VerificationTest {
         fichier.put("ordre", "");
         fichier.put("heures_transferees_du_cycle_precedent", 15);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
         verif.validationDateParCycle("2019-01-01", "cours");
         int actual2 =  verif.categorieValide.size();
         int expected2 = 1;
@@ -168,8 +169,8 @@ class VerificationTest {
         activity.put("date", "2018-01-01");
         activities.add(0,activity);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
 
         verif.validationHeuresTransferees(7, 5);
         int actual2 =  verif.formationAVerifier.getHeuresTransferees();
@@ -179,14 +180,7 @@ class VerificationTest {
 
     @Test
     void validationHeuresCategorieMultiple() {
-        verif.validationHeuresCategorieMultiple(this.activities);
-    }
-
-    @Test
-    void calculHeure10Max() {
-        int actual = verif.calculHeure10Max( 15,"cours");
-        int expected = 10;
-        assertEquals(expected, actual);
+        verif.validationHeuresCategorieMultiple();
     }
 
     @Test
@@ -210,8 +204,8 @@ class VerificationTest {
         activity2.put("date", "2018-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
         JSONArray bonnes = verif.creationListeBonnesActivites();
 
         int actual = bonnes.size();
@@ -238,8 +232,8 @@ class VerificationTest {
         activity2.put("date", "2021-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
         JSONArray bonnes2 = verif.creationListeBonnesActivites();
 
         int actual2 = bonnes2.size();
@@ -265,8 +259,8 @@ class VerificationTest {
         activity2.put("date", "2019-01-01");
         activities.add(1,activity2);
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        verif = new MockVerification(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        verif = new MockVerification(formation, "resultat.json", stats);
         JSONArray bonnes3 = verif.creationListeBonnesActivites();
 
         int actual3 = bonnes3.size();

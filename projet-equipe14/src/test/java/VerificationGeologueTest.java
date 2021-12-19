@@ -15,6 +15,7 @@ class VerificationGeologueTest{
     private FormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
+    private Statistiques stats;
 
     @BeforeEach
     void beforeEach() throws Exception {
@@ -61,8 +62,8 @@ class VerificationGeologueTest{
         activities.add(4, activity5);
 
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        geologues = new VerificationGeologue(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        geologues = new VerificationGeologue(formation, "resultat.json", stats);
     }
 
     @Test
@@ -90,8 +91,8 @@ class VerificationGeologueTest{
         activities.add(0, activity);
 
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        geologues = new VerificationGeologue(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        geologues = new VerificationGeologue(formation, "resultat.json", stats);
 
         boolean actual = geologues.validationCycle();
         boolean expected = false;
