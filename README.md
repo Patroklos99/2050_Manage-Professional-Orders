@@ -22,6 +22,18 @@ Description des technologies présentes et du fonctionnement(compilation et exec
   tout les messages d'erreurs seront enregistré dans le fichier de sortie en 
   format JSON.
 
+## Instructions
+- Pour vérifier les déclarations d'activités, faire la commande suivante dans le dossier qui contient le fichier projet-equipe14.jar
+>~~~csh
+>   java -jar projet-equipe14.jar [le fichier à tester] [le fichier résultat]
+>~~~
 
+- Pour voir les statiques, faire la commande suivante:
+>~~~csh
+>   java -jar projet-equipe14.jar -S
+>~~~
 
-
+- Pour réinitialiser les statiques, faire la commande suivante:
+>~~~csh
+>   java -jar projet-equipe14.jar -SR
+>~~~
