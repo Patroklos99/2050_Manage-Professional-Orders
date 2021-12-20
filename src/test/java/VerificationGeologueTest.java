@@ -15,15 +15,18 @@ class VerificationGeologueTest{
     private FormationContinue formation;
     private JSONArray activities;
     private JSONObject fichier;
+    private Statistiques stats;
 
     @BeforeEach
     void beforeEach() throws Exception {
         activities = new JSONArray();
         fichier = new JSONObject();
-        fichier.put("numero_de_permis", "A0001");
+        fichier.put("numero_de_permis", "FW1234");
         fichier.put("cycle", "2018-2021");
         fichier.put("ordre", "geologues");
-
+        fichier.put("nom", "Frazilien");
+        fichier.put("prenom", "William");
+        fichier.put("sexe", 1);
 
         JSONObject activity = new JSONObject();
         activity.put("description", "Rédaction pour le magazine Architecture moderne");
@@ -61,8 +64,9 @@ class VerificationGeologueTest{
         activities.add(4, activity5);
 
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        geologues = new VerificationGeologue(formation, "resultat.json");
+        stats = new Statistiques();
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        geologues = new VerificationGeologue(formation, "resultat.json", stats);
     }
 
     @Test
@@ -78,10 +82,12 @@ class VerificationGeologueTest{
     void validationCycle() throws Exception {
         activities = new JSONArray();
         fichier = new JSONObject();
-        fichier.put("numero_de_permis", "A0001");
+        fichier.put("numero_de_permis", "FW1234");
         fichier.put("cycle", "2018-2022");
         fichier.put("ordre", "geologues");
-
+        fichier.put("nom", "Frazilien");
+        fichier.put("prenom", "William");
+        fichier.put("sexe", 1);
         JSONObject activity = new JSONObject();
         activity.put("description", "Rédaction pour le magazine Architecture moderne");
         activity.put("categorie", "cours");
@@ -90,13 +96,11 @@ class VerificationGeologueTest{
         activities.add(0, activity);
 
         fichier.put("activites", activities);
-        formation = new FormationContinue(fichier, "resultat.json");
-        geologues = new VerificationGeologue(formation, "resultat.json");
+        formation = new FormationContinue(fichier, "resultat.json", stats);
+        geologues = new VerificationGeologue(formation, "resultat.json", stats);
 
         boolean actual = geologues.validationCycle();
         boolean expected = false;
         assertEquals(expected, actual);
-
-
     }
 }

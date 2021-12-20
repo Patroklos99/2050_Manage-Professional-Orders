@@ -3,6 +3,7 @@ import net.sf.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -15,8 +16,8 @@ public class VerificationPsychologues extends Verification {
 
 
     public VerificationPsychologues(FormationContinue formation,
-                                    String fichierSortie) throws Exception {
-        super(formation, fichierSortie);
+                                    String fichierSortie, Statistiques stats) throws Exception {
+        super(formation, fichierSortie, stats);
     }
 
     @Override
@@ -46,6 +47,16 @@ public class VerificationPsychologues extends Verification {
         }
     }
 
+    @Override
+    public void validationHeures2(int pHeureMin, JSONArray pActiviteValide,
+                                  ArrayList<String> listeDate){
+        creationListeCategorieHeure();
+        for(String date : listeDate) {
+            int heureDate = 0;
+            verifierActivitePourHeure(pActiviteValide,date,heureDate);
+        }
+        calculHeureTotal(pHeureMin);
+    }
 
     @Override
     public void validDateCycleListe(String date, JSONArray bonneActivites,
@@ -97,16 +108,24 @@ public class VerificationPsychologues extends Verification {
     }
 
     @Override
+    public void validationNumeroPermis() throws Exception {
+        String numeroPermis = formationAVerifier.getNumeroPermis();
+        if(!numeroPermis.matches("^[0-9]{5}[-][0-9]{2}$"))
+            causerErreurVerif("Le numero de permis du psychologue n'est pas du bon " +
+                    "format (5 Chiffres suivit d'un trait d'union et 2 chiffres de plus).");
+    }
+
+    @Override
     public void validationFinal(String fichierSortie) throws Exception {
         validationGenerale(); //Heritage
         if(validationCycle()) { //Heritage
             JSONArray activiteValide = creationListeBonnesActivites();
             validationDates(); //Class
+            ArrayList<String> listeDate = creationListeDates(activiteValide);
             validationCategories(); //Heritage
-            validationHeures1(90, activiteValide); //Class
+            validationHeures2(90, activiteValide,listeDate); //Class
             validationHeureMinimum("cours", 25);
         }
-        imprimer(fichierSortie);
     }
 
 

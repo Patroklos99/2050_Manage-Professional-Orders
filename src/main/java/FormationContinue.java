@@ -4,12 +4,16 @@ import java.io.FileWriter;
 public class FormationContinue {
 
     private String ordre;
+    private String nom;
+    private String prenom;
+    private int sexe;
     private String numeroPermis;
     private String cycle;
     private int heuresTransferees;
     protected boolean isHeuresTransfereesNull;
     private JSONArray activites;
     private JSONObject fichier;
+    private Statistiques stats;
     final private String msgErrAct = "Les activités doivent être stocké dans "+
             "un tableau";
     final private String msgErrActMiss = "Il manque un champs dans une activité";
@@ -19,17 +23,30 @@ public class FormationContinue {
             "caractères";
     final private String msgErrOrd = "L'ordre doit être une chaîne de " +
             "caractères";
+    final private String msgErrNom = "Le nom doit être une chaîne de caractères";
+    final private String msgErrPre = "Le prénom doit être une chaîne de " +
+            "caractères";
+    final private String msgErrSexe = "Le sexe doit être un chiffre";
 
-    public FormationContinue (JSONObject fichier,String fichierSortie)
+    public FormationContinue (JSONObject fichier, String fichierSortie, Statistiques stats)
             throws Exception {
+        this.stats = stats;
         verifierType(fichier,fichierSortie);
-        this.fichier = fichier;
-        this.ordre = fichier.get("ordre").toString();
-        this.numeroPermis = fichier.get("numero_de_permis").toString();
-        this.cycle = fichier.get("cycle").toString();
+        verifierType2(fichier,fichierSortie);
+        assignerSeptChamps(fichier, stats);
         assignerChampHeuresTranf(fichier);
         this.activites = (JSONArray) fichier.get("activites");
         verifierAct(fichier,fichierSortie);
+    }
+
+    public void assignerSeptChamps(JSONObject fichier, Statistiques stats){
+        this.fichier = fichier;
+        this.ordre = fichier.get("ordre").toString();
+        this.nom = fichier.get("nom").toString();
+        this.prenom = fichier.get("prenom").toString();
+        this.sexe = Integer.parseInt(fichier.get("sexe").toString());
+        this.numeroPermis = fichier.get("numero_de_permis").toString();
+        this.cycle = fichier.get("cycle").toString();
     }
 
     public JSONObject getFichier(){
@@ -38,6 +55,18 @@ public class FormationContinue {
 
     public String getOrdre(){
         return ordre;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public int getSexe() {
+        return sexe;
     }
 
     public String getNumeroPermis() {
@@ -76,6 +105,16 @@ public class FormationContinue {
             afficheErreur(msgErrOrd,fichierSortie);
     }
 
+    public void verifierType2(JSONObject f,String fichierSortie)
+            throws Exception {
+        if(!(f.get("nom") instanceof String))
+            afficheErreur(msgErrNom,fichierSortie);
+        if(!(f.get("prenom") instanceof String))
+            afficheErreur(msgErrPre,fichierSortie);
+        if(!(f.get("sexe") instanceof Integer))
+            afficheErreur(msgErrSexe,fichierSortie);
+    }
+
     public void verifierAct(JSONObject f,String fichierSortie)
             throws Exception {
         for (int i = 0; i < this.activites.size(); i++){
@@ -89,6 +128,8 @@ public class FormationContinue {
 
     public void afficheErreur(String pMessage, String fichierSortie)
             throws Exception {
+        stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+        stats.save();
         System.err.println(pMessage);
         imprimerErreurStructure(fichierSortie);
         System.exit( -1 );

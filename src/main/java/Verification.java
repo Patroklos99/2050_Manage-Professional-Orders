@@ -8,6 +8,7 @@ import java.time.format.*;
 import java.util.*;
 
 public class Verification {
+    protected Statistiques stats;
     protected FormationContinue formationAVerifier;
     private JSONObject fichierErreur;
     private String fichierSortie;
@@ -23,15 +24,15 @@ public class Verification {
     private String[] categoriesRequise = {"cours", "atelier", "séminaire",
             "colloque", "conférence", "lecture dirigée"};
 
-    public Verification(FormationContinue formation, String fichierSortie)
+    public Verification(FormationContinue formation, String fichierSortie, Statistiques stats)
             throws Exception {
+        this.stats = stats;
         this.formationAVerifier = formation;
         this.fichierSortie = fichierSortie;
         this.fichierErreur = new JSONObject();
         JSONArray listeErreurs = new JSONArray();
         fichierErreur.put("Complet", true);
         fichierErreur.put("Erreurs", listeErreurs);
-
         validationFinal(fichierSortie);
     }
 
@@ -83,6 +84,12 @@ public class Verification {
     public void ajoutCategorieListe(String categorie){
         if(!categorieValide.contains(categorie)){
             categorieValide.add(categorie);
+
+            stats.setRapportActivite(stats.getRapportActivite()+1);
+
+            HashMap<String, Integer> tempMap = stats.getRapportActiviteCategorie();
+            tempMap.put(categorie, stats.getRapportActiviteCategorie().get(categorie)+1);
+            stats.setRapportActiviteCategorie(tempMap);
         }
     }
 
@@ -127,22 +134,21 @@ public class Verification {
         }
     }
 
-    public void validationHeuresParCycle(JSONArray pActiviteValide){
+    public void validationHeuresParCycle(JSONArray pActiviteValide,
+                                         ArrayList<String> listeDate){
         if(formationAVerifier.getCycle().equals("2020-2022")){
-            validationHeures1(40,pActiviteValide);
+            validationHeures2(40,pActiviteValide,listeDate);
         }
         else{
-            validationHeures1(42,pActiviteValide);
+            validationHeures2(42,pActiviteValide,listeDate);
         }
     }
 
-    public void validationHeuresCategorieMultiple(JSONArray activites){
+    public void validationHeuresCategorieMultiple(){
         int heures = 0;
-        for (Object o : activites) {
-            JSONObject activite = (JSONObject) o;
-            if(Arrays.asList(categoriesRequise).contains(
-                    activite.get("categorie")))
-                heures += Integer.parseInt(activite.get("heures").toString());
+        for (CalculHeureCategorie o : heureCategorie) {
+            if(Arrays.asList(categoriesRequise).contains(o.getCategorie()))
+                heures += o.getHeure();
         }
         if(!validationNbHeuresActivite(17, heures))
             ajoutMsgErreur("Les heures totales de l'ensemble des categories " +
@@ -177,15 +183,66 @@ public class Verification {
         return heure;
     }
 
-    public void validationHeures1(int pHeureMin, JSONArray pActiviteValide){
-        JSONObject activite;
+    public void validationHeures2(int pHeureMin, JSONArray pActiviteValide,
+                                 ArrayList<String> listeDate){
         creationListeCategorieHeure();
-        for (Object o : pActiviteValide) {
-            activite = (JSONObject) o;
-            ajoutHeureListe(activite);
+        for(String date : listeDate) {
+            int heureDate = 0;
+            verifierActivitePourHeure(pActiviteValide,date,heureDate);
         }
         ajustementMaxHeures();
         calculHeureTotal(pHeureMin);
+    }
+
+    public void verifierActivitePourHeure(JSONArray pActiviteValide,
+                                          String date, int heureDate){
+        for (Object o : pActiviteValide) {
+            JSONObject activite = (JSONObject) o;
+            if(date.equals(activite.get("date").toString())){
+                int heurePrec = heureDate;
+                heureDate = verifieHeurePrec(activite, heurePrec,heureDate);
+            }
+        }
+    }
+
+    public int verifieHeurePrec(JSONObject activite, int heurePrec,
+                                int heureDate){
+        if(heurePrec == 10){
+            String description = activite.get("description").toString();
+            ajoutMsgErreur("L'activité " + description +
+                    " ne sera pas comptabilisé dans le calcul d'heures, car " +
+                    "il dépasse la limite de 10 heures par jour");
+        }else{
+            heureDate += Integer.parseInt(activite.get("heures").toString());
+            heureDate = verifieHeureDate(activite,heurePrec,heureDate);
+        }
+        return heureDate;
+    }
+
+
+    public int verifieHeureDate(JSONObject activite, int heurePrec,
+                                int heureDate){
+        int heure;
+        if(heureDate > 10){
+            heureDate = ajoutHeureReduitCat(activite, heurePrec, heureDate);
+        }else{
+            heure = Integer.parseInt(activite.get("heures").toString());
+            ajoutHeureListe(activite, heure);
+        }
+        return heureDate;
+    }
+
+
+    public int ajoutHeureReduitCat(JSONObject activite, int heurePrec,
+                                   int heureDate){
+        String desc2 = activite.get("description").toString();
+        int heure = 10 - heurePrec;
+        ajoutHeureListe(activite, heure);
+        ajoutMsgErreur("Certaines des heures de l'activité " + desc2 +
+                " n'ont pas été comptabilisé lors du calcul d'heures " +
+                "(limite de 10 heures par jour)");
+        heureDate = 10;
+        return heureDate;
     }
 
     public void creationListeCategorieHeure(){
@@ -196,10 +253,8 @@ public class Verification {
         }
     }
 
-    public void ajoutHeureListe(JSONObject activite){
+    public void ajoutHeureListe(JSONObject activite, int heureAct){
         String categorieAct = activite.get("categorie").toString();
-        int heureAct = calculHeure10Max(Integer.parseInt(activite.get("heures")
-                .toString()),categorieAct);
         CalculHeureCategorie calculHeure;
         for(int i = 0; i < heureCategorie.size(); i++){
             calculHeure = heureCategorie.get(i);
@@ -213,18 +268,6 @@ public class Verification {
                                        int heure){
         int heureAjoute = calculHeure.getHeure() + heure;
         calculHeure.setHeure(heureAjoute);
-    }
-
-    public int calculHeure10Max(int heure,String categorie){
-        int bonneHeure;
-        if(heure > 10){
-            bonneHeure = 10;
-            ajoutMsgErreur("Le nombre d'heures d'une activité de catégorie "
-                    + categorie + " dépasse 10 heures.");
-        }else{
-            bonneHeure = heure;
-        }
-        return bonneHeure;
     }
 
     public void ajustementMaxHeures(){
@@ -242,9 +285,6 @@ public class Verification {
         for(int i = 0; i < heureCategorie.size(); i++){
             heureTotal = heureTotal + heureCategorie.get(i).getHeure();
         }
-
-        System.out.println(heureTotal + " Heures complété");
-
         if(heureTotal < heureReq)
             ajoutMsgErreur("L'etudiant a complete seulement " + heureTotal +
                     " de " + heureReq + "h");
@@ -383,12 +423,13 @@ public class Verification {
     }
 
 
-
     public void validationNumeroPermis() throws Exception {
         String numeroPermis = formationAVerifier.getNumeroPermis();
-        if(!numeroPermis.matches("^[ARSZ]{1}[0-9]{4}$"))
-            causerErreurVerif("Le numero de permis n'est pas du bon " +
-                    "format (A, R, S ou Z suivit de 4 chiffres).");
+        if(!numeroPermis.matches("^[AT]{1}[0-9]{4}$"))
+            causerErreurVerif("Le numero de permis du architecte " +
+                    "n'est pas du bon " +
+                    "format (A ou T suivit de 4 chiffres).");
+        stats.setRapportPermisValide(stats.getRapportPermisValide()+1);
     }
 
     public void validationDescription() throws Exception {
@@ -399,6 +440,12 @@ public class Verification {
                 causerErreurVerif("La description de l'activité " +
                         activity.get("description")
                         + " ne contient pas plus de 20 caractères.");
+        }
+    }
+    public void validationSexe(){
+        int sexe = formationAVerifier.getSexe();
+        if(sexe < 0 || sexe > 2){
+            ajoutMsgErreur("Le sexe n'a pas une valeur acceptée (0, 1 ou 2)");
         }
     }
 
@@ -413,8 +460,18 @@ public class Verification {
         System.err.println(pMessage);
         ajoutMsgErreur("Le fichier d'entrée est invalide et le cycle est " +
                 "incomplet.");
-        imprimer(getFichierSortie());
+        imprimer(getFichierSortie(), formationAVerifier.getOrdre());
         System.exit( -1 );
+    }
+
+    public ArrayList<String> creationListeDates(JSONArray activiteValide){
+        ArrayList<String> listeDate = new ArrayList<>();
+        for(Object o : activiteValide){
+            JSONObject activite = (JSONObject) o;
+            if(!listeDate.contains(activite.get("date").toString()))
+                listeDate.add(activite.get("date").toString());
+        }
+        return listeDate;
     }
 
     public void validationFinal(String fichierSortie) throws Exception {
@@ -422,17 +479,18 @@ public class Verification {
         if(validationCycle()) {
             validationDates();
             JSONArray activiteValide = creationListeBonnesActivites();
+            ArrayList<String> listeDate = creationListeDates(activiteValide);
             validationCategories();
             validationHeuresTransferees(7, 0);
-            validationHeuresParCycle(activiteValide);
-            validationHeuresCategorieMultiple(activiteValide);
+            validationHeuresParCycle(activiteValide,listeDate);
+            validationHeuresCategorieMultiple();
         }
-        imprimer(fichierSortie);
     }
 
     public void validationGenerale() throws Exception {
         verifierChampHeuresTransf();
         validationNumeroPermis();
+        validationSexe();
         validationDescription();
         validationHeureFormat();
     }
@@ -441,12 +499,31 @@ public class Verification {
      * Code inspire de la methode save() du projet json-lib-ex ecrit par
      * Dogny, Gnagnely Serge
      */
-    public void imprimer(String fichierSortie) throws Exception {
+    public void imprimer(String fichierSortie, String ordre) throws Exception {
         try (FileWriter f = new FileWriter(fichierSortie)) {
             f.write(fichierErreur.toString(3));
             f.flush();
         }catch(IOException e){
             throw new Exception(e.toString());
+        }
+        additionComplete(ordre);
+        stats.save();
+    }
+
+    private void additionComplete(String ordre) {
+        if ((boolean)fichierErreur.get("Complet")) {
+            stats.setRapportComplete(stats.getRapportComplete()+1);
+
+            HashMap<String, Integer> tempMap = stats.getRapportOrdreCompletes();
+            tempMap.put(ordre, stats.getRapportOrdreCompletes().get(ordre)+1);
+            stats.setRapportOrdreCompletes(tempMap);
+        }
+        else{
+            stats.setIncompleteInvalide(stats.getIncompleteInvalide()+1);
+
+            HashMap<String, Integer> tempMap = stats.getRapportOrdreIncompletes();
+            tempMap.put(ordre, stats.getRapportOrdreIncompletes().get(ordre)+1);
+            stats.setRapportOrdreIncompletes(tempMap);
         }
     }
 }
