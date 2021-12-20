@@ -1,4 +1,3 @@
-
 #### 1. Exigences Fonctionnalités à tester
 
 | Identifiants des <br> fonctionnalités | Description des fonctionnalités |
@@ -30,10 +29,6 @@
 |              | **ST - 014** | Respect des dates supportées <br> pour les déclarations des géologues    | 2  |
 | **EF - 004** | **ST - 015** | Mettre à jour le fichier statistique <br> selon les déclarations données | 11 |
 <br>
-
-
-Le fichier d’entrée JSON n'a pas 17h total accumulées pour les activités dans la catégorie groupe de discussion
-Le fichier d’entrée JSON n'a pas 17h total accumulé pour les activités dans la catégorie groupe de discussion
 
 #### 3. Cas de tests
 | Identifiants des <br> suites de tests | Identifiants des <br> cas de tests | Description des des cas de test | Préconditions | Sortie attendue |Priorité|
