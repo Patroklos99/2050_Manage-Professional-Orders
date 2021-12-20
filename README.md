@@ -28,12 +28,12 @@ Description des technologies présentes et du fonctionnement(compilation et exec
 >   java -jar projet-equipe14.jar [le fichier à tester] [le fichier résultat]
 >~~~
 
-- Pour voir les statiques, faire la commande suivante:
+- Pour voir les statistiques, faire la commande suivante:
 >~~~csh
 >   java -jar projet-equipe14.jar -S
 >~~~
 
-- Pour réinitialiser les statiques, faire la commande suivante:
+- Pour réinitialiser les statistiques, faire la commande suivante:
 >~~~csh
 >   java -jar projet-equipe14.jar -SR
 >~~~
