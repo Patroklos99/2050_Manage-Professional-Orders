@@ -1,7 +1,9 @@
 # Projet TP3 2050
 
 ## _README_
-Description des technologies présentes et du fonctionnement(compilation et execution) 
+Description of (compilation et execution) 
+
+![image](https://user-images.githubusercontent.com/96098657/187054419-0d855275-b4d8-4598-b9e1-a50bd7569b50.png)
 
 ## Particularités
 - Notre code respecte la convention d'écriture camel case.
@@ -45,3 +47,4 @@ Description des technologies présentes et du fonctionnement(compilation et exec
 - physchologues, ex : 34523-54
 - architectes, ex : A9745 (either A or T) 
 - geologues, ex : AB4536 (First letter of the members Last name, Second letter is first letter of members First name)
+
