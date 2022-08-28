@@ -76,5 +76,4 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # Fichiers de test
-test.json
 resultat.json
