@@ -37,3 +37,11 @@ Description des technologies présentes et du fonctionnement(compilation et exec
 >~~~csh
 >   java -jar projet-equipe14.jar -SR
 >~~~
+
+## Format du Champ Sexe
+- ISO 5218, ex : 0,1 or 2
+
+## Format de Permis
+- physchologues, ex : 34523-54
+- architectes, ex : A9745 (either A or T) 
+- geologues, ex : AB4536 (First letter of the members Last name, Second letter is first letter of members First name)
