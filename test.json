@@ -1,0 +1,69 @@
+{
+  "nom": "John",
+  "prenom": "Biscuits",
+  "sexe": 1,
+  "numero_de_permis": "45634-32",
+  "ordre": "psychologues",
+  "cycle": "2018-2023",
+  "activites": [{
+    "description": "Cours sur la déontologie",
+    "categorie": "cours",
+    "heures": 10,
+    "date": "2019-05-20"
+    },
+    {
+      "description": "Cours sur la déontologie",
+      "categorie": "cours",
+      "heures": 10,
+      "date": "2019-11-20"
+    },
+    {
+      "description": "Cours sur la déontologie",
+      "categorie": "cours",
+      "heures": 5,
+      "date": "2020-11-20"
+    },
+    {
+      "description": "conférence sur l'architecture contemporaine",
+      "categorie": "conférence",
+      "heures": 10,
+      "date": "2019-04-01"
+    },
+    {
+      "description": "conférence sur l'architecture contemporaine",
+      "categorie": "conférence",
+      "heures": 5,
+      "date": "2020-04-01"
+    },
+    {
+      "description": "Migration de système orienté objet ",
+      "categorie": "projet de recherche",
+      "heures": 10,
+      "date": "2019-01-01"
+    },
+    {
+      "description": "Rédaction pour le magazine Architecture moderne",
+      "categorie": "rédaction professionnelle",
+      "heures": 10,
+      "date": "2020-01-01"
+    },
+    {
+      "description": "Migration de système orienté objet ",
+      "categorie": "projet de recherche",
+      "heures": 10,
+      "date": "2018-01-01"
+    },
+    {
+      "description": "Rédaction pour le magazine Architecture moderne",
+      "categorie": "rédaction professionnelle",
+      "heures": 10,
+      "date": "2019-01-01"
+    },
+    {
+      "description": "Rédaction pour le magazine Architecture moderne",
+      "categorie": "rédaction professionnelle",
+      "heures": 10,
+      "date": "2021-01-01"
+    }
+  ]
+}

@@ -54,11 +54,11 @@
                 <!-- JUnit 5 requires Surefire version 2.22.0 or higher -->
                 <version>3.0.0-M5</version>
             </plugin>
-            <plugin>
+           <!-- <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.8-SNAPSHOT</version>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
